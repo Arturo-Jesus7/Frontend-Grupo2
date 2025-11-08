@@ -1,1 +1,15 @@
-<p>menu works!</p>
+<div class="container">
+  <mat-toolbar class="custom-toolbar">
+    <button 
+    matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuDevice">
+      <mat-icon>menu</mat-icon>Roles
+    </button>
+  </mat-toolbar>
+  <mat-menu #menuDevice="matMenu">
+  <button mat-menu-item routerLink="/roles">Listar</button>
+  <button mat-menu-item routerLink="/roles/nuevo">Registrar</button>
+</mat-menu>
+</div>

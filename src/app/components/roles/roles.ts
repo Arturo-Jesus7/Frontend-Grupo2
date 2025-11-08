@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
-import { Roleslistar } from './roleslistar/roleslistar';
+import { roleslistar } from './roleslistar/roleslistar';
 
 @Component({
   selector: 'app-roles',
-  imports: [RouterOutlet,Roleslistar],
+  imports: [RouterOutlet,roleslistar],
   templateUrl: './roles.html',
   styleUrl: './roles.css',
 })

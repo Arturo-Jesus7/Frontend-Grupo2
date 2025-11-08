@@ -1,1 +1,52 @@
-<p>roleslistar works!</p>
+<div class="container">
+  <div style="text-align: center; margin: 5%"><h2>Lista de Roles</h2></div>
+  <div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!--- Note that these columns can be defined in any order.
+
+    The actual rendered columns are set as a property on the row definition" -->
+      <!-- Position Column -->
+
+      <ng-container matColumnDef="c1">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.idRol }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="c2">
+        <th mat-header-cell *matHeaderCellDef>Roles</th>
+        <td mat-cell *matCellDef="let element">{{ element.nameRole }}</td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="c3">
+        <th mat-header-cell *matHeaderCellDef>Actualizar</th>
+        <td mat-cell *matCellDef="let element">
+          <button 
+          matButton
+          [routerLink]="['edits',element.idDevice]"
+          >
+           <mat-icon>edit</mat-icon>
+           Actualizar
+          </button>
+        </td>
+      </ng-container>
+       <!-- Symbol Column -->
+      <ng-container matColumnDef="c4">
+        <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+        <td mat-cell *matCellDef="let element">
+          <button 
+          matButton
+          (click)="eliminar(element.idDevice)"
+          >
+           <mat-icon>delete</mat-icon>
+           Eliminar
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>
