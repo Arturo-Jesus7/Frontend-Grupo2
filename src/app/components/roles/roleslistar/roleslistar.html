@@ -24,7 +24,7 @@
         <td mat-cell *matCellDef="let element">
           <button 
           matButton
-          [routerLink]="['edits',element.idDevice]"
+          [routerLink]="['edits',element.idRol]"
           >
            <mat-icon>edit</mat-icon>
            Actualizar
@@ -37,7 +37,7 @@
         <td mat-cell *matCellDef="let element">
           <button 
           matButton
-          (click)="eliminar(element.idDevice)"
+          (click)="eliminar(element.idRol)"
           >
            <mat-icon>delete</mat-icon>
            Eliminar
