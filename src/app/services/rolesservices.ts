@@ -20,7 +20,7 @@ export class rolesservice{
         return this.http.get<Roles[]>(this.url);
     }
     insert(r:Roles){
-        return this.http.post(this.url,r);
+        return this.http.post(this.url,r,{responseType:'text'});
     }
     setList(listaNueva:Roles[]){
         this.listaCambio.next(listaNueva);
@@ -28,4 +28,13 @@ export class rolesservice{
     getList(){
         return this.listaCambio.asObservable();
     }
+    listId(id:number){
+        return this.http.get<Roles>(`${this.url}/${id}`);
+    }
+    update(r:Roles) {
+    return this.http.put(this.url, r, { responseType: 'text' });
+  }
+    delete(id: number) {
+    return this.http.delete(`${this.url}/${id}`, { responseType: 'text' });
+  }
 }

@@ -1,1 +1,23 @@
-<p>rolesinsert works!</p>
+<div class="container">
+  <div style="text-align: center; margin: 5%"><h2>Registro de roles</h2></div>
+
+  <div style="text-align: center; margin: 5%">
+    <form [formGroup]="form" (submit)="aceptar()">
+      @if(edicion){
+      <mat-form-field>
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" />
+      </mat-form-field>
+      }
+      <br />
+      <mat-form-field>
+        <mat-label>Nombre del rol</mat-label>
+        <input matInput formControlName="nombre" />
+        <mat-error> @if (form.get('nombre')?.hasError('required')) { Ingrese nombre!! } </mat-error>
+      </mat-form-field>
+      <div>
+        <button matButton="elevated">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

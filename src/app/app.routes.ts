@@ -5,7 +5,8 @@ import { Rolesinsert } from './components/roles/rolesinsert/rolesinsert';
 export const routes: Routes = [
     {path:'roles',component:Roles,
         children:[
-            {path:'nuevo',component:Rolesinsert}
+            {path:'nuevo',component:Rolesinsert},
+            {path:'edits/:id',component:Rolesinsert}
         ]
 
     }
