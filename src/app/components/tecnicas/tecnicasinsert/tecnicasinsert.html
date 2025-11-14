@@ -1,45 +1,55 @@
-<div class="container">
-  <div style="text-align: center; margin: 5%">
-    <h2>{{ edicion ? 'Edición de tecnica' : 'Registrar tecnica' }}</h2>
-  </div>
-  <div style="text-align: center; margin: 5%">
-    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
-      @if (edicion) {
-      <mat-form-field class="example-full-width">
-        <mat-label>ID:</mat-label>
-        <input matInput formControlName="codigo" readonly="true" />
-        <mat-error> @if (form.get('id')?.hasError('required')) { Ingrese ID!! } </mat-error>
-      </mat-form-field>
-      }
-      <br />
-      <mat-form-field>
-        <mat-label>nombreTecnica</mat-label>
-        <input matInput formControlName="nombreTecnica" />
+<div class="form-container">
+  <h2 class="form-title">
+    {{ edicion ? '🧪 Edición de Técnica' : '🧪 Registrar Técnica' }}
+  </h2>
+
+  <form [formGroup]="form" (submit)="aceptar()" class="user-form">
+
+    <!-- ID (solo en edición) -->
+    @if (edicion) {
+      <mat-form-field class="form-field">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly />
         <mat-error>
-          @if (form.get('nombreTecnica')?.hasError('required')) { Ingrese nombreTecnica!! }
+          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
         </mat-error>
       </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>descripcionTecnica</mat-label>
-        <input matInput formControlName="descripcionTecnica" />
-        <mat-error>
-          @if (form.get('descripcionTecnica')?.hasError('required')) { Ingrese descripcionTecnica!! }
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Sesiones</mat-label>
-        <mat-select formControlName="FK">
-          @for (food of listaSesiones; track food) {
-          <mat-option [value]="food.idSesion">{{ food.idSesion }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <br />
-      <div>
-        <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
-      </div>
-    </form>
-  </div>
+    }
+
+    <!-- Nombre -->
+    <mat-form-field class="form-field">
+      <mat-label>Nombre *</mat-label>
+      <input matInput formControlName="nombreTecnica" />
+      <mat-error>
+        @if (form.get('nombreTecnica')?.hasError('required')) { Ingrese nombreTecnica!! }
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Descripción -->
+    <mat-form-field class="form-field">
+      <mat-label>Descripción *</mat-label>
+      <textarea matInput formControlName="descripcionTecnica" rows="3"></textarea>
+      <mat-error>
+        @if (form.get('descripcionTecnica')?.hasError('required')) { Ingrese descripcionTecnica!! }
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Sesión -->
+    <mat-form-field class="form-field">
+      <mat-label>Sesión *</mat-label>
+      <mat-select formControlName="FK" required>
+        @for (s of listaSesiones; track s) {
+          <mat-option [value]="s.idSesion">Sesión #{{ s.idSesion }} — N°{{ s.numeroSesion }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Botón -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? '🧪 Guardar cambios' : '🧪 Registrar técnica' }}
+      </button>
+    </div>
+
+  </form>
 </div>

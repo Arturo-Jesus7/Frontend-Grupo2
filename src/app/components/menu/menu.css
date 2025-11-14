@@ -1,132 +1,115 @@
-/* --- Toolbar --- */
-
-.custom-toolbar {
-
- background-color: rgb(242, 63, 35); /* verde principal */
-
- display: flex;
-
- align-items: center;
-
- padding: 0 8px;
-
+.clinic-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8fafc;
 }
 
-
-
-/* --- Botón principal --- */
-
-.btn-rojo {
-
- background-color: rgb(242, 63, 35);
-
- border: none;
-
- font-size: smaller;
-
- border-radius: 4px;
-
- margin: 4px;
-
- padding: 6px 10px;
-
- display: flex;
-
- align-items: center;
-
- gap: 6px;
-
- cursor: pointer;
-
- transition: background-color 0.2s ease;
-
+.header {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
-
-
-.btn-rojo:hover {
-
- background-color: rgb(113, 118, 115);
-
+.header .logo-icon {
+  font-size: 1.5rem;
+  background: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1e40af;
 }
 
-
-
-/* --- Icono --- */
-
-.btn-rojo mat-icon,
-
-.btn-rojo .material-symbols-outlined {
-
- font-size: 1.3rem;
-
- vertical-align: middle;
-
- line-height: 1;
-
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-
-
-/* --- Texto dentro del botón --- */
-
-.btn-rojo span:not(.material-symbols-outlined),
-
-.btn-rojo {
-
- vertical-align: middle;
-
+.header p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
 }
 
-
-
-/* --- Asegurar color blanco --- */
-
-.custom-toolbar button,
-
-.custom-toolbar mat-icon {
-
- color: rgb(255, 255, 255);
-
+.main-content {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
 }
 
-
-
-/* --- Menú desplegable translúcido verde claro --- */
-
-.mat-mdc-menu-panel {
-
- background-color: rgba(144, 238, 144, 0.3) !important; /* verde claro translúcido (lightgreen con transparencia) */
-
- backdrop-filter: blur(6px); /* efecto suave de vidrio */
-
- border: 1px solid rgba(46, 158, 46, 0.3);
-
- border-radius: 8px;
-
- padding: 4px 0;
-
+.sidebar {
+  width: 250px;
+  background: #ffffff;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 
-
-
-/* --- Opciones del menú --- */
-
-.mat-mdc-menu-item {
-
- color: #064d06 !important; /* texto verde oscuro */
-
- font-size: 0.85rem;
-
- font-weight: 500;
-
+.sidebar nav {
+  padding: 1.5rem 0;
+  flex-grow: 1;
 }
 
-
-
-.mat-mdc-menu-item:hover {
-
- background-color: rgba(46, 158, 46, 0.2) !important; /* un verde más visible al pasar el mouse */
-
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
+.sidebar li {
+  margin: 0.5rem 1rem;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: #1e293b;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background-color: #dbeafe;
+  color: #1e40af;
+  font-weight: 600;
+  transform: translateX(4px);
+}
+
+.sidebar .icon {
+  margin-right: 0.75rem;
+  font-size: 1.1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: #f8fafc;
+}
+
+.footer {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #64748b;
+  border-top: 1px solid #e2e8f0;
+  background: #ffffff;
+}

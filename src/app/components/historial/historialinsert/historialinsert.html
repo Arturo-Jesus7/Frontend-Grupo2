@@ -1,37 +1,46 @@
-<div class="container">
-  <div style="text-align: center; margin: 5%">
-    <h2>{{ edicion ? 'Edición de historial' : 'Registrar historial' }}</h2>
-  </div>
-  <div style="text-align: center; margin: 5%">
-    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
-      @if (edicion) {
-      <mat-form-field class="example-full-width">
-        <mat-label>ID:</mat-label>
-        <input matInput formControlName="codigo" readonly="true" />
-        <mat-error> @if (form.get('id')?.hasError('required')) { Ingrese ID!! } </mat-error>
-      </mat-form-field>
-      }
-      <br />
-      <mat-form-field>
-        <mat-label>documentacionHistorial</mat-label>
-        <input matInput formControlName="documentacionHistorial" />
+<div class="form-container">
+  <h2 class="form-title">
+    {{ edicion ? '📜 Edición de Historial' : '📜 Registrar Historial' }}
+  </h2>
+
+  <form [formGroup]="form" (submit)="aceptar()" class="user-form">
+
+    <!-- ID (solo en edición) -->
+    @if (edicion) {
+      <mat-form-field class="form-field">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly />
         <mat-error>
-          @if (form.get('documentacionHistorial')?.hasError('required')) { Ingrese documentacionHistorial!! }
+          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
         </mat-error>
       </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Usuarios</mat-label>
-        <mat-select formControlName="FK">
-          @for (food of listaUsuarios; track food) {
-          <mat-option [value]="food.idUsuario">{{ food.idUsuario }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <br />
-      <div>
-        <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
-      </div>
-    </form>
-  </div>
+    }
+
+    <!-- Documentación -->
+    <mat-form-field class="form-field">
+      <mat-label>Documentación *</mat-label>
+      <textarea matInput formControlName="documentacionHistorial" rows="4"></textarea>
+      <mat-error>
+        @if (form.get('documentacionHistorial')?.hasError('required')) { Ingrese documentacionHistorial!! }
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Paciente -->
+    <mat-form-field class="form-field">
+      <mat-label>Paciente *</mat-label>
+      <mat-select formControlName="FK" required>
+        @for (u of listaUsuarios; track u) {
+          <mat-option [value]="u.idUsuario">{{ u.nameUsuario }} {{ u.apellidoUsuario }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Botón -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? '📜 Guardar cambios' : '📜 Registrar historial' }}
+      </button>
+    </div>
+
+  </form>
 </div>

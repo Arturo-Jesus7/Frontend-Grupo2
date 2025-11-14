@@ -9,29 +9,40 @@ import { UsuariosService } from '../../../services/usuariosservice';
 
 @Component({
   selector: 'app-usuarioslistar',
-  imports: [MatTableModule,CommonModule,MatIconModule,RouterLink , MatButtonModule,RouterLink],
+  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule, RouterLink],
   templateUrl: './usuarioslistar.html',
   styleUrl: './usuarioslistar.css',
 })
 export class Usuarioslistar {
   dataSource: MatTableDataSource<Usuarios> = new MatTableDataSource();
-  displayedColumns: string[] = ['a', 'b', 'c', 'd','e','f','g','h','i','j','k','FK','l','m'];
-  
-  constructor(private uS: UsuariosService) {}
-  ngOnInit(): void {
+  displayedColumns: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'FK', 'l', 'm'];
 
-    this.uS.list().subscribe(data=>{
-      this.dataSource=new MatTableDataSource(data)
-    })
-    this.uS.getList().subscribe(data=>{
-      this.dataSource=new MatTableDataSource(data)
-    })
-  }  
-  eliminar(id:number){
-    this.uS.delete(id).subscribe(data=>{
-      this.uS.list().subscribe(data=>{
-        this.uS.setList(data)
-      })
-    })
+  constructor(private uS: UsuariosService) {}
+
+  ngOnInit(): void {
+    this.uS.list().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+    });
+    this.uS.getList().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+    });
+  }
+
+  eliminar(id: number) {
+    this.uS.delete(id).subscribe(data => {
+      this.uS.list().subscribe(data => {
+        this.uS.setList(data);
+      });
+    });
+  }
+
+  listar(): void {
+    this.uS.list().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+    });
+  }
+
+  registrar(): void {
+    window.location.href = '/usuarios/nuevo'; 
   }
 }
