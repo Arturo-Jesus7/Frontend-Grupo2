@@ -10,6 +10,9 @@
       <mat-form-field class="form-field">
         <mat-label>ID</mat-label>
         <input matInput formControlName="codigo" readonly />
+        <mat-error>
+          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
+        </mat-error>
       </mat-form-field>
     }
 
@@ -17,7 +20,7 @@
     <mat-form-field class="form-field">
       <mat-label>Nombre del Rol *</mat-label>
       <input matInput formControlName="nombre" />
-      <mat-error>Ingrese nombre!!</mat-error>
+      <mat-error> @if (form.get('nombre')?.hasError('required')) { Ingrese nombre!! }</mat-error>
     </mat-form-field>
 
     <!-- Botón -->

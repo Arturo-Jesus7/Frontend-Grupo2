@@ -10,6 +10,7 @@
       <mat-form-field class="form-field">
         <mat-label>ID</mat-label>
         <input matInput formControlName="codigo" readonly />
+          <mat-error>@if (form.get('id')?.hasError('required')) { Ingrese ID!! } </mat-error>
       </mat-form-field>
     }
 
@@ -21,7 +22,7 @@
           <mat-option [value]="t.value">{{ t.viewValue }}</mat-option>
         }
       </mat-select>
-      <mat-error>El estado es obligatorio.</mat-error>
+      <mat-error>@if (form.get('estadoCita')?.hasError('required')) {  El estado es obligatorio. }</mat-error>
     </mat-form-field>
 
     <!-- Fecha -->
@@ -31,21 +32,21 @@
       <mat-hint>DD/MM/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
-      <mat-error>La fecha es obligatoria.</mat-error>
+      <mat-error>@if (form.get('fecha')?.hasError('required')) { La fecha es obligatoria. }</mat-error>
     </mat-form-field>
 
     <!-- Motivo -->
     <mat-form-field class="form-field">
       <mat-label>Motivo *</mat-label>
       <input matInput formControlName="motivoCita" />
-      <mat-error>Ingrese motivo.</mat-error>
+        <mat-error>@if (form.get('motivoCita')?.hasError('required')) { Ingrese motivo de la Cita!! }</mat-error>
     </mat-form-field>
 
     <!-- Video -->
     <mat-form-field class="form-field">
       <mat-label>Enlace de Video *</mat-label>
       <input matInput formControlName="videoCita" type="url" />
-      <mat-error>Ingrese enlace válido.</mat-error>
+        <mat-error>@if (form.get('videoCita')?.hasError('required')) { Ingrese video?!! }</mat-error>
     </mat-form-field>
 
     <!-- Favorito -->
@@ -55,7 +56,7 @@
         <mat-radio-button [value]="true">✅ Sí</mat-radio-button>
         <mat-radio-button [value]="false">❌ No</mat-radio-button>
       </mat-radio-group>
-      <mat-error>Este campo es obligatorio.</mat-error>
+      <mat-error>@if (form.get('favoritoCita')?.hasError('required')) { La selección es obligatoria. }</mat-error>
     </div>
 
     <!-- Paciente -->
