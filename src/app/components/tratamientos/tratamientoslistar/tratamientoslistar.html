@@ -1,1 +1,86 @@
-<p>tratamientoslistar works!</p>
+<p>usuarioslistar works!</p>
+<div class="container">
+<div style="text-align: center; margin: 5%"><h2>Lista de Tratamientos</h2></div>
+<div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="a">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let element"> {{element.idTratamiento}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="b">
+    <th mat-header-cell *matHeaderCellDef> objetivoTratamiento </th>
+    <td mat-cell *matCellDef="let element"> {{element.objetivoTratamiento}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="c">
+    <th mat-header-cell *matHeaderCellDef> planTratamiento </th>
+    <td mat-cell *matCellDef="let element"> {{element.planTratamiento}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="d">
+    <th mat-header-cell *matHeaderCellDef> FechaInicioTratamiento </th>
+    <td mat-cell *matCellDef="let element"> {{element.FechaInicioTratamiento|date:'dd/MM/yyyy'}} </td>
+  </ng-container>
+    <!-- Symbol Column -->
+
+    <ng-container matColumnDef="e">
+    <th mat-header-cell *matHeaderCellDef> FechaFinTratamiento </th>
+    <td mat-cell *matCellDef="let element"> {{element.FechaFinTratamiento|date:'dd/MM/yyyy'}} </td>
+  </ng-container>
+    <!-- Symbol Column -->
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="f">
+    <th mat-header-cell *matHeaderCellDef> terapeutaTratamiento </th>
+    <td mat-cell *matCellDef="let element"> {{element.terapeutaTratamiento}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="g">
+    <th mat-header-cell *matHeaderCellDef> progresoTratamiento </th>
+    <td mat-cell *matCellDef="let element"> {{element.progresoTratamiento}} </td>
+  </ng-container>
+
+
+    <!-- Symbol Column -->
+  <ng-container matColumnDef="FK">
+    <th mat-header-cell *matHeaderCellDef> Historial </th>
+    <td mat-cell *matCellDef="let element"> {{element.Historial.idHistorial}} </td>
+  </ng-container>
+
+ <ng-container matColumnDef="l">
+        <th mat-header-cell *matHeaderCellDef>Actualizar</th>
+        <td mat-cell *matCellDef="let element">
+          <button  matButton
+            [routerLink]="['edits',element.idTratamiento]" >
+            <mat-icon>edit</mat-icon>
+            
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="m">
+        <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+        <td mat-cell *matCellDef="let element">
+          <button  matButton 
+            (click)="eliminar(element.idTratamiento)" >
+             <mat-icon>delete</mat-icon>
+            
+          </button>
+        </td>
+      </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+</div>
+
+</div>

@@ -1,1 +1,117 @@
-<p>usuariosinsert works!</p>
+<div class="container">
+  <div style="text-align: center; margin: 5%">
+    <h2>{{ edicion ? 'Edición de usuario' : 'Registrar usuario' }}</h2>
+  </div>
+  <div style="text-align: center; margin: 5%">
+    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
+      @if (edicion) {
+      <mat-form-field class="example-full-width">
+        <mat-label>ID:</mat-label>
+        <input matInput formControlName="codigo" readonly="true" />
+        <mat-error> @if (form.get('id')?.hasError('required')) { Ingrese ID!! } </mat-error>
+      </mat-form-field>
+      }
+      <br />
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" />
+        <mat-error>
+          @if (form.get('username')?.hasError('required')) { Ingrese username!! }
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" />
+        <mat-error>
+          @if (form.get('password')?.hasError('required')) { Ingrese password!! }
+        </mat-error>
+      </mat-form-field>
+      <br />
+        <label>Enabled</label>
+        <mat-radio-group aria-label="Estado" formControlName="estado">
+          <mat-radio-button [value]="true">Activo</mat-radio-button>
+          <mat-radio-button [value]="false">Inactivo</mat-radio-button>
+        </mat-radio-group>
+        <mat-error>
+          @if (form.get('estado')?.hasError('required')) { La estado es obligatoria. }
+        </mat-error>
+        <br />
+        <mat-form-field>
+          <mat-label>nameUsuario</mat-label>
+          <input matInput formControlName="nameusuario" />
+          <mat-error>
+            @if (form.get('nameusuario')?.hasError('required')) { Ingrese nameusuario!! }
+          </mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>apellidoUsuario</mat-label>
+          <input matInput formControlName="apellidousuario" />
+          <mat-error>
+            @if (form.get('apellidousuario')?.hasError('required')) { Ingrese apellidoUsuario!! }
+          </mat-error>
+        </mat-form-field>
+        <br />
+        <br />
+        <div>
+          <mat-form-field>
+            <mat-label>fechaNacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fecha" />
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>
+              @if (form.get('fecha')?.hasError('required')) { La fecha es obligatoria. }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <br>
+        <mat-form-field>
+          <mat-label>DNIUsuario</mat-label>
+          <input matInput formControlName="dni" />
+          <mat-error> @if (form.get('dni')?.hasError('required')) { Ingrese dni!! } </mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>especialidad</mat-label>
+          <mat-select formControlName="especialidad" required>
+            @for (t of tipos; track t) {
+            <mat-option [value]="t.value">{{ t.viewValue }}</mat-option>
+            }
+          </mat-select>
+          <mat-error>
+            @if (form.get('especialidad')?.hasError('required')) { La especialidad es obligatorio. }
+          </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>numerocolegiatura</mat-label>
+          <input matInput formControlName="numerocolegiatura" />
+          <mat-error> @if (form.get('numerocolegiatura')?.hasError('required')) { Ingrese numerocolegiatura!! }
+          </mat-error>
+        </mat-form-field>
+        <br>
+        <br />
+        <mat-form-field>
+          <mat-label>apoderadoUsuario</mat-label>
+          <input matInput formControlName="apoderadousuario" />
+          <mat-error>
+            @if (form.get('apoderadousuario')?.hasError('required')) { Ingrese apoderadoUsuario!! }
+          </mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>Roles</mat-label>
+          <mat-select formControlName="FK">
+            @for (food of listaRoles; track food) {
+            <mat-option [value]="food.idRol">{{ food.nameRole }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
+        </div>
+      </form>
+  </div>
+</div>

@@ -7,9 +7,109 @@
     [matMenuTriggerFor]="menuRol">
       <mat-icon>menu</mat-icon>Roles
     </button>
+    <button matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuUsuario">
+      <mat-icon>developer_mode</mat-icon>Usuarios
+    </button>
+        <button matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuAlertas">
+      <mat-icon>developer_mode</mat-icon>Alertas
+    </button>
+        <button matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuCitas">
+      <mat-icon>developer_mode</mat-icon>Citas
+    </button>
+        <button matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuDiagnosticos">
+      <mat-icon>developer_mode</mat-icon>Diagnosticos
+    </button>
+        <button matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuHistorial">
+      <mat-icon>developer_mode</mat-icon>Historial
+    </button>
+        <button matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuPagos">
+      <mat-icon>developer_mode</mat-icon>Pagos
+    </button>
+        <button matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuSesiones">
+      <mat-icon>developer_mode</mat-icon>Sesiones
+    </button>
+        <button matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuTecnicas">
+      <mat-icon>developer_mode</mat-icon>Tecnicas
+    </button>
+        <button matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuTratamientos">
+      <mat-icon>developer_mode</mat-icon>Tratamientos
+    </button>
+        <button matButton 
+    class="btn-rojo" 
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menuVideoconferencias">
+      <mat-icon>developer_mode</mat-icon>Videoconferencias
+    </button>
   </mat-toolbar>
   <mat-menu #menuRol="matMenu">
   <button mat-menu-item routerLink="/roles">Listar</button>
   <button mat-menu-item routerLink="/roles/nuevo">Registrar</button>
+</mat-menu>
+ <mat-menu #menuUsuario="matMenu">
+  <button mat-menu-item routerLink="/usuarios"><mat-icon>list</mat-icon>Listar</button>
+  <button mat-menu-item routerLink="/usuarios/nuevo"><mat-icon>add</mat-icon>Registrar</button>
+</mat-menu>
+ <mat-menu #menuAlertas="matMenu">
+  <button mat-menu-item routerLink="/alertas"><mat-icon>list</mat-icon>Listar</button>
+  <button mat-menu-item routerLink="/alertas/nuevo"><mat-icon>add</mat-icon>Registrar</button>
+</mat-menu>
+ <mat-menu #menuCitas="matMenu">
+  <button mat-menu-item routerLink="/citas"><mat-icon>list</mat-icon>Listar</button>
+  <button mat-menu-item routerLink="/citas/nuevo"><mat-icon>add</mat-icon>Registrar</button>
+</mat-menu>
+ <mat-menu #menuDiagnosticos="matMenu">
+  <button mat-menu-item routerLink="/diagnosticos"><mat-icon>list</mat-icon>Listar</button>
+  <button mat-menu-item routerLink="/diagnosticos/nuevo"><mat-icon>add</mat-icon>Registrar</button>
+</mat-menu>
+ <mat-menu #menuHistorial="matMenu">
+  <button mat-menu-item routerLink="/historial"><mat-icon>list</mat-icon>Listar</button>
+  <button mat-menu-item routerLink="/historial/nuevo"><mat-icon>add</mat-icon>Registrar</button>
+</mat-menu>
+ <mat-menu #menuPagos="matMenu">
+  <button mat-menu-item routerLink="/pagos"><mat-icon>list</mat-icon>Listar</button>
+  <button mat-menu-item routerLink="/pagos/nuevo"><mat-icon>add</mat-icon>Registrar</button>
+</mat-menu>
+ <mat-menu #menuSesiones="matMenu">
+  <button mat-menu-item routerLink="/sesiones"><mat-icon>list</mat-icon>Listar</button>
+  <button mat-menu-item routerLink="/sesiones/nuevo"><mat-icon>add</mat-icon>Registrar</button>
+</mat-menu>
+ <mat-menu #menuTecnicas="matMenu">
+  <button mat-menu-item routerLink="/tecnicas"><mat-icon>list</mat-icon>Listar</button>
+  <button mat-menu-item routerLink="/tecnicas/nuevo"><mat-icon>add</mat-icon>Registrar</button>
+</mat-menu>
+ <mat-menu #menuTratamientos="matMenu">
+  <button mat-menu-item routerLink="/tratamientos"><mat-icon>list</mat-icon>Listar</button>
+  <button mat-menu-item routerLink="/tratamientos/nuevo"><mat-icon>add</mat-icon>Registrar</button>
+</mat-menu>
+ <mat-menu #menuVideoconferencias="matMenu">
+  <button mat-menu-item routerLink="/videoconferencias"><mat-icon>list</mat-icon>Listar</button>
+  <button mat-menu-item routerLink="/videoconferencias/nuevo"><mat-icon>add</mat-icon>Registrar</button>
 </mat-menu>
 </div>

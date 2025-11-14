@@ -1,1 +1,85 @@
-<p>tratamientosinsert works!</p>
+<div class="container">
+  <div style="text-align: center; margin: 5%">
+    <h2>{{ edicion ? 'Edición de tratamiento' : 'Registrar tratamiento' }}</h2>
+  </div>
+  <div style="text-align: center; margin: 5%">
+    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
+      @if (edicion) {
+      <mat-form-field class="example-full-width">
+        <mat-label>ID:</mat-label>
+        <input matInput formControlName="codigo" readonly="true" />
+        <mat-error> @if (form.get('id')?.hasError('required')) { Ingrese ID!! } </mat-error>
+      </mat-form-field>
+      }
+      <br />
+      <mat-form-field>
+        <mat-label>objetivoTratamiento</mat-label>
+        <input matInput formControlName="objetivoTratamiento" />
+        <mat-error>
+          @if (form.get('objetivoTratamiento')?.hasError('required')) { Ingrese objetivoTratamiento!! }
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>planTratamiento</mat-label>
+        <input matInput formControlName="planTratamiento" />
+        <mat-error>
+          @if (form.get('planTratamiento')?.hasError('required')) { Ingrese planTratamiento!! }
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <div>
+        <mat-form-field>
+          <mat-label>FechaInicioTratamiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechainicio" />
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error>
+            @if (form.get('fechainicio')?.hasError('required')) { La fecha es obligatoria. }
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <br />
+      <div>
+        <mat-form-field>
+          <mat-label>FechaFinTratamiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechafin" />
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error>
+            @if (form.get('fechafin')?.hasError('required')) { La fecha es obligatoria. }
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <br>
+        <mat-form-field>
+        <mat-label>terapeutaTratamiento</mat-label>
+        <input matInput formControlName="terapeutaTratamiento" />
+        <mat-error>
+          @if (form.get('terapeutaTratamiento')?.hasError('required')) { Ingrese terapeutaTratamiento!! }
+        </mat-error>
+      </mat-form-field>
+      <br />
+    <mat-form-field>
+      <mat-label>progresoTratamiento</mat-label>
+      <input matInput formControlName="progresoTratamiento" />
+      <mat-error> @if (form.get('progresoTratamiento')?.hasError('required')) { Ingrese progresoTratamiento!! } </mat-error>
+    </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Historial</mat-label>
+        <mat-select formControlName="FK">
+          @for (food of listaHistorial; track food) {
+          <mat-option [value]="food.idHistorial">{{ food.idHistorial }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <div>
+        <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

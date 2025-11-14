@@ -1,1 +1,61 @@
-<p>videoconferenciasinsert works!</p>
+<div class="container">
+  <div style="text-align: center; margin: 5%">
+    <h2>{{ edicion ? 'Edición de videoconferencia' : 'Registrar videoconferencia' }}</h2>
+  </div>
+  <div style="text-align: center; margin: 5%">
+    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
+      @if (edicion) {
+      <mat-form-field class="example-full-width">
+        <mat-label>ID:</mat-label>
+        <input matInput formControlName="codigo" readonly="true" />
+        <mat-error> @if (form.get('id')?.hasError('required')) { Ingrese ID!! } </mat-error>
+      </mat-form-field>
+      }
+      <br />
+      <mat-form-field>
+        <mat-label>proveedorVideoconferencia</mat-label>
+        <input matInput formControlName="proveedorVideoconferencia" />
+        <mat-error>
+          @if (form.get('proveedorVideoconferencia')?.hasError('required')) { Ingrese proveedorVideoconferencia!! }
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>joinUrlVideoconferencia</mat-label>
+        <input matInput formControlName="joinUrlVideoconferencia" />
+        <mat-error>
+          @if (form.get('joinUrlVideoconferencia')?.hasError('required')) { Ingrese joinUrlVideoconferencia!! }
+        </mat-error>
+      </mat-form-field>
+      <br />
+            <mat-form-field>
+        <mat-label>starUrlVideoconferencia</mat-label>
+        <input matInput formControlName="starUrlVideoconferencia" />
+        <mat-error>
+          @if (form.get('starUrlVideoconferencia')?.hasError('required')) { Ingrese starUrlVideoconferencia!! }
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>passApiVideoconferencia</mat-label>
+        <input matInput formControlName="passApiVideoconferencia" />
+        <mat-error>
+          @if (form.get('passApiVideoconferencia')?.hasError('required')) { Ingrese passApiVideoconferencia!! }
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Citas</mat-label>
+        <mat-select formControlName="FK">
+          @for (food of listaCitas; track food) {
+          <mat-option [value]="food.idCita">{{ food.idCita }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <div>
+        <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
+      </div>
+    </form>
+  </div>
+</div>
