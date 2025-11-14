@@ -1,1 +1,63 @@
-<p>sesionesinsert works!</p>
+<div class="container">
+  <div style="text-align: center; margin: 5%">
+    <h2>{{ edicion ? 'Edición de sesion' : 'Registrar sesion' }}</h2>
+  </div>
+  <div style="text-align: center; margin: 5%">
+    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
+      @if (edicion) {
+      <mat-form-field class="example-full-width">
+        <mat-label>ID:</mat-label>
+        <input matInput formControlName="codigo" readonly="true" />
+        <mat-error> @if (form.get('id')?.hasError('required')) { Ingrese ID!! } </mat-error>
+      </mat-form-field>
+      }
+      <br />
+      <mat-form-field>
+        <mat-label>numeroSesion</mat-label>
+        <input matInput formControlName="numeroSesion" />
+        <mat-error>
+          @if (form.get('numeroSesion')?.hasError('required')) { Ingrese numeroSesion!! }
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <div>
+        <mat-form-field>
+          <mat-label>fechaInicioSesion</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechainicio" />
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error>
+            @if (form.get('fechainicio')?.hasError('required')) { La fecha es obligatoria. }
+          </mat-error>
+        </mat-form-field>
+      </div>
+       <br />
+      <div>
+        <mat-form-field>
+          <mat-label>fechaFinSesion</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechafin" />
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error>
+            @if (form.get('fechafin')?.hasError('required')) { La fecha es obligatoria. }
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <br />
+      <mat-form-field>
+        <mat-label>Citas</mat-label>
+        <mat-select formControlName="FK">
+          @for (food of listaCita; track food) {
+          <mat-option [value]="food.idCita">{{ food.idCita }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <div>
+        <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
+      </div>
+    </form>
+  </div>
+</div>
