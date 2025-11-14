@@ -8,13 +8,13 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-roleslistar',
-  imports: [MatTableModule, MatIconModule, MatButtonModule,RouterLink],
+  imports: [MatTableModule, MatIconModule, MatButtonModule, RouterLink],
   templateUrl: './roleslistar.html',
   styleUrl: './roleslistar.css',
 })
 export class roleslistar implements OnInit {
   dataSource: MatTableDataSource<Roles> = new MatTableDataSource();
-  displayedColumns: string[] = ['c1', 'c2','c3','c4'];
+  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4'];
 
   constructor(private rS: rolesservice) {}
 
@@ -28,10 +28,20 @@ export class roleslistar implements OnInit {
   }
 
   eliminar(id: number) {
-    this.rS.delete(id).subscribe(data=>{
-      this.rS.list().subscribe(data=>{
-        this.rS.setList(data)
-      })
-    })
+    this.rS.delete(id).subscribe((data) => {
+      this.rS.list().subscribe((data) => {
+        this.rS.setList(data);
+      });
+    });
+  }
+
+  listar(): void {
+    this.rS.list().subscribe((data) => {
+      this.dataSource = new MatTableDataSource(data);
+    });
+  }
+
+  registrar(): void {
+    window.location.href = '/roles/nuevo';
   }
 }

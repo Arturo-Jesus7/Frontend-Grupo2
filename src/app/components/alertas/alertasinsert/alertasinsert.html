@@ -1,53 +1,64 @@
-<div class="container">
-  <div style="text-align: center; margin: 5%">
-    <h2>{{ edicion ? 'Edición de alerta' : 'Registrar alerta' }}</h2>
-  </div>
-  <div style="text-align: center; margin: 5%">
-    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
-      @if (edicion) {
-      <mat-form-field class="example-full-width">
-        <mat-label>ID:</mat-label>
-        <input matInput formControlName="codigo" readonly="true" />
-        <mat-error> @if (form.get('id')?.hasError('required')) { Ingrese ID!! } </mat-error>
-      </mat-form-field>
-      }
-      <br />
-      <mat-form-field>
-        <mat-label>canalAlerta</mat-label>
-        <input matInput formControlName="canalAlerta" />
+<div class="form-container">
+  <h2 class="form-title">
+    {{ edicion ? '🔔 Edición de Alerta' : '🔔 Registrar Alerta' }}
+  </h2>
+
+  <form [formGroup]="form" (submit)="aceptar()" class="user-form">
+
+    <!-- ID (solo en edición) -->
+    @if (edicion) {
+      <mat-form-field class="form-field">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly />
         <mat-error>
-          @if (form.get('canalAlerta')?.hasError('required')) { Ingrese canalAlerta!! }
+          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
         </mat-error>
       </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>tituloAlerta</mat-label>
-        <input matInput formControlName="tituloAlerta" />
-        <mat-error>
-          @if (form.get('tituloAlerta')?.hasError('required')) { Ingrese tituloAlerta!! }
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>mensajeAlerta</mat-label>
-        <input matInput formControlName="mensajeAlerta" />
-        <mat-error>
-          @if (form.get('mensajeAlerta')?.hasError('required')) { Ingrese mensajeAlerta!! }
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Citas</mat-label>
-        <mat-select formControlName="FK">
-          @for (food of listaCita; track food) {
-          <mat-option [value]="food.idCita">{{ food.idCita }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <br />
-      <div>
-        <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
-      </div>
-    </form>
-  </div>
+    }
+
+    <!-- Canal -->
+    <mat-form-field class="form-field">
+      <mat-label>Canal *</mat-label>
+      <input matInput formControlName="canalAlerta" />
+      <mat-error>
+        @if (form.get('canalAlerta')?.hasError('required')) { Ingrese canalAlerta!! }
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Título -->
+    <mat-form-field class="form-field">
+      <mat-label>Título *</mat-label>
+      <input matInput formControlName="tituloAlerta" />
+      <mat-error>
+        @if (form.get('tituloAlerta')?.hasError('required')) { Ingrese tituloAlerta!! }
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Mensaje -->
+    <mat-form-field class="form-field">
+      <mat-label>Mensaje *</mat-label>
+      <textarea matInput formControlName="mensajeAlerta" rows="3"></textarea>
+      <mat-error>
+        @if (form.get('mensajeAlerta')?.hasError('required')) { Ingrese mensajeAlerta!! }
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Cita -->
+    <mat-form-field class="form-field">
+      <mat-label>Cita *</mat-label>
+      <mat-select formControlName="FK" required>
+        @for (cita of listaCita; track cita) {
+          <mat-option [value]="cita.idCita">Cita #{{ cita.idCita }} — {{ cita.estadoCita }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Botón -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? '🔔 Guardar cambios' : '🔔 Registrar alerta' }}
+      </button>
+    </div>
+
+  </form>
 </div>

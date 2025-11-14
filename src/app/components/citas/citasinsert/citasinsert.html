@@ -1,89 +1,91 @@
-<p>citasinsert works!</p>
-<div class="container">
-  <div style="text-align: center; margin: 5%">
-    <h2>{{ edicion ? 'Edición de cita' : 'Registrar cita' }}</h2>
-  </div>
-  <div style="text-align: center; margin: 5%">
-    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
-      @if (edicion) {
-      <mat-form-field class="example-full-width">
-        <mat-label>ID:</mat-label>
-        <input matInput formControlName="codigo" readonly="true" />
-        <mat-error> @if (form.get('id')?.hasError('required')) { Ingrese ID!! } </mat-error>
+<div class="form-container">
+  <h2 class="form-title">
+    {{ edicion ? '💾 Edición de Cita' : '✅ Registrar Cita' }}
+  </h2>
+
+  <form [formGroup]="form" (submit)="aceptar()" class="user-form">
+
+    <!-- ID (solo en edición) -->
+    @if (edicion) {
+      <mat-form-field class="form-field">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly />
       </mat-form-field>
-      }
-      <br />
-        <mat-form-field>
-        <mat-label>estadoCita</mat-label>
-        <mat-select formControlName="estadoCita" required>
-          @for (t of tipos; track t) {
+    }
+
+    <!-- Estado -->
+    <mat-form-field class="form-field">
+      <mat-label>Estado *</mat-label>
+      <mat-select formControlName="estadoCita" required>
+        @for (t of tipos; track t) {
           <mat-option [value]="t.value">{{ t.viewValue }}</mat-option>
-          }
-        </mat-select>
-        <mat-error>
-          @if (form.get('estadoCita')?.hasError('required')) { El estadoCita es obligatorio. }
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <br />
-      <div>
-        <mat-form-field>
-          <mat-label>fechaCita</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="fecha" />
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error>
-            @if (form.get('fecha')?.hasError('required')) { La fecha es obligatoria. }
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <mat-form-field>
-        <mat-label>motivoCita</mat-label>
-        <input matInput formControlName="motivoCita" />
-        <mat-error>
-          @if (form.get('motivoCita')?.hasError('required')) { Ingrese motivoCita!! }
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>videoCita</mat-label>
-        <input matInput formControlName="videoCita" />
-        <mat-error>
-          @if (form.get('videoCita')?.hasError('required')) { Ingrese videoCita!! }
-        </mat-error>
-      </mat-form-field>
-      <br />
-        <label>favoritoCita</label>
-        <mat-radio-group aria-label="Estado" formControlName="favoritoCita">
-          <mat-radio-button [value]="true">Activo</mat-radio-button>
-          <mat-radio-button [value]="false">Inactivo</mat-radio-button>
-        </mat-radio-group>
-        <mat-error>
-          @if (form.get('favoritoCita')?.hasError('required')) { FavoritoCita es obligatoria. }
-        </mat-error>
-      <br />
-      <br />
-      <mat-form-field>
-        <mat-label>Usuarios Paciente</mat-label>
-        <mat-select formControlName="FK1">
-          @for (food of listaUsuarios; track food) {
-          <mat-option [value]="food.idUsuario">{{ food.nameUsuario }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <br />
-            <mat-form-field>
-        <mat-label>Usuarios Terapeuta</mat-label>
-        <mat-select formControlName="FK2">
-          @for (food of listaUsuarios; track food) {
-          <mat-option [value]="food.idUsuario">{{ food.nameUsuario }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <div>
-        <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
-      </div>
-    </form>
-  </div>
+        }
+      </mat-select>
+      <mat-error>El estado es obligatorio.</mat-error>
+    </mat-form-field>
+
+    <!-- Fecha -->
+    <mat-form-field class="form-field">
+      <mat-label>Fecha de Cita *</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fecha" />
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error>La fecha es obligatoria.</mat-error>
+    </mat-form-field>
+
+    <!-- Motivo -->
+    <mat-form-field class="form-field">
+      <mat-label>Motivo *</mat-label>
+      <input matInput formControlName="motivoCita" />
+      <mat-error>Ingrese motivo.</mat-error>
+    </mat-form-field>
+
+    <!-- Video -->
+    <mat-form-field class="form-field">
+      <mat-label>Enlace de Video *</mat-label>
+      <input matInput formControlName="videoCita" type="url" />
+      <mat-error>Ingrese enlace válido.</mat-error>
+    </mat-form-field>
+
+    <!-- Favorito -->
+    <div class="radio-group">
+      <label>Favorito *</label>
+      <mat-radio-group formControlName="favoritoCita">
+        <mat-radio-button [value]="true">✅ Sí</mat-radio-button>
+        <mat-radio-button [value]="false">❌ No</mat-radio-button>
+      </mat-radio-group>
+      <mat-error>Este campo es obligatorio.</mat-error>
+    </div>
+
+    <!-- Paciente -->
+    <mat-form-field class="form-field">
+      <mat-label>Paciente *</mat-label>
+      <mat-select formControlName="FK1" required>
+        @for (u of listaUsuarios; track u) {
+          <mat-option [value]="u.idUsuario">{{ u.nameUsuario }} {{ u.apellidoUsuario }}</mat-option>
+        }
+      </mat-select>
+      <mat-error>Seleccione un paciente.</mat-error>
+    </mat-form-field>
+
+    <!-- Terapeuta -->
+    <mat-form-field class="form-field">
+      <mat-label>Terapeuta *</mat-label>
+      <mat-select formControlName="FK2" required>
+        @for (u of listaUsuarios; track u) {
+          <mat-option [value]="u.idUsuario">{{ u.nameUsuario }} {{ u.apellidoUsuario }}</mat-option>
+        }
+      </mat-select>
+      <mat-error>Seleccione un terapeuta.</mat-error>
+    </mat-form-field>
+
+    <!-- Botón -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? '💾 Guardar cambios' : '✅ Registrar cita' }}
+      </button>
+    </div>
+
+  </form>
 </div>

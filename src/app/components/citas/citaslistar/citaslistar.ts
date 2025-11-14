@@ -9,29 +9,41 @@ import { CitasService } from '../../../services/citasservice';
 
 @Component({
   selector: 'app-citaslistar',
-  imports: [MatTableModule,CommonModule,MatIconModule,RouterLink , MatButtonModule,RouterLink],
+  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
   templateUrl: './citaslistar.html',
   styleUrl: './citaslistar.css',
 })
 export class Citaslistar {
-dataSource: MatTableDataSource<Citas> = new MatTableDataSource();
-  displayedColumns: string[] = ['a', 'b', 'c', 'd','e','f','FK1','FK2','l','m'];
-  
-  constructor(private cS: CitasService) {}
-  ngOnInit(): void {
+  dataSource: MatTableDataSource<Citas> = new MatTableDataSource();
+  displayedColumns: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'FK1', 'FK2', 'l', 'm'];
 
-    this.cS.list().subscribe(data=>{
-      this.dataSource=new MatTableDataSource(data)
-    })
-    this.cS.getList().subscribe(data=>{
-      this.dataSource=new MatTableDataSource(data)
-    })
-  }  
-  eliminar(id:number){
-    this.cS.delete(id).subscribe(data=>{
-      this.cS.list().subscribe(data=>{
-        this.cS.setList(data)
-      })
-    })
+  constructor(private cS: CitasService) {}
+
+  ngOnInit(): void {
+    this.cS.list().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+    });
+    this.cS.getList().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+    });
+  }
+
+  eliminar(id: number) {
+    this.cS.delete(id).subscribe(data => {
+      this.cS.list().subscribe(data => {
+        this.cS.setList(data);
+      });
+    });
+  }
+
+  // 👇 Métodos nuevos (sin tocar lo anterior)
+  listar(): void {
+    this.cS.list().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+    });
+  }
+
+  registrar(): void {
+    window.location.href = '/citas/nuevo';
   }
 }

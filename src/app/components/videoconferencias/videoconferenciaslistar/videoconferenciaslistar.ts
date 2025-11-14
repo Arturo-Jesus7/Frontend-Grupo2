@@ -9,29 +9,40 @@ import { VideoconferenciasService } from '../../../services/videoconferenciasser
 
 @Component({
   selector: 'app-videoconferenciaslistar',
-  imports: [MatTableModule,CommonModule,MatIconModule,RouterLink , MatButtonModule],
+  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
   templateUrl: './videoconferenciaslistar.html',
   styleUrl: './videoconferenciaslistar.css',
 })
 export class Videoconferenciaslistar {
   dataSource: MatTableDataSource<Videoconferencias> = new MatTableDataSource();
-  displayedColumns: string[] = ['a', 'b', 'c', 'd','e','FK','l','m'];
-  
-  constructor(private vS: VideoconferenciasService) {}
-  ngOnInit(): void {
+  displayedColumns: string[] = ['a', 'b', 'c', 'd', 'e', 'FK', 'l', 'm'];
 
-    this.vS.list().subscribe(data=>{
-      this.dataSource=new MatTableDataSource(data)
-    })
-    this.vS.getList().subscribe(data=>{
-      this.dataSource=new MatTableDataSource(data)
-    })
-  }  
-  eliminar(id:number){
-    this.vS.delete(id).subscribe(data=>{
-      this.vS.list().subscribe(data=>{
-        this.vS.setList(data)
-      })
-    })
+  constructor(private vS: VideoconferenciasService) {}
+
+  ngOnInit(): void {
+    this.vS.list().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+    });
+    this.vS.getList().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+    });
+  }
+
+  eliminar(id: number) {
+    this.vS.delete(id).subscribe(data => {
+      this.vS.list().subscribe(data => {
+        this.vS.setList(data);
+      });
+    });
+  }
+
+  listar(): void {
+    this.vS.list().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+    });
+  }
+
+  registrar(): void {
+    window.location.href = '/videoconferencias/nuevo';
   }
 }

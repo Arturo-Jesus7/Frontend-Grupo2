@@ -1,68 +1,80 @@
-<div class="container">
-  <div style="text-align: center; margin: 5%">
-    <h2>{{ edicion ? 'Edición de pago' : 'Registrar pago' }}</h2>
-  </div>
-  <div style="text-align: center; margin: 5%">
-    <form [formGroup]="form" (submit)="aceptar()" class="example-form">
-      @if (edicion) {
-      <mat-form-field class="example-full-width">
-        <mat-label>ID:</mat-label>
-        <input matInput formControlName="codigo" readonly="true" />
-        <mat-error> @if (form.get('id')?.hasError('required')) { Ingrese ID!! } </mat-error>
+<div class="form-container">
+  <h2 class="form-title">
+    {{ edicion ? '💳 Edición de Pago' : '💳 Registrar Pago' }}
+  </h2>
+
+  <form [formGroup]="form" (submit)="aceptar()" class="user-form">
+
+    <!-- ID (solo en edición) -->
+    @if (edicion) {
+      <mat-form-field class="form-field">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly />
+        <mat-error>
+          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
+        </mat-error>
       </mat-form-field>
-      } 
-      <br>
-    <mat-form-field>
-      <mat-label>montoPago</mat-label>
-      <input matInput formControlName="montoPago" />
-      <mat-error> @if (form.get('montoPago')?.hasError('required')) { Ingrese montoPago!! } </mat-error>
+    }
+
+    <!-- Monto -->
+    <mat-form-field class="form-field">
+      <mat-label>Monto (S/) *</mat-label>
+      <input matInput type="number" step="0.01" formControlName="montoPago" />
+      <mat-error>
+        @if (form.get('montoPago')?.hasError('required')) { Ingrese montoPago!! }
+      </mat-error>
     </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>passApiPago</mat-label>
-        <input matInput formControlName="passApiPago" />
-        <mat-error>
-          @if (form.get('passApiPago')?.hasError('required')) { Ingrese passApiPago!! }
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <div>
-        <mat-form-field>
-          <mat-label>fechaPago</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="fecha" />
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error>
-            @if (form.get('fecha')?.hasError('required')) { La fecha es obligatoria. }
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <br>
-     <mat-form-field>
-        <mat-label>estadoPago</mat-label>
-        <mat-select formControlName="estadoPago" required>
-          @for (t of tipos; track t) {
+
+    <!-- Pass API -->
+    <mat-form-field class="form-field">
+      <mat-label>Clave API *</mat-label>
+      <input matInput type="password" formControlName="passApiPago" />
+      <mat-error>
+        @if (form.get('passApiPago')?.hasError('required')) { Ingrese passApiPago!! }
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Fecha -->
+    <mat-form-field class="form-field">
+      <mat-label>Fecha de Pago *</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fecha" />
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error>
+        @if (form.get('fecha')?.hasError('required')) { La fecha es obligatoria. }
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Estado -->
+    <mat-form-field class="form-field">
+      <mat-label>Estado *</mat-label>
+      <mat-select formControlName="estadoPago" required>
+        @for (t of tipos; track t) {
           <mat-option [value]="t.value">{{ t.viewValue }}</mat-option>
-          }
-        </mat-select>
-        <mat-error>
-          @if (form.get('estadoPago')?.hasError('required')) { El estadoPago es obligatorio. }
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <mat-label>Citas</mat-label>
-        <mat-select formControlName="FK">
-          @for (food of listaCita; track food) {
-          <mat-option [value]="food.idCita">{{ food.idCita }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <br />
-      <div>
-        <button matButton="elevated">{{ edicion ? 'Editar' : 'Registrar' }}</button>
-      </div>
-    </form>
-  </div>
+        }
+      </mat-select>
+      <mat-error>
+        @if (form.get('estadoPago')?.hasError('required')) { El estadoPago es obligatorio. }
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Cita -->
+    <mat-form-field class="form-field">
+      <mat-label>Cita *</mat-label>
+      <mat-select formControlName="FK" required>
+        @for (c of listaCita; track c) {
+          <mat-option [value]="c.idCita">Cita #{{ c.idCita }} — {{ c.estadoCita }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Botón -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? '💳 Guardar cambios' : '💳 Registrar pago' }}
+      </button>
+    </div>
+
+  </form>
 </div>
