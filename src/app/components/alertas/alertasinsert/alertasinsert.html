@@ -1,6 +1,6 @@
 <div class="form-container">
   <h2 class="form-title">
-    {{ edicion ? '🔔 Edición de Alerta' : '🔔 Registrar Alerta' }}
+    {{ edicion ? 'Edición de Alerta' : 'Registrar Alerta' }}
   </h2>
 
   <form [formGroup]="form" (submit)="aceptar()" class="user-form">
@@ -56,7 +56,7 @@
     <!-- Botón -->
     <div class="form-actions">
       <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? '🔔 Guardar cambios' : '🔔 Registrar alerta' }}
+        {{ edicion ? ' Guardar cambios' : ' Registrar alerta' }}
       </button>
     </div>
 

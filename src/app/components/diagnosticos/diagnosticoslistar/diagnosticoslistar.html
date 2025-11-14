@@ -1,10 +1,10 @@
 <!-- Panel de acción -->
 <div class="action-panel">
   <button class="btn-list" (click)="listar()">
-    <span class="icon">🩺</span> Listar
+    <mat-icon>list</mat-icon> Listar
   </button>
   <button class="btn-register" (click)="registrar()">
-    <span class="icon">➕</span> Registrar
+    <mat-icon>add</mat-icon> Registrar
   </button>
 </div>
 
@@ -54,7 +54,7 @@
     <th mat-header-cell *matHeaderCellDef>Actualizar</th>
     <td mat-cell *matCellDef="let element">
       <button mat-button class="edit-btn" [routerLink]="['edits', element.idDiagnostico]">
-        <mat-icon>edit_note</mat-icon>
+        <mat-icon>edit</mat-icon>
       </button>
     </td>
   </ng-container>
@@ -63,7 +63,7 @@
     <th mat-header-cell *matHeaderCellDef>Eliminar</th>
     <td mat-cell *matCellDef="let element">
       <button mat-button class="delete-btn" (click)="eliminar(element.idDiagnostico)">
-        <mat-icon>delete_outline</mat-icon>
+        <mat-icon>delete</mat-icon>
       </button>
     </td>
   </ng-container>
