@@ -1,5 +1,76 @@
+/* Contenedor principal para hacer la rejilla */
+.card-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que las tarjetas bajen si no caben */
+  gap: 20px; /* Espacio entre tarjetas */
+  padding: 20px;
+  justify-content: flex-start;
+}
+
+/* Estilo de la tarjeta individual */
+.cita-card {
+  flex: 1 1 300px;
+  border-radius: 12px;
+  background-color: #fff;
+  transition: transform 0.2s;
+}
+
+.cita-card:hover {
+  transform: translateY(-5px); /* Efecto visual al pasar el mouse */
+}
+
+/* Detalles visuales */
+.header-icon {
+  background-color: #3f51b5; /* Color primario */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-row {
+  margin-bottom: 10px;
+}
+
+.motivo-text {
+  font-style: italic;
+  color: #555;
+  margin: 0;
+}
+
+/* Grid interna */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: #f5f5f5;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.fav-badge {
+  margin-left: 8px;
+  font-size: 1.2em;
+}
+
+.status-badge {
+  background: #e0e0e0;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.video-link {
+  text-decoration: none;
+  color: #3f51b5;
+  font-weight: bold;
+}
+
 /* --- Botones dentro de la tabla --- */
-button[matButton] {
+/* button[matButton] {
   font-size: 0.8rem;
   font-weight: 500;
   border-radius: 6px;
@@ -10,13 +81,12 @@ button[matButton] {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
   background-color: rgb(251, 140, 0);
   border-color: rgb(251, 140, 0);
-}
-
+} */
 
 /* --- Responsivo (botones más compactos en pantallas pequeñas) --- */
-@media (max-width: 768px) {
-  button[matButton] [matIconButton]{
+/* @media (max-width: 768px) {
+  button[matButton] [matIconButton] {
     font-size: 0.7rem;
     padding: 3px 8px;
   }
-}
+} */

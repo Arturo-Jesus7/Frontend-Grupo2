@@ -6,10 +6,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Citas } from '../../../models/Citas';
 import { CitasService } from '../../../services/citasservice';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-citaslistar',
-  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
+  imports: [MatCardModule,MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
   templateUrl: './citaslistar.html',
   styleUrl: './citaslistar.css',
 })
