@@ -6,10 +6,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Sesiones } from '../../../models/Sesiones';
 import { SesionesService } from '../../../services/sesionesservice';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-sesioneslistar',
-  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
+  imports: [MatCardModule,MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
   templateUrl: './sesioneslistar.html',
   styleUrl: './sesioneslistar.css',
 })
