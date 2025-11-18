@@ -1,46 +1,43 @@
 <div class="form-container">
   <h2 class="form-title">
+    <mat-icon>{{ edicion ? 'edit' : 'add_circle' }}</mat-icon>
     {{ edicion ? ' Edición de Historial' : ' Registrar Historial' }}
   </h2>
 
   <form [formGroup]="form" (submit)="aceptar()" class="user-form">
-
-    <!-- ID (solo en edición) -->
-    @if (edicion) {
+    <div class="form-grid">
+      @if (edicion) {
       <mat-form-field class="form-field">
         <mat-label>ID</mat-label>
         <input matInput formControlName="codigo" readonly />
+      </mat-form-field>
+      }
+
+      <mat-form-field class="form-field">
+        <mat-label>Paciente *</mat-label>
+        <mat-select formControlName="FK" required>
+          @for (u of listaUsuarios; track u) {
+          <mat-option [value]="u.idUsuario">{{ u.nameUsuario }} {{ u.apellidoUsuario }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>Seleccione paciente</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" style="grid-column: 1 / -1;">
+        <mat-label>Documentación *</mat-label>
+        <textarea matInput formControlName="documentacionHistorial" rows="5"></textarea>
         <mat-error>
-          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
+            @if (form.get('documentacionHistorial')?.hasError('required')) { La documentación es obligatoria }
         </mat-error>
       </mat-form-field>
-    }
-
-    <!-- Documentación -->
-    <mat-form-field class="form-field">
-      <mat-label>Documentación *</mat-label>
-      <textarea matInput formControlName="documentacionHistorial" rows="4"></textarea>
-      <mat-error>
-        @if (form.get('documentacionHistorial')?.hasError('required')) { Ingrese documentacionHistorial!! }
-      </mat-error>
-    </mat-form-field>
-
-    <!-- Paciente -->
-    <mat-form-field class="form-field">
-      <mat-label>Paciente *</mat-label>
-      <mat-select formControlName="FK" required>
-        @for (u of listaUsuarios; track u) {
-          <mat-option [value]="u.idUsuario">{{ u.nameUsuario }} {{ u.apellidoUsuario }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-
-    <!-- Botón -->
-    <div class="form-actions">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? ' Guardar cambios' : 'Registrar historial' }}
-      </button>
     </div>
 
+    <div class="form-actions">
+      <button mat-raised-button color="warn" type="button" routerLink="/historiales">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        <mat-icon>save</mat-icon>
+        {{ edicion ? ' Guardar Cambios' : ' Registrar Historial' }}
+      </button>
+    </div>
   </form>
 </div>

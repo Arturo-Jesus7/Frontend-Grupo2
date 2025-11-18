@@ -1,92 +1,82 @@
-/* Contenedor principal para hacer la rejilla */
 .card-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que las tarjetas bajen si no caben */
-  gap: 20px; /* Espacio entre tarjetas */
+  flex-wrap: wrap;
+  gap: 20px;
   padding: 20px;
   justify-content: flex-start;
 }
 
-/* Estilo de la tarjeta individual */
-.cita-card {
+.historial-card {
   flex: 1 1 300px;
   border-radius: 12px;
   background-color: #fff;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  max-width: 500px; 
 }
 
-.cita-card:hover {
-  transform: translateY(-5px); /* Efecto visual al pasar el mouse */
+.historial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
-/* Detalles visuales */
+/* --- ENCABEZADO --- */
 .header-icon {
-  background-color: #3f51b5; /* Color primario */
+  background-color: #3f51b5;
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.mat-card-header-text {
+  margin-left: 16px;
 }
 
 .info-row {
   margin-bottom: 10px;
 }
 
-.motivo-text {
-  font-style: italic;
-  color: #555;
-  margin: 0;
-}
-
-/* Grid interna */
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  background: #f5f5f5;
-  padding: 8px;
+.doc-text {
+  background-color: #f5f5f5;
+  padding: 12px;
   border-radius: 8px;
-  margin-bottom: 10px;
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.5; /* Espaciado entre líneas para textos largos */
+  margin-top: 8px;
+  border-left: 4px solid #3f51b5;
+  
+  max-height: 150px; 
+  overflow-y: auto;
+  white-space: pre-wrap;
 }
 
-.fav-badge {
-  margin-left: 8px;
-  font-size: 1.2em;
+/* --- PANEL DE ACCIÓN --- */
+.action-panel {
+  padding: 20px 20px 0 20px;
+  display: flex;
+  gap: 10px;
 }
 
-.status-badge {
-  background: #e0e0e0;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.85em;
-  font-weight: bold;
-}
-
-.video-link {
-  text-decoration: none;
-  color: #3f51b5;
-  font-weight: bold;
-}
-
-/* --- Botones dentro de la tabla --- */
-/* button[matButton] {
-  font-size: 0.8rem;
+.btn-list, .btn-register {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
   font-weight: 500;
-  border-radius: 6px;
-  padding: 4px 12px;
-  color: rgb(238, 244, 241);
-  text-transform: none;
-  transition: all 0.25s ease;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-  background-color: rgb(251, 140, 0);
-  border-color: rgb(251, 140, 0);
-} */
+  color: white;
+}
 
-/* --- Responsivo (botones más compactos en pantallas pequeñas) --- */
-/* @media (max-width: 768px) {
-  button[matButton] [matIconButton] {
-    font-size: 0.7rem;
-    padding: 3px 8px;
-  }
-} */
+.btn-list {
+  background-color: #3f51b5;
+}
+
+.btn-register {
+  background-color: #ff4081; 
+}
