@@ -1,68 +1,68 @@
 <div class="form-container">
   <h2 class="form-title">
-    {{ edicion ? 'Edición de Sesión' : '⏱Registrar Sesión' }}
+    <mat-icon>{{ edicion ? 'edit' : 'add_circle' }}</mat-icon>
+    {{ edicion ? ' Edición de Sesión' : ' Registrar Sesión' }}
   </h2>
 
   <form [formGroup]="form" (submit)="aceptar()" class="user-form">
+    
+    <div class="form-grid">
 
-    <!-- ID (solo en edición) -->
-    @if (edicion) {
+      @if (edicion) {
       <mat-form-field class="form-field">
         <mat-label>ID</mat-label>
         <input matInput formControlName="codigo" readonly />
         <mat-error>
-          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
+           @if (form.get('id')?.hasError('required')) { Ingrese ID }
         </mat-error>
       </mat-form-field>
-    }
+      }
 
-    <!-- Número de Sesión -->
-    <mat-form-field class="form-field">
-      <mat-label>N° Sesión *</mat-label>
-      <input matInput type="number" formControlName="numeroSesion" />
-      <mat-error>
-        @if (form.get('numeroSesion')?.hasError('required')) { Ingrese numeroSesion!! }
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>N° Sesión *</mat-label>
+        <input matInput type="number" formControlName="numeroSesion" />
+        <mat-error>
+          @if (form.get('numeroSesion')?.hasError('required')) { Ingrese número de sesión }
+        </mat-error>
+      </mat-form-field>
 
-    <!-- Fecha Inicio -->
-    <mat-form-field class="form-field">
-      <mat-label>Fecha de Inicio *</mat-label>
-      <input matInput [matDatepicker]="pickerInicio" formControlName="fechainicio" />
-      <mat-hint>DD/MM/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
-      <mat-datepicker #pickerInicio></mat-datepicker>
-      <mat-error>
-        @if (form.get('fechainicio')?.hasError('required')) { La fecha es obligatoria. }
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Fecha de Inicio *</mat-label>
+        <input matInput [matDatepicker]="pickerInicio" formControlName="fechainicio" />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInicio></mat-datepicker>
+        <mat-error>
+          @if (form.get('fechainicio')?.hasError('required')) { Fecha obligatoria }
+        </mat-error>
+      </mat-form-field>
 
-    <!-- Fecha Fin -->
-    <mat-form-field class="form-field">
-      <mat-label>Fecha de Fin *</mat-label>
-      <input matInput [matDatepicker]="pickerFin" formControlName="fechafin" />
-      <mat-hint>DD/MM/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
-      <mat-datepicker #pickerFin></mat-datepicker>
-      <mat-error>
-        @if (form.get('fechafin')?.hasError('required')) { La fecha es obligatoria. }
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Fecha de Fin *</mat-label>
+        <input matInput [matDatepicker]="pickerFin" formControlName="fechafin" />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFin></mat-datepicker>
+        <mat-error>
+          @if (form.get('fechafin')?.hasError('required')) { Fecha obligatoria }
+        </mat-error>
+      </mat-form-field>
 
-    <!-- Cita -->
-    <mat-form-field class="form-field">
-      <mat-label>Cita *</mat-label>
-      <mat-select formControlName="FK" required>
-        @for (c of listaCita; track c) {
+      <mat-form-field class="form-field">
+        <mat-label>Cita *</mat-label>
+        <mat-select formControlName="FK" required>
+          @for (c of listaCita; track c) {
           <mat-option [value]="c.idCita">Cita #{{ c.idCita }} — {{ c.estadoCita }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+          }
+        </mat-select>
+        <mat-error>Seleccione una cita</mat-error>
+      </mat-form-field>
 
-    <!-- Botón -->
-    <div class="form-actions">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? 'Guardar cambios' : 'Registrar sesión' }}
+    </div> <div class="form-actions">
+      <button mat-raised-button color="warn" type="button" routerLink="/sesiones">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        <mat-icon>save</mat-icon>
+        {{ edicion ? ' Guardar Cambios' : ' Registrar Sesión' }}
       </button>
     </div>
 
