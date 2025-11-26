@@ -21,6 +21,7 @@ import { Tratamientos } from './components/tratamientos/tratamientos';
 import { Tratamientosinsert } from './components/tratamientos/tratamientosinsert/tratamientosinsert';
 import { Videoconferencias } from './components/videoconferencias/videoconferencias';
 import { Videoconferenciasinsert } from './components/videoconferencias/videoconferenciasinsert/videoconferenciasinsert';
+import { VideoCall } from './components/video-call/video-call';
 
 export const routes: Routes = [
     {path:'roles',component:Roles,
@@ -99,6 +100,8 @@ export const routes: Routes = [
             {path:'edits/:id',component:Videoconferenciasinsert}
         ]
 
+    },{
+      path:'videocall',component: VideoCall,
     },
 
 ];

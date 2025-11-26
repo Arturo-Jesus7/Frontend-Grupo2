@@ -1,15 +1,21 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Signaling } from '../../services/signaling';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-video-call',
-  imports: [],
+  imports:[FormsModule,CommonModule],
   templateUrl: './video-call.html',
   styleUrl: './video-call.css',
 })
 export class VideoCall {
+
   @ViewChild('localVideo', { static: true }) localVideo!: ElementRef;
   @ViewChild('remoteVideo', { static: true }) remoteVideo!: ElementRef;
+
+  roomCode: string = "";
+  inCall = false;
 
   peer!: RTCPeerConnection;
   localStream!: MediaStream;
@@ -17,8 +23,6 @@ export class VideoCall {
   constructor(private signaling: Signaling) {}
 
   ngOnInit() {
-    this.initializeWebRTC();
-
     this.signaling.onMessage(async message => {
 
       if (message.type === 'offer') {
@@ -38,15 +42,25 @@ export class VideoCall {
     });
   }
 
-  async initializeWebRTC() {
+  async enterRoom() {
+    if (!this.roomCode.trim()) return;
 
+    await this.initializeWebRTC();
+
+    this.signaling.send({
+      type: "join",
+      room: this.roomCode
+    });
+
+    this.inCall = true;
+  }
+
+  async initializeWebRTC() {
     this.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     this.localVideo.nativeElement.srcObject = this.localStream;
 
     this.peer = new RTCPeerConnection({
-      iceServers: [
-        { urls: "stun:stun.l.google.com:19302" }
-      ]
+      iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
     });
 
     this.localStream.getTracks().forEach(track => {
@@ -57,7 +71,8 @@ export class VideoCall {
       if (event.candidate) {
         this.signaling.send({
           type: 'candidate',
-          candidate: event.candidate
+          candidate: event.candidate,
+          room: this.roomCode
         });
       }
     };
@@ -70,6 +85,10 @@ export class VideoCall {
   async startCall() {
     const offer = await this.peer.createOffer();
     await this.peer.setLocalDescription(offer);
-    this.signaling.send(offer);
+
+    this.signaling.send({
+      ...offer,
+      room: this.roomCode
+    });
   }
 }
