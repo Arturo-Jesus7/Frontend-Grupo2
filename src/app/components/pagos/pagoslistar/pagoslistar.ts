@@ -6,10 +6,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Pagos } from '../../../models/Pagos';
 import { PagosService } from '../../../services/pagosservice';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-pagoslistar',
-  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
+  imports: [MatPaginator,MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
   templateUrl: './pagoslistar.html',
   styleUrl: './pagoslistar.css',
 })

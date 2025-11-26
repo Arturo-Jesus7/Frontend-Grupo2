@@ -6,10 +6,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Videoconferencias } from '../../../models/Videoconferencias';
 import { VideoconferenciasService } from '../../../services/videoconferenciasservices';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-videoconferenciaslistar',
-  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
+  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule,MatPaginator],
   templateUrl: './videoconferenciaslistar.html',
   styleUrl: './videoconferenciaslistar.css',
 })

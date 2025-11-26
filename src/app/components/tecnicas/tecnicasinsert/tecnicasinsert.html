@@ -21,8 +21,15 @@
       <mat-label>Nombre *</mat-label>
       <input matInput formControlName="nombreTecnica" />
       <mat-error>
-        @if (form.get('nombreTecnica')?.hasError('required')) { Ingrese nombreTecnica!! }
-      </mat-error>
+        @if (form.get('nombreTecnica')?.hasError('required')) {
+            El nombre de la técnica es obligatorio.
+        } @else if (form.get('nombreTecnica')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('nombreTecnica')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        } @else if (form.get('nombreTecnica')?.hasError('pattern')) {
+            Solo se permiten letras, números y espacios.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Descripción -->
@@ -30,8 +37,15 @@
       <mat-label>Descripción *</mat-label>
       <textarea matInput formControlName="descripcionTecnica" rows="3"></textarea>
       <mat-error>
-        @if (form.get('descripcionTecnica')?.hasError('required')) { Ingrese descripcionTecnica!! }
-      </mat-error>
+        @if (form.get('descripcionTecnica')?.hasError('required')) {
+            La descripción de la técnica es obligatoria.
+        } @else if (form.get('descripcionTecnica')?.hasError('minlength')) {
+            Debe tener un mínimo de 20 caracteres.
+        } @else if (form.get('descripcionTecnica')?.hasError('maxlength')) {
+            Debe tener un máximo de 1000 caracteres.
+        } @else if (form.get('descripcionTecnica')?.hasError('pattern')) {
+            Solo se permiten letras, números, espacios y signos de puntuación comunes.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Sesión -->

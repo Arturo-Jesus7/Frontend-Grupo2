@@ -6,10 +6,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Diagnosticos } from '../../../models/Diagnosticos';
 import { DiagnosticosService } from '../../../services/diagnosticosservice';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-diagnosticoslistar',
-  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
+  imports: [MatPaginator,MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
   templateUrl: './diagnosticoslistar.html',
   styleUrl: './diagnosticoslistar.css',
 })

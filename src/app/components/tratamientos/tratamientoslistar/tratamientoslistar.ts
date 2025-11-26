@@ -6,10 +6,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Tratamientos } from '../../../models/Tratamientos';
 import { TratamientossService } from '../../../services/tratamientosservice';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-tratamientoslistar',
-  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
+  imports: [MatPaginator,MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
   templateUrl: './tratamientoslistar.html',
   styleUrl: './tratamientoslistar.css',
 })

@@ -6,10 +6,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Tecnicas } from '../../../models/Tecnicas';
 import { TecnicasService } from '../../../services/tecnicasservice';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-tecnicaslistar',
-  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
+  imports: [MatPaginator,MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
   templateUrl: './tecnicaslistar.html',
   styleUrl: './tecnicaslistar.css',
 })

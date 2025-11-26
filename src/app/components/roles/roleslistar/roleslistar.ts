@@ -5,10 +5,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Roles } from '../../../models/Roles';
 import { rolesservice } from '../../../services/rolesservices';
 import { RouterLink } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-roleslistar',
-  imports: [MatTableModule, MatIconModule, MatButtonModule, RouterLink],
+  imports: [MatPaginator,MatTableModule, MatIconModule, MatButtonModule, RouterLink],
   templateUrl: './roleslistar.html',
   styleUrl: './roleslistar.css',
 })

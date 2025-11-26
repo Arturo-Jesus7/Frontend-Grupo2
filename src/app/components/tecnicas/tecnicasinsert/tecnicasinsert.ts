@@ -55,9 +55,8 @@ form: FormGroup = new FormGroup({});
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-      nombreTecnica: ['', Validators.required],
-      password: ['', Validators.required],  
-      FK:['',Validators.required]
+nombreTecnica: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s]+$')]],
+descripcionTecnica: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(200), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],      FK:['',Validators.required]
     });
   }
   aceptar(): void {

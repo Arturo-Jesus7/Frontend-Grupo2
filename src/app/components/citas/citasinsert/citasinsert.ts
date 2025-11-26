@@ -59,11 +59,15 @@ export class Citasinsert {
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-      estadoCita: ['', Validators.required],
-      fecha: ['', Validators.required],
-      motivoCita: ['', Validators.required],
-      videoCita: ['', Validators.required],
-      favoritoCita: [false, Validators.required],
+     estadoCita: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+  
+  fecha: ['', [Validators.required]],
+  
+  motivoCita: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],
+  
+  videoCita: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]], 
+  
+  favoritoCita: [false, Validators.requiredTrue],
       FK1:['',Validators.required],
       FK2:['',Validators.required]
     });

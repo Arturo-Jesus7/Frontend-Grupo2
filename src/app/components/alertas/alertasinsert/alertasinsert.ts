@@ -55,10 +55,11 @@ form: FormGroup = new FormGroup({});
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      nameusuario: ['', Validators.required], 
-      FK:['',Validators.required]
+      canalAlerta: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+  
+  tituloAlerta: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s]+$')]],
+  
+  mensajeAlerta: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(150), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],    FK:['',Validators.required]
     });
   }
   aceptar(): void {

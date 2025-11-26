@@ -32,6 +32,7 @@ form: FormGroup = new FormGroup({});
   edicion: boolean = false;
   id: number = 0;
   pag: Pagos = new Pagos();
+  readonly minDate = new Date(); 
 
   listaCita: Citas[] = [];
 
@@ -57,12 +58,16 @@ form: FormGroup = new FormGroup({});
     this.cS.list().subscribe((data) => {
       this.listaCita = data;
     });
+    const hoy = new Date().toISOString().substring(0, 10);
     this.form = this.formBuilder.group({
       codigo: [''],
-      montoPago: ['', Validators.required],
-      passApiPago: ['', Validators.required],
-      fecha: ['', Validators.required],
-      estadoPago: ['', Validators.required],
+     montoPago: ['', [Validators.required, Validators.min(1), Validators.max(10000), Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')]],
+  
+  passApiPago: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50), Validators.pattern('^[a-zA-Z0-9]+$')]],
+  
+  fecha: [hoy, [Validators.required,]],
+  
+  estadoPago: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
       FK:['',Validators.required]
     });
   }

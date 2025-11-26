@@ -30,7 +30,7 @@ import { rolesservice } from '../../../services/rolesservices';
 })
 export class Usuariosinsert {
   form: FormGroup = new FormGroup({});
-
+  readonly minDate = new Date(); 
   edicion: boolean = false;
   id: number = 0;
   usu: Usuarios = new Usuarios();
@@ -62,17 +62,17 @@ export class Usuariosinsert {
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validators.pattern('^[a-zA-Z0-9]+$')]],
       password: ['', Validators.required],
-      nameusuario: ['', Validators.required],
-      apellidousuario: ['', Validators.required],
+      nameusuario: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+      apellidousuario: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]], 
       estado: [false, Validators.required],
-      fecha: ['', Validators.required],
-      dni:['',Validators.required],
-      especialidad: ['', Validators.required],
-      numerocolegiatura: ['', Validators.required],
-      apoderadousuario: ['', Validators.required],   
-      FK:['',Validators.required]
+      fecha: ['', [Validators.required]],
+      dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$'), Validators.minLength(8), Validators.maxLength(8)]],
+      especialidad: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+      numerocolegiatura: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.minLength(5), Validators.maxLength(10)]],
+      apoderadousuario: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],   
+      FK: ['', Validators.required]
     });
   }
   aceptar(): void {

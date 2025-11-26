@@ -6,10 +6,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Usuarios } from '../../../models/Usuarios';
 import { UsuariosService } from '../../../services/usuariosservice';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-usuarioslistar',
-  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule, RouterLink],
+  imports: [MatPaginator,MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule, RouterLink],
   templateUrl: './usuarioslistar.html',
   styleUrl: './usuarioslistar.css',
 })

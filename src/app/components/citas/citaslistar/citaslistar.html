@@ -70,7 +70,9 @@
 
   </mat-card>
 </div>
-
+<mat-paginator [length]="100"
+              [pageSizeOptions]="[4, 8, 12]"
+              aria-label="Select page">showFirstLastButtons></mat-paginator>
 <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <ng-container matColumnDef="a">

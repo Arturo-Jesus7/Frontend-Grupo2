@@ -28,6 +28,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 export class Tratamientosinsert {
  form: FormGroup = new FormGroup({});
+  readonly minDate = new Date(); 
 
   edicion: boolean = false;
   id: number = 0;
@@ -53,14 +54,21 @@ export class Tratamientosinsert {
     this.hS.list().subscribe((data) => {
       this.listaHistorial = data;
     });
+        const hoy = new Date().toISOString().substring(0, 10);
+
     this.form = this.formBuilder.group({
       codigo: [''],
-      objetivoTratamiento: ['', Validators.required],
-      planTratamiento: ['', Validators.required],
-      fechainicio: ['', Validators.required],
-      fechafin: ['', Validators.required],
-      terapeutaTratamiento: ['', Validators.required],
-      progresoTratamiento: ['', Validators.required],
+objetivoTratamiento: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],
+  
+  planTratamiento: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(1000), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],
+  
+  fechainicio: [hoy, [Validators.required,]],
+  
+  fechafin: ['', [Validators.required,]],
+  
+  terapeutaTratamiento: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+  
+  progresoTratamiento: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$'),Validators.min(1), Validators.max(100)]],
       FK:['',Validators.required]
     });
   }
