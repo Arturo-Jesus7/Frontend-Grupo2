@@ -21,8 +21,15 @@
           }
         </mat-select>
         <mat-error
-          >@if (form.get('estadoCita')?.hasError('required')) { El estado es obligatorio
-          }</mat-error
+          >@if (form.get('estadoCita')?.hasError('required')) {
+            El estado de la cita es obligatorio.
+        } @else if (form.get('estadoCita')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('estadoCita')?.hasError('maxlength')) {
+            Debe tener un máximo de 30 caracteres.
+        } @else if (form.get('estadoCita')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error
         >
       </mat-form-field>
 
@@ -39,14 +46,28 @@
         <mat-label>Motivo *</mat-label>
         <input matInput formControlName="motivoCita" />
         <mat-error
-          >@if (form.get('motivoCita')?.hasError('required')) { Ingrese el motivo }</mat-error
+          >@if (form.get('motivoCita')?.hasError('required')) {
+            El motivo de la cita es obligatorio.
+        } @else if (form.get('motivoCita')?.hasError('minlength')) {
+            Debe tener un mínimo de 10 caracteres.
+        } @else if (form.get('motivoCita')?.hasError('maxlength')) {
+            Debe tener un máximo de 500 caracteres.
+        } @else if (form.get('motivoCita')?.hasError('pattern')) {
+            Solo se permiten letras, números, espacios y signos de puntuación comunes.
+        }</mat-error
         >
       </mat-form-field>
 
       <mat-form-field class="form-field">
         <mat-label>Enlace de Video *</mat-label>
         <input matInput formControlName="videoCita" type="url" placeholder="https://zoom.us/..." />
-        <mat-error>@if (form.get('videoCita')?.hasError('required')) { Ingrese enlace }</mat-error>
+        <mat-error>@if (form.get('videoCita')?.hasError('required')) {
+            El enlace o ID de la video cita es obligatorio.
+        } @else if (form.get('videoCita')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('videoCita')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        }</mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-field">

@@ -18,7 +18,15 @@
     <mat-form-field class="form-field">
       <mat-label>Username *</mat-label>
       <input matInput formControlName="username" />
-      <mat-error>@if (form.get('username')?.hasError('required')) { Ingrese username!! }</mat-error>
+      <mat-error>@if (form.get('username')?.hasError('required')) {
+            El nombre de usuario es obligatorio.
+        } @else if (form.get('username')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('username')?.hasError('maxlength')) {
+            Debe tener un máximo de 30 caracteres.
+        } @else if (form.get('username')?.hasError('pattern')) {
+            Solo se permiten letras y números.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Password -->
@@ -43,13 +51,25 @@
       <mat-form-field class="form-field">
         <mat-label>Nombre *</mat-label>
         <input matInput formControlName="nameusuario" />
-        <mat-error>@if (form.get('nameusuario')?.hasError('required')) { Ingrese nameusuario!! }</mat-error>
+        <mat-error>@if (form.get('nameusuario')?.hasError('required')) {
+            El nombre es obligatorio.
+        } @else if (form.get('nameusuario')?.hasError('minlength')) {
+            Debe tener un mínimo de 2 caracteres.
+        } @else if (form.get('nameusuario')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-field">
         <mat-label>Apellido *</mat-label>
         <input matInput formControlName="apellidousuario" />
-        <mat-error>@if (form.get('apellidousuario')?.hasError('required')) { Ingrese apellidoUsuario!! }</mat-error>
+        <mat-error>@if (form.get('nameusuario')?.hasError('required')) {
+            El nombre es obligatorio.
+        } @else if (form.get('nameusuario')?.hasError('minlength')) {
+            Debe tener un mínimo de 2 caracteres.
+        } @else if (form.get('nameusuario')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
       </mat-form-field>
     </div>
 
@@ -67,7 +87,11 @@
     <mat-form-field class="form-field">
       <mat-label>DNI *</mat-label>
       <input matInput formControlName="dni" />
-      <mat-error> @if (form.get('dni')?.hasError('required')) { Ingrese dni!! }</mat-error>
+      <mat-error> @if (form.get('dni')?.hasError('required')) {
+            El DNI es obligatorio.
+        } @else if (form.get('dni')?.hasError('pattern') || form.get('dni')?.hasError('minlength') || form.get('dni')?.hasError('maxlength')) {
+            El DNI debe contener exactamente 8 dígitos numéricos.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Especialidad -->
@@ -78,21 +102,41 @@
           <mat-option [value]="t.value">{{ t.viewValue }}</mat-option>
         }
       </mat-select>
-      <mat-error>@if (form.get('especialidad')?.hasError('required')) { La especialidad es obligatorio. }</mat-error>
+      <mat-error>@if (form.get('especialidad')?.hasError('required')) {
+            La especialidad es obligatoria.
+        } @else if (form.get('especialidad')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('especialidad')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        } @else if (form.get('especialidad')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Número colegiatura -->
     <mat-form-field class="form-field">
       <mat-label>Número Colegiatura *</mat-label>
       <input matInput formControlName="numerocolegiatura" />
-      <mat-error>@if (form.get('numerocolegiatura')?.hasError('required')) { Ingrese numerocolegiatura!! }</mat-error>
+      <mat-error>@if (form.get('numerocolegiatura')?.hasError('required')) {
+            El número de colegiatura es obligatorio.
+        } @else if (form.get('numerocolegiatura')?.hasError('minlength') || form.get('numerocolegiatura')?.hasError('maxlength') || form.get('numerocolegiatura')?.hasError('pattern')) {
+            Debe contener entre 5 y 10 dígitos numéricos.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Apoderado -->
     <mat-form-field class="form-field">
       <mat-label>Apoderado *</mat-label>
       <input matInput formControlName="apoderadousuario" />
-      <mat-error>@if (form.get('apoderadousuario')?.hasError('required')) { Ingrese apoderadoUsuario!! }</mat-error>
+      <mat-error>@if (form.get('apoderadousuario')?.hasError('required')) {
+            El nombre del apoderado es obligatorio.
+        } @else if (form.get('apoderadousuario')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('apoderadousuario')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        } @else if (form.get('apoderadousuario')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Rol -->

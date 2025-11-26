@@ -32,6 +32,7 @@ export class Sesionesinsert {
   edicion: boolean = false;
   id: number = 0;
   ses: Sesiones = new Sesiones();
+  readonly minDate = new Date(); 
 
   listaCita: Citas[] = [];
 
@@ -55,8 +56,8 @@ export class Sesionesinsert {
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-      numeroSesion: ['', Validators.required],
-      fechainicio: ['', Validators.required],
+numeroSesion: ['', [Validators.required, Validators.min(1), Validators.max(999), Validators.pattern('^[0-9]+$')]],     
+ fechainicio: ['', Validators.required],
       fechafin: ['', Validators.required],
       FK:['',Validators.required]
     });

@@ -55,10 +55,13 @@ form: FormGroup = new FormGroup({});
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-      proveedorVideoconferencia: ['', Validators.required],
-      joinUrlVideoconferencia: ['', Validators.required],
-      namestarUrlVideoconferenciausuario: ['', Validators.required],
-      passApiVideoconferencia: ['', Validators.required], 
+     proveedorVideoconferencia: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+  
+  joinUrlVideoconferencia: ['', [Validators.required, Validators.maxLength(250), Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]],
+  
+  namestarUrlVideoconferenciausuario: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-Z0-9]+$')]],
+  
+  passApiVideoconferencia: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]], 
       FK:['',Validators.required]
     });
   }

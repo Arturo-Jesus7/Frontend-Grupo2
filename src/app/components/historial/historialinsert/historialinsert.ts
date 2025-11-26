@@ -55,8 +55,7 @@ form: FormGroup = new FormGroup({});
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-      username: ['', Validators.required], 
-      FK:['',Validators.required]
+      userdocumentacionHistorialname: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],      FK:['',Validators.required]
     });
   }
   aceptar(): void {

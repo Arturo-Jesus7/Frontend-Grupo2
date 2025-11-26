@@ -27,8 +27,15 @@
         <mat-label>Documentación *</mat-label>
         <textarea matInput formControlName="documentacionHistorial" rows="5"></textarea>
         <mat-error>
-            @if (form.get('documentacionHistorial')?.hasError('required')) { La documentación es obligatoria }
-        </mat-error>
+           @if (form.get('userdocumentacionHistorialname')?.hasError('required')) {
+            El nombre del usuario que documenta es obligatorio.
+        } @else if (form.get('userdocumentacionHistorialname')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('userdocumentacionHistorialname')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        } @else if (form.get('userdocumentacionHistorialname')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
       </mat-form-field>
     </div>
 

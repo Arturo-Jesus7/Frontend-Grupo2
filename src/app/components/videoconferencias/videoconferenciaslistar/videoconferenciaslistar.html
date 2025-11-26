@@ -29,7 +29,7 @@
     <th mat-header-cell *matHeaderCellDef>Enlace Entrada</th>
     <td mat-cell *matCellDef="let element">
       <a href="{{ element.joinUrlVideoconferencia }}" target="_blank" class="link-url">
-        🔗 Enlace
+         Enlace
       </a>
     </td>
   </ng-container>
@@ -38,7 +38,7 @@
     <th mat-header-cell *matHeaderCellDef>Enlace Inicio</th>
     <td mat-cell *matCellDef="let element">
       <a href="{{ element.starUrlVideoconferencia }}" target="_blank" class="link-url">
-        🎥 Iniciar
+         Iniciar
       </a>
     </td>
   </ng-container>
@@ -46,7 +46,7 @@
   <ng-container matColumnDef="e">
     <th mat-header-cell *matHeaderCellDef>API Pass</th>
     <td mat-cell *matCellDef="let element">
-      <span class="api-pass">🔒 {{ element.passApiVideoconferencia ? 'Sí' : '—' }}</span>
+      <span class="api-pass"> {{ element.passApiVideoconferencia ? 'Sí' : '—' }}</span>
     </td>
   </ng-container>
 
@@ -76,3 +76,6 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<mat-paginator [length]="100"
+              [pageSizeOptions]="[4, 8, 12]"
+              aria-label="Select page">showFirstLastButtons></mat-paginator>

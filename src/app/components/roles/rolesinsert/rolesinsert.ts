@@ -47,8 +47,7 @@ export class Rolesinsert implements OnInit{
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-      nombre: ['', Validators.required],
-    });
+nombre: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],    });
   }
   aceptar(): void {
     if (this.form.valid) {

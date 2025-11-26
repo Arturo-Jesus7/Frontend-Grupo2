@@ -20,13 +20,21 @@
     <mat-form-field class="form-field">
       <mat-label>Nombre del Rol *</mat-label>
       <input matInput formControlName="nombre" />
-      <mat-error> @if (form.get('nombre')?.hasError('required')) { Ingrese nombre!! }</mat-error>
+      <mat-error> @if (form.get('nombre')?.hasError('required')) {
+            El nombre es obligatorio.
+        } @else if (form.get('nombre')?.hasError('minlength')) {
+            Debe tener un mínimo de 2 caracteres.
+        } @else if (form.get('nombre')?.hasError('maxlength')) {
+            Debe tener un máximo de 50 caracteres.
+        } @else if (form.get('nombre')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Botón -->
     <div class="form-actions">
       <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? '💾 Guardar cambios' : 'Registrar rol' }}
+        {{ edicion ? ' Guardar cambios' : 'Registrar rol' }}
       </button>
     </div>
 

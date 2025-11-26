@@ -58,13 +58,18 @@ form: FormGroup = new FormGroup({});
     this.hS.list().subscribe((data) => {
       this.listaHistorial = data;
     });
+    const hoy = new Date().toISOString().substring(0, 10);
     this.form = this.formBuilder.group({
       codigo: [''],
-      fecha: ['', Validators.required],
-      descripcionDiagnostico: ['', Validators.required],
-      terapeutaDiagnostico: ['', Validators.required],
-      severidadDiagnostico: ['', Validators.required],
-      firmaDiagnostico: [, Validators.required],
+      fecha: [hoy, [Validators.required,]],
+  
+  descripcionDiagnostico: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(1000), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],
+  
+  terapeutaDiagnostico: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+  
+  severidadDiagnostico: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+  
+  firmaDiagnostico: [false, Validators.requiredTrue], 
       FK:['',Validators.required]
     });
   }

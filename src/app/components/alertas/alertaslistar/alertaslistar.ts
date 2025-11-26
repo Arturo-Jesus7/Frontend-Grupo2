@@ -6,10 +6,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Alertas } from '../../../models/Alertas';
 import { AlertasService } from '../../../services/alertasservice';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-alertaslistar',
-  imports: [MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
+  imports: [MatPaginator,MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule],
   templateUrl: './alertaslistar.html',
   styleUrl: './alertaslistar.css',
 })

@@ -21,8 +21,15 @@
       <mat-label>Proveedor *</mat-label>
       <input matInput formControlName="proveedorVideoconferencia" placeholder="Zoom, Teams, Jitsi, etc." />
       <mat-error>
-        @if (form.get('proveedorVideoconferencia')?.hasError('required')) { Ingrese proveedorVideoconferencia!! }
-      </mat-error>
+       @if (form.get('proveedorVideoconferencia')?.hasError('required')) {
+            El proveedor es obligatorio.
+        } @else if (form.get('proveedorVideoconferencia')?.hasError('minlength')) {
+            Debe tener un mínimo de 3 caracteres.
+        } @else if (form.get('proveedorVideoconferencia')?.hasError('maxlength')) {
+            Debe tener un máximo de 50 caracteres.
+        } @else if (form.get('proveedorVideoconferencia')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Enlace de Entrada (Join) -->
@@ -30,8 +37,13 @@
       <mat-label>Enlace de Entrada (Join URL) *</mat-label>
       <input matInput type="url" formControlName="joinUrlVideoconferencia" placeholder="https://zoom.us/j/123456789" />
       <mat-error>
-        @if (form.get('joinUrlVideoconferencia')?.hasError('required')) { Ingrese joinUrlVideoconferencia!! }
-      </mat-error>
+        @if (form.get('joinUrlVideoconferencia')?.hasError('required')) {
+            La URL de unión es obligatoria.
+        } @else if (form.get('joinUrlVideoconferencia')?.hasError('maxlength')) {
+            Debe tener un máximo de 250 caracteres.
+        } @else if (form.get('joinUrlVideoconferencia')?.hasError('pattern')) {
+            Debe ser una URL válida (ej. https://ejemplo.com).
+        }</mat-error>
     </mat-form-field>
 
     <!-- Enlace de Inicio (Start) -->
@@ -39,8 +51,15 @@
       <mat-label>Enlace de Inicio (Start URL) *</mat-label>
       <input matInput type="url" formControlName="starUrlVideoconferencia" placeholder="https://zoom.us/s/123456789" />
       <mat-error>
-        @if (form.get('starUrlVideoconferencia')?.hasError('required')) { Ingrese starUrlVideoconferencia!! }
-      </mat-error>
+       @if (form.get('starUrlVideoconferencia')?.hasError('required')) {
+            El nombre de inicio de URL es obligatorio.
+        } @else if (form.get('starUrlVideoconferencia')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('starUrlVideoconferencia')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        } @else if (form.get('starUrlVideoconferencia')?.hasError('pattern')) {
+            Solo se permiten caracteres alfanuméricos (letras y números).
+        }</mat-error>
     </mat-form-field>
 
     <!-- Clave API -->
@@ -48,8 +67,13 @@
       <mat-label>Clave API *</mat-label>
       <input matInput type="password" formControlName="passApiVideoconferencia" />
       <mat-error>
-        @if (form.get('passApiVideoconferencia')?.hasError('required')) { Ingrese passApiVideoconferencia!! }
-      </mat-error>
+       @if (form.get('passApiVideoconferencia')?.hasError('required')) {
+            La clave API o contraseña es obligatoria.
+        } @else if (form.get('passApiVideoconferencia')?.hasError('minlength')) {
+            Debe tener un mínimo de 8 caracteres.
+        } @else if (form.get('passApiVideoconferencia')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Cita -->

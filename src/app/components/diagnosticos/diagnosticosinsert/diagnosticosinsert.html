@@ -33,8 +33,15 @@
       <mat-label>Descripción *</mat-label>
       <textarea matInput formControlName="descripcionDiagnostico" rows="3"></textarea>
       <mat-error>
-        @if (form.get('descripcionDiagnostico')?.hasError('required')) { Ingrese descripcionDiagnostico!! }
-      </mat-error>
+       @if (form.get('descripcionDiagnostico')?.hasError('required')) {
+            La descripción del diagnóstico es obligatoria.
+        } @else if (form.get('descripcionDiagnostico')?.hasError('minlength')) {
+            Debe tener un mínimo de 20 caracteres.
+        } @else if (form.get('descripcionDiagnostico')?.hasError('maxlength')) {
+            Debe tener un máximo de 1000 caracteres.
+        } @else if (form.get('descripcionDiagnostico')?.hasError('pattern')) {
+            Solo se permiten letras, números, espacios y signos de puntuación comunes.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Terapeuta -->
@@ -42,8 +49,15 @@
       <mat-label>Terapeuta *</mat-label>
       <input matInput formControlName="terapeutaDiagnostico" />
       <mat-error>
-        @if (form.get('terapeutaDiagnostico')?.hasError('required')) { Ingrese terapeutaDiagnostico!! }
-      </mat-error>
+       @if (form.get('terapeutaDiagnostico')?.hasError('required')) {
+            El nombre del terapeuta es obligatorio.
+        } @else if (form.get('terapeutaDiagnostico')?.hasError('minlength')) {
+            Debe tener un mínimo de 3 caracteres.
+        } @else if (form.get('terapeutaDiagnostico')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        } @else if (form.get('terapeutaDiagnostico')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Severidad -->
@@ -55,8 +69,15 @@
         }
       </mat-select>
       <mat-error>
-        @if (form.get('severidadDiagnostico')?.hasError('required')) { La severidadDiagnostico es obligatorio. }
-      </mat-error>
+       @if (form.get('severidadDiagnostico')?.hasError('required')) {
+            La severidad del diagnóstico es obligatoria.
+        } @else if (form.get('severidadDiagnostico')?.hasError('minlength')) {
+            Debe tener un mínimo de 3 caracteres.
+        } @else if (form.get('severidadDiagnostico')?.hasError('maxlength')) {
+            Debe tener un máximo de 30 caracteres.
+        } @else if (form.get('severidadDiagnostico')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
     </mat-form-field>
 
     <!-- Firma -->
