@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -12,6 +12,7 @@ import { Citas } from '../../../models/Citas';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlertasService } from '../../../services/alertasservice';
 import { CitasService } from '../../../services/citasservice';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Importaciones de Snackbar
 
 @Component({
   selector: 'app-alertasinsert',
@@ -22,16 +23,20 @@ import { CitasService } from '../../../services/citasservice';
     MatButtonModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MatIconModule,],
+    MatIconModule,
+    MatSnackBarModule, // Módulo de Snackbar añadido
+  ],
   templateUrl: './alertasinsert.html',
   styleUrl: './alertasinsert.css',
 })
 export class Alertasinsert {
-form: FormGroup = new FormGroup({});
+  form: FormGroup = new FormGroup({});
 
   edicion: boolean = false;
   id: number = 0;
   ale: Alertas = new Alertas();
+
+  private _snackBar = inject(MatSnackBar); 
 
   listaCita: Citas[] = [];
 
@@ -41,7 +46,7 @@ form: FormGroup = new FormGroup({});
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private cS: CitasService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
@@ -56,10 +61,11 @@ form: FormGroup = new FormGroup({});
     this.form = this.formBuilder.group({
       codigo: [''],
       canalAlerta: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
-  
-  tituloAlerta: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s]+$')]],
-  
-  mensajeAlerta: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(150), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],    FK:['',Validators.required]
+
+      tituloAlerta: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s]+$')]],
+
+      mensajeAlerta: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(150), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],
+      FK: ['', Validators.required]
     });
   }
   aceptar(): void {
@@ -71,12 +77,14 @@ form: FormGroup = new FormGroup({});
       this.ale.citas.idCita = this.form.value.FK;
       if (this.edicion) {
         this.aS.update(this.ale).subscribe(() => {
+          this._snackBar.open('Alerta Actualizada correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de actualización
           this.aS.list().subscribe((data) => {
             this.aS.setList(data);
           });
         });
       } else {
         this.aS.insert(this.ale).subscribe((data) => {
+          this._snackBar.open('Alerta Registrada correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de registro
           this.aS.list().subscribe((data) => {
             this.aS.setList(data);
           });
@@ -93,9 +101,13 @@ form: FormGroup = new FormGroup({});
           canalAlerta: new FormControl(data.canalAlerta),
           tituloAlerta: new FormControl(data.tituloAlerta),
           mensajeAlerta: new FormControl(data.mensajeAlerta),
-          FK:new FormControl(data.citas.idCita),
+          FK: new FormControl(data.citas.idCita),
         });
       });
     }
+  }
+
+  cancelar(): void { 
+    this.router.navigate(['alertas']);
   }
 }

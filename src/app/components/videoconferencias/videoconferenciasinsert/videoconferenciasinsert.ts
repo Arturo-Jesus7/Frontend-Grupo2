@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -12,6 +12,7 @@ import { Citas } from '../../../models/Citas';
 import { VideoconferenciasService } from '../../../services/videoconferenciasservices';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CitasService } from '../../../services/citasservice';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-videoconferenciasinsert',
@@ -22,18 +23,22 @@ import { CitasService } from '../../../services/citasservice';
     MatButtonModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MatIconModule,],
+    MatIconModule,
+    MatSnackBarModule,
+  ],
   templateUrl: './videoconferenciasinsert.html',
   styleUrl: './videoconferenciasinsert.css',
 })
 export class Videoconferenciasinsert {
-form: FormGroup = new FormGroup({});
+  form: FormGroup = new FormGroup({});
 
   edicion: boolean = false;
   id: number = 0;
   vid: Videoconferencias = new Videoconferencias();
 
   listaCitas: Citas[] = [];
+
+  private _snackBar = inject(MatSnackBar);
 
   constructor(
     private vS: VideoconferenciasService,
@@ -55,13 +60,13 @@ form: FormGroup = new FormGroup({});
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-     proveedorVideoconferencia: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+      proveedorVideoconferencia: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
   
-  joinUrlVideoconferencia: ['', [Validators.required, Validators.maxLength(250), Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]],
+      joinUrlVideoconferencia: ['', [Validators.required, Validators.maxLength(250), Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]],
   
-  namestarUrlVideoconferenciausuario: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-Z0-9]+$')]],
+      namestarUrlVideoconferenciausuario: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-Z0-9]+$')]],
   
-  passApiVideoconferencia: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]], 
+      passApiVideoconferencia: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]], 
       FK:['',Validators.required]
     });
   }
@@ -75,12 +80,14 @@ form: FormGroup = new FormGroup({});
       this.vid.citas.idCita = this.form.value.FK;
       if (this.edicion) {
         this.vS.update(this.vid).subscribe(() => {
+          this._snackBar.open('Se Actualizó correctamente', 'Cerrar', { duration: 3000 });
           this.vS.list().subscribe((data) => {
             this.vS.setList(data);
           });
         });
       } else {
         this.vS.insert(this.vid).subscribe((data) => {
+          this._snackBar.open('Se Registró correctamente', 'Cerrar', { duration: 3000 });
           this.vS.list().subscribe((data) => {
             this.vS.setList(data);
           });
@@ -102,5 +109,9 @@ form: FormGroup = new FormGroup({});
         });
       });
     }
+  }
+  
+  cancelar(): void {
+      this.router.navigate(['videoconferencia']); 
   }
 }

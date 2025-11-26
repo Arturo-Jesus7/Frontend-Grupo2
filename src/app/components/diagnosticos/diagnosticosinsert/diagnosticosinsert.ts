@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -12,6 +12,7 @@ import { Historial } from '../../../models/Historial';
 import { DiagnosticosService } from '../../../services/diagnosticosservice';
 import { HistorialService } from '../../../services/historialservice';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Importaciones de Snackbar
 
 @Component({
   selector: 'app-diagnosticosinsert',
@@ -22,7 +23,9 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
     MatButtonModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MatIconModule,],
+    MatIconModule,
+    MatSnackBarModule, // Módulo de Snackbar añadido
+  ],
   templateUrl: './diagnosticosinsert.html',
   styleUrl: './diagnosticosinsert.css',
 })
@@ -34,6 +37,8 @@ form: FormGroup = new FormGroup({});
   dia: Diagnosticos = new Diagnosticos();
 
   listaHistorial: Historial[] = [];
+  
+  private _snackBar = inject(MatSnackBar); // Inyección de MatSnackBar
 
   tipos: { value: string; viewValue: string }[] = [
     { value: 'Grave', viewValue: 'Grave' },
@@ -84,12 +89,14 @@ form: FormGroup = new FormGroup({});
       this.dia.historial.idHistorial = this.form.value.FK;
       if (this.edicion) {
         this.dS.update(this.dia).subscribe(() => {
+          this._snackBar.open('Se Actualizó correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de actualización
           this.dS.list().subscribe((data) => {
             this.dS.setList(data);
           });
         });
       } else {
         this.dS.insert(this.dia).subscribe((data) => {
+          this._snackBar.open('Se Registró correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de registro
           this.dS.list().subscribe((data) => {
             this.dS.setList(data);
           });
@@ -112,5 +119,9 @@ form: FormGroup = new FormGroup({});
         });
       });
     }
+  }
+  
+  cancelar(): void { 
+      this.router.navigate(['diagnosticos']); 
   }
 }

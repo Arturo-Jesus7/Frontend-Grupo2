@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -8,6 +8,7 @@ import { Sesiones } from '../../../models/Sesiones';
 import { SesionesService } from '../../../services/sesionesservice';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sesioneslistar',
@@ -18,15 +19,20 @@ import { MatPaginator } from '@angular/material/paginator';
 export class Sesioneslistar {
   dataSource: MatTableDataSource<Sesiones> = new MatTableDataSource();
   displayedColumns: string[] = ['a', 'b', 'c', 'd', 'FK', 'l', 'm'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  private _snackBar = inject(MatSnackBar);
 
   constructor(private sS: SesionesService) {}
 
   ngOnInit(): void {
     this.sS.list().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
     });
     this.sS.getList().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
+            this.dataSource.paginator = this.paginator;
+
     });
   }
 
@@ -34,6 +40,8 @@ export class Sesioneslistar {
     this.sS.delete(id).subscribe(data => {
       this.sS.list().subscribe(data => {
         this.sS.setList(data);
+                this._snackBar.open('Se eliminó correctamente', 'Cerrar', { duration: 3000 });
+
       });
     });
   }
@@ -42,6 +50,7 @@ export class Sesioneslistar {
   listar(): void {
     this.sS.list().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
     });
   }
 
