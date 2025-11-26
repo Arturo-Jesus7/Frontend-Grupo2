@@ -1,46 +1,101 @@
-<div class="clinic-layout">
-
+<div class="clinic-layout" role="application">
   <!-- Cabecera superior -->
-  <header class="header">
-    <div class="logo">
-      <span class="logo-icon">🏥</span>
+  <header class="header" role="banner">
+  <div class="header-content">
+    <div class="logo-container">
+      <span class="logo-icon" aria-hidden="true">🏥</span>
+    </div>
+    <div class="header-text">
       <h1>Clínica Digital</h1>
       <p>Sistema de Gestión Médica Infantil</p>
     </div>
-  </header>
+  </div>
+</header>
 
   <!-- Contenido principal -->
   <div class="main-content">
-
     <!-- Menú lateral -->
-    <aside class="sidebar">
+    <aside class="sidebar" role="navigation" aria-label="Menú de navegación principal">
       <nav>
         <ul>
-          <li><a routerLink="/roles" routerLinkActive="active"><mat-icon>assignment_ind</mat-icon> Roles</a></li>
-<li><a routerLink="/usuarios" routerLinkActive="active"><mat-icon>people</mat-icon> Usuarios</a></li>
-<li><a routerLink="/alertas" routerLinkActive="active"><mat-icon>notifications</mat-icon> Alertas</a></li>
-<li><a routerLink="/citas" routerLinkActive="active"><mat-icon>event</mat-icon> Citas</a></li>
-<li><a routerLink="/diagnosticos" routerLinkActive="active"><mat-icon>medical_information</mat-icon> Diagnósticos</a></li>
-<li><a routerLink="/historial" routerLinkActive="active"><mat-icon>history</mat-icon> Historial</a></li>
-<li><a routerLink="/pagos" routerLinkActive="active"><mat-icon>payments</mat-icon> Pagos</a></li>
-<li><a routerLink="/sesiones" routerLinkActive="active"><mat-icon>timer</mat-icon> Sesiones</a></li>
-<li><a routerLink="/tecnicas" routerLinkActive="active"><mat-icon>psychology</mat-icon> Técnicas</a></li>
-<li><a routerLink="/tratamientos" routerLinkActive="active"><mat-icon>healing</mat-icon> Tratamientos</a></li>
-<li><a routerLink="/videoconferencias" routerLinkActive="active"><mat-icon>videocam</mat-icon> Videoconferencias</a></li>
+          <li>
+            <a routerLink="/roles" routerLinkActive="active">
+              <mat-icon aria-hidden="true">assignment_ind</mat-icon>
+              <span>Roles</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/usuarios" routerLinkActive="active">
+              <mat-icon aria-hidden="true">people</mat-icon>
+              <span>Usuarios</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/alertas" routerLinkActive="active">
+              <mat-icon aria-hidden="true">notifications</mat-icon>
+              <span>Alertas</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/citas" routerLinkActive="active">
+              <mat-icon aria-hidden="true">event</mat-icon>
+              <span>Citas</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/diagnosticos" routerLinkActive="active">
+              <mat-icon aria-hidden="true">medical_information</mat-icon>
+              <span>Diagnósticos</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/historial" routerLinkActive="active">
+              <mat-icon aria-hidden="true">history</mat-icon>
+              <span>Historial</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/pagos" routerLinkActive="active">
+              <mat-icon aria-hidden="true">payments</mat-icon>
+              <span>Pagos</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/sesiones" routerLinkActive="active">
+              <mat-icon aria-hidden="true">timer</mat-icon>
+              <span>Sesiones</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/tecnicas" routerLinkActive="active">
+              <mat-icon aria-hidden="true">psychology</mat-icon>
+              <span>Técnicas</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/tratamientos" routerLinkActive="active">
+              <mat-icon aria-hidden="true">healing</mat-icon>
+              <span>Tratamientos</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/videoconferencias" routerLinkActive="active">
+              <mat-icon aria-hidden="true">videocam</mat-icon>
+              <span>Videoconferencias</span>
+            </a>
+          </li>
         </ul>
       </nav>
     </aside>
 
     <!-- Contenido central -->
-    <main class="content">
+    <main class="content" role="main">
       <router-outlet></router-outlet>
     </main>
-
   </div>
 
   <!-- Pie de página -->
-  <footer class="footer">
+  <footer class="footer" role="contentinfo">
     <p>© 2025 Clínica Digital - Sistema de Gestión Médica Infantil</p>
   </footer>
-
 </div>
