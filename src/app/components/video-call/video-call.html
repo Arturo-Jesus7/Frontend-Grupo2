@@ -1,0 +1,20 @@
+<div class="container">
+
+  @if (!inCall) {
+    <h2>Ingresar a la sala de videollamada</h2>
+
+    <input type="text" [(ngModel)]="roomCode" placeholder="Código de sala" />
+
+    <button (click)="enterRoom()">Ingresar</button>
+  }
+
+  @if (inCall) {
+    <div class="videos">
+      <video #localVideo autoplay muted></video>
+      <video #remoteVideo autoplay></video>
+    </div>
+
+    <button (click)="startCall()">Iniciar Llamada</button>
+  }
+
+</div>
