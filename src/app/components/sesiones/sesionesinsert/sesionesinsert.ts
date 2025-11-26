@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -9,10 +9,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { Citas } from '../../../models/Citas';
 import { Sesiones } from '../../../models/Sesiones';
-import { UsuariosService } from '../../../services/usuariosservice';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CitasService } from '../../../services/citasservice';
 import { SesionesService } from '../../../services/sesionesservice';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Importaciones añadidas
 
 @Component({
   selector: 'app-sesionesinsert',
@@ -23,7 +23,9 @@ import { SesionesService } from '../../../services/sesionesservice';
     MatButtonModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MatIconModule,],
+    MatIconModule,
+    MatSnackBarModule, // Módulo de Snackbar añadido
+  ],
   templateUrl: './sesionesinsert.html',
   styleUrl: './sesionesinsert.css',
 })
@@ -35,6 +37,8 @@ export class Sesionesinsert {
   readonly minDate = new Date(); 
 
   listaCita: Citas[] = [];
+  
+  private _snackBar = inject(MatSnackBar); // Inyección de MatSnackBar
 
   constructor(
     private sS: SesionesService,
@@ -56,8 +60,8 @@ export class Sesionesinsert {
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-numeroSesion: ['', [Validators.required, Validators.min(1), Validators.max(999), Validators.pattern('^[0-9]+$')]],     
- fechainicio: ['', Validators.required],
+numeroSesion: ['', [Validators.required, Validators.min(1), Validators.max(999), Validators.pattern('^[0-9]+$')]], 	 
+fechainicio: ['', Validators.required],
       fechafin: ['', Validators.required],
       FK:['',Validators.required]
     });
@@ -71,12 +75,14 @@ numeroSesion: ['', [Validators.required, Validators.min(1), Validators.max(999),
       this.ses.citas.idCita = this.form.value.FK;
       if (this.edicion) {
         this.sS.update(this.ses).subscribe(() => {
+          this._snackBar.open('Se Actualizó correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de actualización
           this.sS.list().subscribe((data) => {
             this.sS.setList(data);
           });
         });
       } else {
         this.sS.insert(this.ses).subscribe((data) => {
+          this._snackBar.open('Se Registró correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de registro
           this.sS.list().subscribe((data) => {
             this.sS.setList(data);
           });
@@ -90,12 +96,16 @@ numeroSesion: ['', [Validators.required, Validators.min(1), Validators.max(999),
       this.sS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
           codigo: new FormControl(data.idSesion),
-          username: new FormControl(data.numeroSesion),
-          password: new FormControl(data.fechaInicioSesion),
-          nameusuario: new FormControl(data.fechaFinSesion),
+          numeroSesion: new FormControl(data.numeroSesion), 
+          fechainicio: new FormControl(data.fechaInicioSesion),
+          fechafin: new FormControl(data.fechaFinSesion),
           FK:new FormControl(data.citas.idCita),
         });
       });
     }
+  }
+  
+  cancelar(): void { 
+      this.router.navigate(['sesiones']); 
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -12,6 +12,7 @@ import { Historial } from '../../../models/Historial';
 import { TratamientossService } from '../../../services/tratamientosservice';
 import { HistorialService } from '../../../services/historialservice';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-tratamientosinsert',
@@ -22,12 +23,14 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
     MatButtonModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MatIconModule,],
+    MatIconModule,
+    MatSnackBarModule,
+  ],
   templateUrl: './tratamientosinsert.html',
   styleUrl: './tratamientosinsert.css',
 })
 export class Tratamientosinsert {
- form: FormGroup = new FormGroup({});
+  form: FormGroup = new FormGroup({});
   readonly minDate = new Date(); 
 
   edicion: boolean = false;
@@ -35,6 +38,8 @@ export class Tratamientosinsert {
   tra: Tratamientos = new Tratamientos();
 
   listaHistorial: Historial[] = [];
+
+  private _snackBar = inject(MatSnackBar);
 
   constructor(
     private tS: TratamientossService,
@@ -60,15 +65,15 @@ export class Tratamientosinsert {
       codigo: [''],
 objetivoTratamiento: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],
   
-  planTratamiento: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(1000), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],
+planTratamiento: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(1000), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],
   
-  fechainicio: [hoy, [Validators.required,]],
+fechainicio: [hoy, [Validators.required,]],
   
-  fechafin: ['', [Validators.required,]],
+fechafin: ['', [Validators.required,]],
   
-  terapeutaTratamiento: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+terapeutaTratamiento: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
   
-  progresoTratamiento: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$'),Validators.min(1), Validators.max(100)]],
+progresoTratamiento: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$'),Validators.min(1), Validators.max(100)]],
       FK:['',Validators.required]
     });
   }
@@ -84,12 +89,14 @@ objetivoTratamiento: ['', [Validators.required, Validators.minLength(10), Valida
       this.tra.historial.idHistorial = this.form.value.FK;
       if (this.edicion) {
         this.tS.update(this.tra).subscribe(() => {
+          this._snackBar.open('Se Actualizó correctamente', 'Cerrar', { duration: 3000 });
           this.tS.list().subscribe((data) => {
             this.tS.setList(data);
           });
         });
       } else {
         this.tS.insert(this.tra).subscribe((data) => {
+          this._snackBar.open('Se Registró correctamente', 'Cerrar', { duration: 3000 });
           this.tS.list().subscribe((data) => {
             this.tS.setList(data);
           });
@@ -113,5 +120,9 @@ objetivoTratamiento: ['', [Validators.required, Validators.minLength(10), Valida
         });
       });
     }
+  }
+  
+  cancelar(): void {
+      this.router.navigate(['tratamientos']); 
   }
 }

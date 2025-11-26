@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -12,6 +12,7 @@ import { Roles } from '../../../models/Roles';
 import { UsuariosService } from '../../../services/usuariosservice';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { rolesservice } from '../../../services/rolesservices';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Añadido MatSnackBar y MatSnackBarModule
 
 @Component({
   selector: 'app-usuariosinsert',
@@ -24,6 +25,7 @@ import { rolesservice } from '../../../services/rolesservices';
     ReactiveFormsModule,
     MatNativeDateModule,
     MatIconModule,
+    MatSnackBarModule, // Añadido MatSnackBarModule
   ],
   templateUrl: './usuariosinsert.html',
   styleUrl: './usuariosinsert.css',
@@ -36,6 +38,8 @@ export class Usuariosinsert {
   usu: Usuarios = new Usuarios();
 
   listaRoles: Roles[] = [];
+
+  private _snackBar = inject(MatSnackBar); // Añadida inyección de MatSnackBar
 
   tipos: { value: string; viewValue: string }[] = [
     { value: 'Traumatologo', viewValue: 'Traumatologo' },
@@ -71,7 +75,7 @@ export class Usuariosinsert {
       dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$'), Validators.minLength(8), Validators.maxLength(8)]],
       especialidad: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
       numerocolegiatura: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.minLength(5), Validators.maxLength(10)]],
-      apoderadousuario: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],   
+      apoderadousuario: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],   
       FK: ['', Validators.required]
     });
   }
@@ -91,12 +95,14 @@ export class Usuariosinsert {
       this.usu.roles.idRol = this.form.value.FK;
       if (this.edicion) {
         this.uS.update(this.usu).subscribe(() => {
+          this._snackBar.open('Se Actualizó correctamente', 'Cerrar', { duration: 3000 }); // Añadido Snackbar para actualización
           this.uS.list().subscribe((data) => {
             this.uS.setList(data);
           });
         });
       } else {
         this.uS.insert(this.usu).subscribe((data) => {
+          this._snackBar.open('Se Registró correctamente', 'Cerrar', { duration: 3000 }); // Añadido Snackbar para registro
           this.uS.list().subscribe((data) => {
             this.uS.setList(data);
           });
@@ -124,5 +130,9 @@ export class Usuariosinsert {
         });
       });
     }
+  }
+  
+  cancelar(): void { // Añadido el método cancelar
+      this.router.navigate(['usuarios']); 
   }
 }

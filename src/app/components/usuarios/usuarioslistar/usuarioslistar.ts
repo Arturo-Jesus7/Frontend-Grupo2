@@ -1,31 +1,36 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { Usuarios } from '../../../models/Usuarios';
 import { UsuariosService } from '../../../services/usuariosservice';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-usuarioslistar',
-  imports: [MatPaginator,MatTableModule, CommonModule, MatIconModule, RouterLink, MatButtonModule, RouterLink],
+  imports: [MatPaginatorModule, MatCardModule, CommonModule, MatIconModule, RouterLink, MatButtonModule, RouterLink],
   templateUrl: './usuarioslistar.html',
   styleUrl: './usuarioslistar.css',
 })
-export class Usuarioslistar {
+export class Usuarioslistar implements OnInit {
   dataSource: MatTableDataSource<Usuarios> = new MatTableDataSource();
-  displayedColumns: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'FK', 'l', 'm'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator; 
+    private _snackBar = inject(MatSnackBar);
 
   constructor(private uS: UsuariosService) {}
 
   ngOnInit(): void {
     this.uS.list().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator; 
     });
     this.uS.getList().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -33,6 +38,8 @@ export class Usuarioslistar {
     this.uS.delete(id).subscribe(data => {
       this.uS.list().subscribe(data => {
         this.uS.setList(data);
+        this._snackBar.open('Se eliminó correctamente', 'Cerrar', { duration: 3000 });
+
       });
     });
   }
@@ -40,6 +47,7 @@ export class Usuarioslistar {
   listar(): void {
     this.uS.list().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator; 
     });
   }
 
