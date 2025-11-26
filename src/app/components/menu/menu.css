@@ -4,57 +4,104 @@
   height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8fafc;
+  color: #1e293b;
+  line-height: 1.6;
 }
 
+/* === HEADER === */
 .header {
   background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
   color: white;
   padding: 1rem 2rem;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 10;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
-.header .logo-icon {
-  font-size: 1.5rem;
-  background: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.logo-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1e40af;
+  width: 48px;
+  height: 48px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .logo-icon {
+    font-size: 1.5rem;
+    color: #1e40af;
+  }
 }
 
-.header h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
+.header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left; 
+  h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.95;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
 }
 
-.header p {
-  margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
-
+/* === MAIN CONTENT === */
 .main-content {
   display: flex;
   flex-grow: 1;
   overflow: hidden;
+  position: relative;
 }
 
+/* === SIDEBAR === */
 .sidebar {
-  width: 250px;
+  width: 260px;
   background: #ffffff;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  border-right: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .sidebar nav {
@@ -77,6 +124,8 @@
   font-size: 1.1rem;
   width: 20px;
   text-align: center;
+  color: #64748b;
+  transition: color 0.2s ease;
 }
 
 .content {
@@ -84,26 +133,76 @@
   padding: 2rem;
   overflow-y: auto;
   background-color: #f8fafc;
+  transition: padding 0.3s ease;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: fadeInUp 0.6s ease-out;
+  }
 }
 
-.footer {
-  padding: 1rem;
-  text-align: center;
-  font-size: 0.8rem;
-  color: #64748b;
-  border-top: 1px solid #e2e8f0;
-  background: #ffffff;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* === SIDEBAR LINKS === */
 .sidebar a {
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
   text-decoration: none;
   color: #1e293b;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  border-radius: 10px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 500;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    z-index: -1;
+    transition: width 0.3s ease;
+  }
+
+  &:hover {
+    background: #f1f5f9;
+    color: #1e40af;
+    transform: translateX(4px);
+
+    .sidebar .icon {
+      color: #1e40af;
+    }
+
+    &:before {
+      width: 100%;
+    }
+  }
+
+  &.active {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    color: white;
+    font-weight: 600;
+
+    .sidebar .icon {
+      color: white;
+    }
+
+    &:before {
+      width: 100%;
+    }
+  }
 }
 
 .sidebar mat-icon {
@@ -112,9 +211,26 @@
   width: 20px;
   text-align: center;
   color: #64748b;
+  transition: color 0.2s ease;
 }
 
 .sidebar a:hover mat-icon,
 .sidebar a.active mat-icon {
   color: #1e40af;
+}
+
+/* === FOOTER === */
+.footer {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #64748b;
+  border-top: 1px solid #e2e8f0;
+  background: #ffffff;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f8fafc;
+  }
 }

@@ -1,108 +1,110 @@
 <div class="form-container">
-  <h2 class="form-title">
-    {{ edicion ? 'Edición de Diagnóstico' : ' Registrar Diagnóstico' }}
-  </h2>
+  <!-- Título con ícono -->
+  <div class="form-header">
+    <mat-icon>medical_information</mat-icon>
+    <h2>
+      {{ edicion ? 'Edición de Diagnóstico' : 'Registrar Diagnóstico' }}
+    </h2>
+  </div>
 
   <form [formGroup]="form" (submit)="aceptar()" class="user-form">
 
     <!-- ID (solo en edición) -->
     @if (edicion) {
-      <mat-form-field class="form-field">
+      <mat-form-field class="form-field full-width">
         <mat-label>ID</mat-label>
         <input matInput formControlName="codigo" readonly />
         <mat-error>
-          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
+          @if (form.get('codigo')?.hasError('required')) { Ingrese ID!! }
         </mat-error>
       </mat-form-field>
     }
 
-    <!-- Fecha -->
-    <mat-form-field class="form-field">
-      <mat-label>Fecha de Registro *</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="fecha" />
-      <mat-hint>DD/MM/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error>
-        @if (form.get('fecha')?.hasError('required')) { La fecha es obligatoria. }
-      </mat-error>
-    </mat-form-field>
+    <!-- Fila 1: Fecha + Severidad -->
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Fecha de Registro *</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha" />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>
+          @if (form.get('fecha')?.hasError('required')) { La fecha es obligatoria. }
+        </mat-error>
+      </mat-form-field>
 
-    <!-- Descripción -->
-    <mat-form-field class="form-field">
-      <mat-label>Descripción *</mat-label>
-      <textarea matInput formControlName="descripcionDiagnostico" rows="3"></textarea>
-      <mat-error>
-       @if (form.get('descripcionDiagnostico')?.hasError('required')) {
-            La descripción del diagnóstico es obligatoria.
-        } @else if (form.get('descripcionDiagnostico')?.hasError('minlength')) {
-            Debe tener un mínimo de 20 caracteres.
-        } @else if (form.get('descripcionDiagnostico')?.hasError('maxlength')) {
-            Debe tener un máximo de 1000 caracteres.
-        } @else if (form.get('descripcionDiagnostico')?.hasError('pattern')) {
-            Solo se permiten letras, números, espacios y signos de puntuación comunes.
-        }</mat-error>
-    </mat-form-field>
-
-    <!-- Terapeuta -->
-    <mat-form-field class="form-field">
-      <mat-label>Terapeuta *</mat-label>
-      <input matInput formControlName="terapeutaDiagnostico" />
-      <mat-error>
-       @if (form.get('terapeutaDiagnostico')?.hasError('required')) {
-            El nombre del terapeuta es obligatorio.
-        } @else if (form.get('terapeutaDiagnostico')?.hasError('minlength')) {
-            Debe tener un mínimo de 3 caracteres.
-        } @else if (form.get('terapeutaDiagnostico')?.hasError('maxlength')) {
-            Debe tener un máximo de 100 caracteres.
-        } @else if (form.get('terapeutaDiagnostico')?.hasError('pattern')) {
-            Solo se permiten letras y espacios.
-        }</mat-error>
-    </mat-form-field>
-
-    <!-- Severidad -->
-    <mat-form-field class="form-field">
-      <mat-label>Severidad *</mat-label>
-      <mat-select formControlName="severidadDiagnostico" required>
-        @for (t of tipos; track t) {
-          <mat-option [value]="t.value">{{ t.viewValue }}</mat-option>
-        }
-      </mat-select>
-      <mat-error>
-       @if (form.get('severidadDiagnostico')?.hasError('required')) {
+      <mat-form-field class="form-field">
+        <mat-label>Severidad *</mat-label>
+        <mat-select formControlName="severidadDiagnostico" required>
+          @for (t of tipos; track t) {
+            <mat-option [value]="t.value">{{ t.viewValue }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          @if (form.get('severidadDiagnostico')?.hasError('required')) {
             La severidad del diagnóstico es obligatoria.
-        } @else if (form.get('severidadDiagnostico')?.hasError('minlength')) {
-            Debe tener un mínimo de 3 caracteres.
-        } @else if (form.get('severidadDiagnostico')?.hasError('maxlength')) {
-            Debe tener un máximo de 30 caracteres.
-        } @else if (form.get('severidadDiagnostico')?.hasError('pattern')) {
-            Solo se permiten letras y espacios.
-        }</mat-error>
-    </mat-form-field>
+          }
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-    <!-- Firma -->
-    <mat-form-field class="form-field">
-      <mat-label>Firma *</mat-label>
-      <input matInput formControlName="firmaDiagnostico" />
+    <!-- Fila 2: Terapeuta + Firma -->
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Terapeuta *</mat-label>
+        <input matInput formControlName="terapeutaDiagnostico" />
+        <mat-error>
+          @if (form.get('terapeutaDiagnostico')?.hasError('required')) {
+            El nombre del terapeuta es obligatorio.
+          } @else if (form.get('terapeutaDiagnostico')?.hasError('minlength')) {
+            Debe tener un mínimo de 3 caracteres.
+          } @else if (form.get('terapeutaDiagnostico')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+          }
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Firma *</mat-label>
+        <input matInput formControlName="firmaDiagnostico" />
+        <mat-error>
+          @if (form.get('firmaDiagnostico')?.hasError('required')) { Ingrese firma!! }
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Descripción (full width) -->
+    <mat-form-field class="form-field full-width">
+      <mat-label>Descripción *</mat-label>
+      <textarea matInput formControlName="descripcionDiagnostico" rows="4"></textarea>
       <mat-error>
-        @if (form.get('firmaDiagnostico')?.hasError('required')) { Ingrese firmaDiagnostico!! }
+        @if (form.get('descripcionDiagnostico')?.hasError('required')) {
+          La descripción del diagnóstico es obligatoria.
+        } @else if (form.get('descripcionDiagnostico')?.hasError('minlength')) {
+          Debe tener un mínimo de 20 caracteres.
+        } @else if (form.get('descripcionDiagnostico')?.hasError('maxlength')) {
+          Debe tener un máximo de 1000 caracteres.
+        }
       </mat-error>
     </mat-form-field>
 
-    <!-- Historial -->
-    <mat-form-field class="form-field">
+    <!-- Historial (full width) -->
+    <mat-form-field class="form-field full-width">
       <mat-label>Historial *</mat-label>
       <mat-select formControlName="FK" required>
         @for (h of listaHistorial; track h) {
           <mat-option [value]="h.idHistorial">Hist. #{{ h.idHistorial }}</mat-option>
         }
       </mat-select>
+      <mat-error>
+        @if (form.get('FK')?.hasError('required')) { Seleccione un historial. }
+      </mat-error>
     </mat-form-field>
 
     <!-- Botón -->
     <div class="form-actions">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? ' Guardar cambios' : 'Registrar diagnóstico' }}
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        {{ edicion ? 'Guardar cambios' : 'Registrar diagnóstico' }}
       </button>
     </div>
 
