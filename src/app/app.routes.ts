@@ -26,8 +26,10 @@ import { Videoconferenciasinsert } from './components/videoconferencias/videocon
 import { Menu } from './components/menu/menu';
 import { guardGuard } from './guard/seguridad-guard';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { LandingPage } from './components/landing/landing';
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', component: LandingPage },
+
   { path: 'login', component: Autenticador },
 
   {
