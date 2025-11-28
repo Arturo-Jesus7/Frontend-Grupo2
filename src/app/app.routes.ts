@@ -1,4 +1,6 @@
+
 import { Routes } from '@angular/router';
+import { Autenticador } from './components/autenticador/autenticador';
 import { Roles } from './components/roles/roles';
 import { Rolesinsert } from './components/roles/rolesinsert/rolesinsert';
 import { Usuarios } from './components/usuarios/usuarios';
@@ -21,84 +23,95 @@ import { Tratamientos } from './components/tratamientos/tratamientos';
 import { Tratamientosinsert } from './components/tratamientos/tratamientosinsert/tratamientosinsert';
 import { Videoconferencias } from './components/videoconferencias/videoconferencias';
 import { Videoconferenciasinsert } from './components/videoconferencias/videoconferenciasinsert/videoconferenciasinsert';
+import { guardGuard } from './guard/seguridad-guard';
+import { Home } from './components/home/home';
+import { Menu } from './components/menu/menu';
 
 export const routes: Routes = [
-    {path:'roles',component:Roles,
-        children:[
-            {path:'nuevo',component:Rolesinsert},
-            {path:'edits/:id',component:Rolesinsert}
-        ]
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: Autenticador },
 
-    },
-      {path:'usuarios',component:Usuarios,
-        children:[
-            {path:'nuevo',component:Usuariosinsert},
-            {path:'edits/:id',component:Usuariosinsert}
-        ]
+  {
+  path: 'app/menu',
+  component: Menu
+  },
 
-    },
-      {path:'citas',component:Citas,
-        children:[
-            {path:'nuevo',component:Citasinsert},
-            {path:'edits/:id',component:Citasinsert}
-        ]
+  { path: 'roles', component: Roles, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Rolesinsert },
+      { path: 'edits/:id', component: Rolesinsert }
+    ]
+  },
 
-    },
-      {path:'alertas',component:Alertas,
-        children:[
-            {path:'nuevo',component:Alertasinsert},
-            {path:'edits/:id',component:Alertasinsert}
-        ]
+  { path: 'usuarios', component: Usuarios, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Usuariosinsert },
+      { path: 'edits/:id', component: Usuariosinsert }
+    ]
+  },
 
-    },
-      {path:'diagnosticos',component:Diagnosticos,
-        children:[
-            {path:'nuevo',component:Diagnosticosinsert},
-            {path:'edits/:id',component:Diagnosticosinsert}
-        ]
+  { path: 'citas', component: Citas, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Citasinsert },
+      { path: 'edits/:id', component: Citasinsert }
+    ]
+  },
 
-    },
-      {path:'historial',component:Historial,
-        children:[
-            {path:'nuevo',component:Historialinsert},
-            {path:'edits/:id',component:Historialinsert}
-        ]
+  { path: 'alertas', component: Alertas, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Alertasinsert },
+      { path: 'edits/:id', component: Alertasinsert }
+    ]
+  },
 
-    },
-      {path:'pagos',component:Pagos,
-        children:[
-            {path:'nuevo',component:Pagosinsert},
-            {path:'edits/:id',component:Pagosinsert}
-        ]
+  { path: 'diagnosticos', component: Diagnosticos, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Diagnosticosinsert },
+      { path: 'edits/:id', component: Diagnosticosinsert }
+    ]
+  },
 
-    },
-      {path:'sesiones',component:Sesiones,
-        children:[
-            {path:'nuevo',component:Sesionesinsert},
-            {path:'edits/:id',component:Sesionesinsert}
-        ]
+  { path: 'historial', component: Historial, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Historialinsert },
+      { path: 'edits/:id', component: Historialinsert }
+    ]
+  },
 
-    },
-      {path:'tecnicas',component:Tecnicas,
-        children:[
-            {path:'nuevo',component:Tecnicasinsert},
-            {path:'edits/:id',component:Tecnicasinsert}
-        ]
+  { path: 'pagos', component: Pagos, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Pagosinsert },
+      { path: 'edits/:id', component: Pagosinsert }
+    ]
+  },
 
-    },
-      {path:'tratamientos',component:Tratamientos,
-        children:[
-            {path:'nuevo',component:Tratamientosinsert},
-            {path:'edits/:id',component:Tratamientosinsert}
-        ]
+  { path: 'sesiones', component: Sesiones, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Sesionesinsert },
+      { path: 'edits/:id', component: Sesionesinsert }
+    ]
+  },
 
-    },
-      {path:'videoconferencias',component:Videoconferencias,
-        children:[
-            {path:'nuevo',component:Videoconferenciasinsert},
-            {path:'edits/:id',component:Videoconferenciasinsert}
-        ]
+  { path: 'tecnicas', component: Tecnicas, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Tecnicasinsert },
+      { path: 'edits/:id', component: Tecnicasinsert }
+    ]
+  },
 
-    },
+  { path: 'tratamientos', component: Tratamientos, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Tratamientosinsert },
+      { path: 'edits/:id', component: Tratamientosinsert }
+    ]
+  },
 
+  { path: 'videoconferencias', component: Videoconferencias, canActivate: [guardGuard],
+    children: [
+      { path: 'nuevo', component: Videoconferenciasinsert },
+      { path: 'edits/:id', component: Videoconferenciasinsert }
+    ]
+  },
+
+  { path: '**', redirectTo: 'login' } // ruta por defecto
 ];

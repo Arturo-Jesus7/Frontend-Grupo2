@@ -1,120 +1,82 @@
 <div class="form-container">
-  <h2 class="form-title">
-    {{ edicion ? ' Edición de Tratamiento' : ' Registrar Tratamiento' }}
-  </h2>
+  <!-- Título con ícono -->
+  <div class="form-header">
+    <mat-icon>healing</mat-icon>
+    <h2>
+      {{ edicion ? 'Edición de Tratamiento' : 'Registrar Tratamiento' }}
+    </h2>
+  </div>
 
   <form [formGroup]="form" (submit)="aceptar()" class="user-form">
 
-    <!-- ID (solo en edición) -->
-    @if (edicion) {
-      <mat-form-field class="form-field">
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="codigo" readonly />
-        <mat-error>
-          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
-        </mat-error>
+    <!-- Fila 1: Objetivo + Plan -->
+    <div class="form-row">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Objetivo</mat-label>
+        <textarea matInput formControlName="objetivo" rows="3"></textarea>
+        <mat-error *ngIf="form.get('objetivo')?.hasError('required')">El objetivo es obligatorio.</mat-error>
       </mat-form-field>
-    }
 
-    <!-- Objetivo -->
-    <mat-form-field class="form-field">
-      <mat-label>Objetivo *</mat-label>
-      <textarea matInput formControlName="objetivoTratamiento" rows="2"></textarea>
-      <mat-error>
-       @if (form.get('objetivoTratamiento')?.hasError('required')) {
-            El objetivo del tratamiento es obligatorio.
-        } @else if (form.get('objetivoTratamiento')?.hasError('minlength')) {
-            Debe tener un mínimo de 10 caracteres.
-        } @else if (form.get('objetivoTratamiento')?.hasError('maxlength')) {
-            Debe tener un máximo de 500 caracteres.
-        } @else if (form.get('objetivoTratamiento')?.hasError('pattern')) {
-            Solo se permiten letras, números, espacios y signos de puntuación comunes.
-        }</mat-error>
-    </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Plan</mat-label>
+        <textarea matInput formControlName="plan" rows="3"></textarea>
+        <mat-error *ngIf="form.get('plan')?.hasError('required')">El plan es obligatorio.</mat-error>
+      </mat-form-field>
+    </div>
 
-    <!-- Plan -->
-    <mat-form-field class="form-field">
-      <mat-label>Plan *</mat-label>
-      <textarea matInput formControlName="planTratamiento" rows="3"></textarea>
-      <mat-error>
-        @if (form.get('planTratamiento')?.hasError('required')) {
-            El plan de tratamiento es obligatorio.
-        } @else if (form.get('planTratamiento')?.hasError('minlength')) {
-            Debe tener un mínimo de 20 caracteres.
-        } @else if (form.get('planTratamiento')?.hasError('maxlength')) {
-            Debe tener un máximo de 1000 caracteres.
-        } @else if (form.get('planTratamiento')?.hasError('pattern')) {
-            Solo se permiten letras, números, espacios y signos de puntuación comunes.
-        }</mat-error>
-    </mat-form-field>
+    <!-- Fila 2: Fecha Inicio + Fecha Fin -->
+    <div class="form-row">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Fecha de Inicio</mat-label>
+        <input matInput [matDatepicker]="pickerInicio" formControlName="fechaInicio" />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInicio></mat-datepicker>
+        <mat-error *ngIf="form.get('fechaInicio')?.hasError('required')">La fecha es obligatoria.</mat-error>
+      </mat-form-field>
 
-    <!-- Fecha Inicio -->
-    <mat-form-field class="form-field">
-      <mat-label>Fecha de Inicio *</mat-label>
-      <input matInput [matDatepicker]="pickerInicio" formControlName="fechainicio" />
-      <mat-hint>DD/MM/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
-      <mat-datepicker #pickerInicio></mat-datepicker>
-      <mat-error>
-        @if (form.get('fechainicio')?.hasError('required')) { La fecha es obligatoria. }
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Fecha de Fin</mat-label>
+        <input matInput [matDatepicker]="pickerFin" formControlName="fechaFin" />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFin></mat-datepicker>
+        <mat-error *ngIf="form.get('fechaFin')?.hasError('required')">La fecha es obligatoria.</mat-error>
+      </mat-form-field>
+    </div>
 
-    <!-- Fecha Fin -->
-    <mat-form-field class="form-field">
-      <mat-label>Fecha de Fin *</mat-label>
-      <input matInput [matDatepicker]="pickerFin" formControlName="fechafin" />
-      <mat-hint>DD/MM/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
-      <mat-datepicker #pickerFin></mat-datepicker>
-      <mat-error>
-        @if (form.get('fechafin')?.hasError('required')) { La fecha es obligatoria. }
-      </mat-error>
-    </mat-form-field>
+    <!-- Fila 3: Terapeuta + Progreso -->
+    <div class="form-row">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Terapeuta</mat-label>
+        <input matInput formControlName="terapeuta" />
+        <mat-error *ngIf="form.get('terapeuta')?.hasError('required')">El nombre del terapeuta es obligatorio.</mat-error>
+      </mat-form-field>
 
-    <!-- Terapeuta -->
-    <mat-form-field class="form-field">
-      <mat-label>Terapeuta *</mat-label>
-      <input matInput formControlName="terapeutaTratamiento" />
-      <mat-error>
-        @if (form.get('terapeutaTratamiento')?.hasError('required')) {
-            El nombre del terapeuta es obligatorio.
-        } @else if (form.get('terapeutaTratamiento')?.hasError('minlength')) {
-            Debe tener un mínimo de 3 caracteres.
-        } @else if (form.get('terapeutaTratamiento')?.hasError('maxlength')) {
-            Debe tener un máximo de 100 caracteres.
-        } @else if (form.get('terapeutaTratamiento')?.hasError('pattern')) {
-            Solo se permiten letras y espacios.
-        }</mat-error>
-    </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Progreso (%)</mat-label>
+        <input matInput type="number" min="0" max="100" formControlName="progreso" />
+        <mat-error *ngIf="form.get('progreso')?.hasError('required')">El progreso es obligatorio.</mat-error>
+        <mat-error *ngIf="form.get('progreso')?.hasError('min') || form.get('progreso')?.hasError('max')">Debe estar entre 0 y 100.</mat-error>
+      </mat-form-field>
+    </div>
 
-    <!-- Progreso -->
-    <mat-form-field class="form-field">
-      <mat-label>Progreso (%) *</mat-label>
-      <input matInput type="number" formControlName="progresoTratamiento" />
-      <mat-error>
-       @if (form.get('progresoTratamiento')?.hasError('required')) {
-            El progreso del tratamiento es obligatorio.
-        }@else if (form.get('progresoTratamiento')?.hasError('pattern')) {
-            Solo se permiten letras, números, espacios y signos de puntuación comunes.
-        }@else if (form.get('progresoTratamiento')?.hasError('min')) { Mínimo 1%. } 
-                    @else if (form.get('progresoTratamiento')?.hasError('max')) { Máximo 100%. }</mat-error>
-    </mat-form-field>
-
-    <!-- Historial -->
-    <mat-form-field class="form-field">
-      <mat-label>Historial *</mat-label>
+    <!-- Historial (full width) -->
+    <mat-form-field class="form-field full-width" appearance="outline">
+      <mat-label>Historial</mat-label>
       <mat-select formControlName="FK" required>
-        @for (h of listaHistorial; track h) {
-          <mat-option [value]="h.idHistorial">Hist. #{{ h.idHistorial }}</mat-option>
-        }
+        <mat-option *ngFor="let h of listaHistorial" [value]="h.idHistorial">Hist. #{{ h.idHistorial }}</mat-option>
       </mat-select>
+      <mat-error *ngIf="form.get('FK')?.hasError('required')">Seleccione un historial.</mat-error>
     </mat-form-field>
 
-    <!-- Botón -->
+    <!-- Botones -->
     <div class="form-actions">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? ' Guardar cambios' : ' Registrar tratamiento' }}
+      <button mat-stroked-button color="warn" type="button" (click)="cancelar()">
+        Cancelar
+      </button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        {{ edicion ? 'Guardar cambios' : 'Registrar tratamiento' }}
       </button>
     </div>
 

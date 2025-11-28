@@ -72,6 +72,10 @@ objetivoTratamiento: ['', [Validators.required, Validators.minLength(10), Valida
       FK:['',Validators.required]
     });
   }
+  cancelar() {
+    // Redirige a la lista de tratamientos o a donde quieras
+    this.router.navigate(['tratamientos']);
+  }
   aceptar(): void {
     if (this.form.valid) {
       this.tra.idTratamiento = this.form.value.codigo;

@@ -1,0 +1,46 @@
+<header class="landing-header">
+	<app-menu *ngIf="shouldShowMenu()"></app-menu>
+	<div class="hero">
+		<div class="hero-content">
+			<h1>{{ title }}</h1>
+			<p class="subtitle">Bienvenido a AnonMusic — conecta, comparte y descubre música de forma anónima.</p>
+			<div class="cta-row">
+				<button mat-raised-button color="primary" routerLink="/publicaciones">Explorar</button>
+				<button mat-stroked-button color="accent" (click)="toggleChat()">Chat</button>
+			</div>
+		</div>
+		<div class="hero-illustration" aria-hidden="true">
+			<div class="music-blob"></div>
+		</div>
+	</div>
+</header>
+
+<main class="landing-main" *ngIf="shouldShowLanding()">
+	<section class="features">
+		<div class="feature">
+			<mat-icon>public</mat-icon>
+			<h3>Explora</h3>
+			<p>Descubre publicaciones y listas creadas por la comunidad.</p>
+		</div>
+		<div class="feature">
+			<mat-icon>group</mat-icon>
+			<h3>Conecta</h3>
+			<p>Sigue a otros usuarios y comparte tus playlists.</p>
+		</div>
+		<div class="feature">
+			<mat-icon>chat</mat-icon>
+			<h3>Comunica</h3>
+			<p>Participa en conversaciones y crea threads privados.</p>
+		</div>
+	</section>
+</main>
+
+<div class="chat-panel" *ngIf="chatVisible">
+	<div class="chat-header">
+		<h4>Chat</h4>
+		<button mat-icon-button (click)="closeChat()"><mat-icon>close</mat-icon></button>
+	</div>
+	<div class="chat-body">
+		<p>Integración de chat pendiente — aquí aparecerán mensajes.</p>
+	</div>
+</div>
