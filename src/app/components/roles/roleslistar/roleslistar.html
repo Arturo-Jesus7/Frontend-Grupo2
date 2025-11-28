@@ -1,11 +1,7 @@
 <!-- Panel de acción -->
 <div class="action-panel">
-  <button class="btn-list" (click)="listar()">
-    <mat-icon>list</mat-icon> Listar
-  </button>
-  <button class="btn-register" (click)="registrar()">
-    <mat-icon>add</mat-icon> Registrar
-  </button>
+  <button class="btn-list" (click)="listar()"><mat-icon>list</mat-icon> Listar</button>
+  <button class="btn-register" (click)="registrar()"><mat-icon>add</mat-icon> Registrar</button>
 </div>
 
 <!-- Título -->
@@ -13,7 +9,6 @@
 
 <!-- Tabla -->
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
   <!-- Columnas -->
   <ng-container matColumnDef="c1">
     <th mat-header-cell *matHeaderCellDef>No.</th>
@@ -44,8 +39,12 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
-<mat-paginator [length]="100"
-              [pageSizeOptions]="[4, 8, 12]"
-              aria-label="Select page">showFirstLastButtons></mat-paginator>
+
+<mat-paginator
+  [pageSizeOptions]="[4, 8, 12]"
+  showFirstLastButtons
+  aria-label="Seleccione una página"
+>
+</mat-paginator>

@@ -41,7 +41,6 @@ export class Historiallistar {
       this.hS.list().subscribe(data => {
         this.hS.setList(data);
         this._snackBar.open('Se eliminó correctamente', 'Cerrar', { duration: 3000 });
-
       });
     });
   }
@@ -50,7 +49,6 @@ export class Historiallistar {
     this.hS.list().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
-
     });
   }
 

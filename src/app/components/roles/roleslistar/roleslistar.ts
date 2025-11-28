@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-roleslistar',
-  imports: [MatPaginator,MatTableModule, MatIconModule, MatButtonModule, RouterLink],
+  imports: [MatPaginator, MatTableModule, MatIconModule, MatButtonModule, RouterLink],
   templateUrl: './roleslistar.html',
   styleUrl: './roleslistar.css',
 })
@@ -28,8 +28,7 @@ export class roleslistar implements OnInit {
     });
     this.rS.getList().subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
-            this.dataSource.paginator = this.paginator;
-
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -37,8 +36,7 @@ export class roleslistar implements OnInit {
     this.rS.delete(id).subscribe((data) => {
       this.rS.list().subscribe((data) => {
         this.rS.setList(data);
-                        this._snackBar.open('Se eliminó correctamente', 'Cerrar', { duration: 3000 });
-
+        this._snackBar.open('Se eliminó correctamente', 'Cerrar', { duration: 3000 });
       });
     });
   }
