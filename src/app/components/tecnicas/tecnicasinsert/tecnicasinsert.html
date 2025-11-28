@@ -7,13 +7,13 @@
 
     <!-- ID (solo en edición) -->
     @if (edicion) {
-      <mat-form-field class="form-field">
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="codigo" readonly />
-        <mat-error>
-          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
-        </mat-error>
-      </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>ID</mat-label>
+      <input matInput formControlName="codigo" readonly />
+      <mat-error>
+        @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
+      </mat-error>
+    </mat-form-field>
     }
 
     <!-- Nombre -->
@@ -22,13 +22,13 @@
       <input matInput formControlName="nombreTecnica" />
       <mat-error>
         @if (form.get('nombreTecnica')?.hasError('required')) {
-            El nombre de la técnica es obligatorio.
+        El nombre de la técnica es obligatorio.
         } @else if (form.get('nombreTecnica')?.hasError('minlength')) {
-            Debe tener un mínimo de 5 caracteres.
+        Debe tener un mínimo de 5 caracteres.
         } @else if (form.get('nombreTecnica')?.hasError('maxlength')) {
-            Debe tener un máximo de 100 caracteres.
+        Debe tener un máximo de 100 caracteres.
         } @else if (form.get('nombreTecnica')?.hasError('pattern')) {
-            Solo se permiten letras, números y espacios.
+        Solo se permiten letras, números y espacios.
         }</mat-error>
     </mat-form-field>
 
@@ -38,13 +38,13 @@
       <textarea matInput formControlName="descripcionTecnica" rows="3"></textarea>
       <mat-error>
         @if (form.get('descripcionTecnica')?.hasError('required')) {
-            La descripción de la técnica es obligatoria.
+        La descripción de la técnica es obligatoria.
         } @else if (form.get('descripcionTecnica')?.hasError('minlength')) {
-            Debe tener un mínimo de 20 caracteres.
+        Debe tener un mínimo de 20 caracteres.
         } @else if (form.get('descripcionTecnica')?.hasError('maxlength')) {
-            Debe tener un máximo de 1000 caracteres.
+        Debe tener un máximo de 1000 caracteres.
         } @else if (form.get('descripcionTecnica')?.hasError('pattern')) {
-            Solo se permiten letras, números, espacios y signos de puntuación comunes.
+        Solo se permiten letras, números, espacios y signos de puntuación comunes.
         }</mat-error>
     </mat-form-field>
 
@@ -53,7 +53,7 @@
       <mat-label>Sesión *</mat-label>
       <mat-select formControlName="FK" required>
         @for (s of listaSesiones; track s) {
-          <mat-option [value]="s.idSesion">Sesión #{{ s.idSesion }} — N°{{ s.numeroSesion }}</mat-option>
+        <mat-option [value]="s.idSesion">Sesión #{{ s.idSesion }} — N°{{ s.numeroSesion }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
@@ -64,6 +64,8 @@
         {{ edicion ? 'Guardar cambios' : 'Registrar técnica' }}
       </button>
     </div>
-
+    <button mat-raised-button color="warn" type="button" (click)="cancelar()">
+      <mat-icon>cancel</mat-icon> Cancelar
+    </button>
   </form>
 </div>

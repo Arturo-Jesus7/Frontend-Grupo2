@@ -107,6 +107,8 @@
         {{ edicion ? 'Guardar cambios' : 'Registrar diagnóstico' }}
       </button>
     </div>
-
+<button mat-raised-button color="warn" type="button" (click)="cancelar()">
+    <mat-icon>cancel</mat-icon> Cancelar
+</button>
   </form>
 </div>

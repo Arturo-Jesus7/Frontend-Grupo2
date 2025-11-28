@@ -23,10 +23,9 @@ import { Tratamientos } from './components/tratamientos/tratamientos';
 import { Tratamientosinsert } from './components/tratamientos/tratamientosinsert/tratamientosinsert';
 import { Videoconferencias } from './components/videoconferencias/videoconferencias';
 import { Videoconferenciasinsert } from './components/videoconferencias/videoconferenciasinsert/videoconferenciasinsert';
-import { guardGuard } from './guard/seguridad-guard';
-import { Home } from './components/home/home';
 import { Menu } from './components/menu/menu';
-
+import { guardGuard } from './guard/seguridad-guard';
+import { RouterModule, RouterOutlet } from '@angular/router';
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Autenticador },
@@ -113,5 +112,5 @@ export const routes: Routes = [
     ]
   },
 
-  { path: '**', redirectTo: 'login' } // ruta por defecto
+
 ];

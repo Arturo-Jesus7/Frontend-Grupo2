@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core'; // Añadido 'inject'
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -10,6 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { Roles } from '../../../models/Roles';
 import { rolesservice } from '../../../services/rolesservices';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Importaciones de Snackbar
 
 @Component({
   selector: 'app-rolesinsert',
@@ -21,6 +23,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
     MatRadioModule,
     MatDatepickerModule,
     MatButtonModule,
+    MatIconModule,
+    MatSnackBarModule // Módulo de Snackbar añadido
   ],
   templateUrl: './rolesinsert.html',
     providers: [provideNativeDateAdapter()],
@@ -32,6 +36,8 @@ export class Rolesinsert implements OnInit{
   rol:Roles = new Roles();
   edicion:boolean=false;
   id:number=0;
+  
+  private _snackBar = inject(MatSnackBar); 
 
   constructor(
     private rS:rolesservice,
@@ -47,7 +53,8 @@ export class Rolesinsert implements OnInit{
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-nombre: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],    });
+nombre: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]], 	 
+    });
   }
   aceptar(): void {
     if (this.form.valid) {
@@ -55,12 +62,14 @@ nombre: ['', [Validators.required, Validators.minLength(2), Validators.maxLength
       this.rol.nameRole = this.form.value.nombre;
       if (this.edicion) {
         this.rS.update(this.rol).subscribe((data) => {
+          this._snackBar.open('Se Actualizó correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de actualización
           this.rS.list().subscribe((data) => {
             this.rS.setList(data);
           });
         });
       } else {
         this.rS.insert(this.rol).subscribe((data) => {
+          this._snackBar.open('Se Registró correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de registro
           this.rS.list().subscribe((data) => {
             this.rS.setList(data);
           });
@@ -78,5 +87,9 @@ nombre: ['', [Validators.required, Validators.minLength(2), Validators.maxLength
         });
       });
     }
+  }
+  
+  cancelar(): void { 
+      this.router.navigate(['roles']); 
   }
 }

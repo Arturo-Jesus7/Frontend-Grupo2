@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -12,6 +12,7 @@ import { Usuarios } from '../../../models/Usuarios';
 import { HistorialService } from '../../../services/historialservice';
 import { UsuariosService } from '../../../services/usuariosservice';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Importaciones de Snackbar
 
 @Component({
   selector: 'app-historialinsert',
@@ -22,7 +23,9 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
     MatButtonModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MatIconModule,],
+    MatIconModule,
+    MatSnackBarModule, // Módulo de Snackbar añadido
+  ],
   templateUrl: './historialinsert.html',
   styleUrl: './historialinsert.css',
 })
@@ -34,6 +37,8 @@ form: FormGroup = new FormGroup({});
   his: Historial = new Historial();
 
   listaUsuarios: Usuarios[] = [];
+  
+  private _snackBar = inject(MatSnackBar); // Inyección de MatSnackBar
 
   constructor(
     private hS: HistorialService,
@@ -55,7 +60,8 @@ form: FormGroup = new FormGroup({});
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-      userdocumentacionHistorialname: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],      FK:['',Validators.required]
+      documentacionHistorial: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]], 	 
+      FK:['',Validators.required]
     });
   }
   aceptar(): void {
@@ -65,12 +71,14 @@ form: FormGroup = new FormGroup({});
       this.his.usuario.idUsuario = this.form.value.FK;
       if (this.edicion) {
         this.hS.update(this.his).subscribe(() => {
+          this._snackBar.open('Se Actualizó correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de actualización
           this.hS.list().subscribe((data) => {
             this.hS.setList(data);
           });
         });
       } else {
         this.hS.insert(this.his).subscribe((data) => {
+          this._snackBar.open('Se Registró correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de registro
           this.hS.list().subscribe((data) => {
             this.hS.setList(data);
           });
@@ -89,5 +97,9 @@ form: FormGroup = new FormGroup({});
         });
       });
     }
+  }
+  
+  cancelar(): void { 
+      this.router.navigate(['historial']); 
   }
 }

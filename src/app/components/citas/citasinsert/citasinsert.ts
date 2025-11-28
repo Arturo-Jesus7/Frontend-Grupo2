@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core'; // Añadido 'inject'
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -12,6 +12,7 @@ import { Usuarios } from '../../../models/Usuarios';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UsuariosService } from '../../../services/usuariosservice';
 import { CitasService } from '../../../services/citasservice';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Importaciones de Snackbar
 
 @Component({
   selector: 'app-citasinsert',
@@ -22,7 +23,9 @@ import { CitasService } from '../../../services/citasservice';
     MatButtonModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MatIconModule,],
+    MatIconModule,
+    MatSnackBarModule, // Módulo de Snackbar añadido
+  ],
   templateUrl: './citasinsert.html',
   styleUrl: './citasinsert.css',
 })
@@ -31,6 +34,8 @@ export class Citasinsert {
   edicion: boolean = false;
   id: number = 0;
   cit: Citas = new Citas();
+
+  private _snackBar = inject(MatSnackBar); // Inyección de MatSnackBar
 
   listaUsuarios: Usuarios[] = [];
 
@@ -45,7 +50,7 @@ export class Citasinsert {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private uS: UsuariosService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
@@ -59,17 +64,17 @@ export class Citasinsert {
     });
     this.form = this.formBuilder.group({
       codigo: [''],
-     estadoCita: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
-  
-  fecha: ['', [Validators.required]],
-  
-  motivoCita: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],
-  
-  videoCita: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]], 
-  
-  favoritoCita: [false, Validators.requiredTrue],
-      FK1:['',Validators.required],
-      FK2:['',Validators.required]
+      estadoCita: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$')]],
+
+      fecha: ['', [Validators.required]],
+
+      motivoCita: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500), Validators.pattern('^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s.,;:\\-]+$')]],
+
+      videoCita: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+
+      favoritoCita: [false, Validators.requiredTrue],
+      FK1: ['', Validators.required],
+      FK2: ['', Validators.required]
     });
   }
   aceptar(): void {
@@ -84,12 +89,14 @@ export class Citasinsert {
       this.cit.usuarioTerapeuta.idUsuario = this.form.value.FK2;
       if (this.edicion) {
         this.cS.update(this.cit).subscribe(() => {
+          this._snackBar.open('Se Actualizó correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de actualización
           this.cS.list().subscribe((data) => {
             this.cS.setList(data);
           });
         });
       } else {
         this.cS.insert(this.cit).subscribe((data) => {
+          this._snackBar.open('Se Registró correctamente', 'Cerrar', { duration: 3000 }); // Snackbar de registro
           this.cS.list().subscribe((data) => {
             this.cS.setList(data);
           });
@@ -108,10 +115,14 @@ export class Citasinsert {
           motivoCita: new FormControl(data.motivoCita),
           videoCita: new FormControl(data.videoCita),
           favoritoCita: new FormControl(data.favoritoCita),
-          FK1:new FormControl(data.usuarioPaciente.idUsuario),         
-          FK2:new FormControl(data.usuarioTerapeuta.idUsuario),
+          FK1: new FormControl(data.usuarioPaciente.idUsuario),
+          FK2: new FormControl(data.usuarioTerapeuta.idUsuario),
         });
       });
     }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['citas']);
   }
 }
