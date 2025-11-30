@@ -1,20 +1,27 @@
 <div class="container">
 
-  @if (!inCall) {
-    <h2>Ingresar a la sala de videollamada</h2>
+  <h2>Video Call - WebRTC</h2>
 
-    <input type="text" [(ngModel)]="roomCode" placeholder="Código de sala" />
+  <div class="room-box">
+    <label>Room ID:</label>
+    <input [(ngModel)]="roomId" placeholder="Ingresa Room ID">
+    <button (click)="createRoom()">Crear Sala</button>
+    <button (click)="joinRoom()">Unirse</button>
+  </div>
 
-    <button (click)="enterRoom()">Ingresar</button>
-  }
+  <p><strong>Sala Actual:</strong> {{ roomId }}</p>
 
-  @if (inCall) {
-    <div class="videos">
-      <video #localVideo autoplay muted></video>
-      <video #remoteVideo autoplay></video>
-    </div>
+  <div class="videos">
+    <video #localVideo autoplay playsinline muted></video>
+    <video #remoteVideo autoplay playsinline></video>
+  </div>
+  <div class="controls">
+    <button (click)="toggleAudio()">
+      {{ audioEnabled ? 'Mute' : 'Unmute' }}
+    </button>
 
-    <button (click)="startCall()">Iniciar Llamada</button>
-  }
-
+    <button (click)="toggleVideo()">
+      {{ videoEnabled ? 'Apagar cámara' : 'Encender cámara' }}
+    </button>
+  </div>
 </div>

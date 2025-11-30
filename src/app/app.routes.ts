@@ -29,6 +29,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { LandingPage } from './components/landing/landing';
 import { Terapeutas } from './components/terapeutas/terapeutas';
 import { Terapeutasinsert } from './components/terapeutas/terapeutasinsert/terapeutasinsert';
+import { VideoCall } from './components/video-call/video-call';
 export const routes: Routes = [
   { path: '', component: LandingPage },
 
@@ -123,5 +124,8 @@ export const routes: Routes = [
     ]
   },
 
+  {
+    path: 'videocall', component: VideoCall
+  },
 
 ];
