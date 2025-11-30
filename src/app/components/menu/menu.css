@@ -31,6 +31,33 @@
   }
 }
 
+.btn-rojo {
+  background-color: #5980ff;
+  border: none;
+  font-size: smaller;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: rgb(15, 203, 71);
+  transition: background-color 0.2s ease;
+}
+
+.btn-rojo:hover {
+  background-color: rgb(255, 255, 255);
+}
+
+/* --- Icono --- */
+.btn-rojo mat-icon,
+.btn-rojo .material-symbols-outlined {
+  font-size: 1.3rem;
+  vertical-align: middle;
+  line-height: 1;
+}
+
 .header-content {
   display: flex;
   align-items: center;
@@ -62,7 +89,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: left; 
+  text-align: left;
   h1 {
     margin: 0;
     font-size: 1.75rem;

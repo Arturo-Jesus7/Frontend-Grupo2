@@ -3,7 +3,7 @@ import { Loginservice } from "../services/loginservice";
 import { inject } from "@angular/core";
 
 
-/*
+
 export const seguridadGuard: CanActivateFn = (route, state) => {
     const lService=inject(Loginservice)
     const router=inject(Router)
@@ -14,7 +14,7 @@ export const seguridadGuard: CanActivateFn = (route, state) => {
     }
     return rpta;
 };
-*/
+/*
 export const guardGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
@@ -38,3 +38,4 @@ export const guardGuard: CanActivateFn = (
 
   return true;
 };
+*/
