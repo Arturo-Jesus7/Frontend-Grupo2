@@ -1,0 +1,68 @@
+<div class="action-panel">
+  <button class="btn-list" (click)="listar()">
+    <mat-icon>list</mat-icon> Listar
+  </button>
+  <button class="btn-register" (click)="registrar()">
+    <mat-icon>add</mat-icon> Registrar
+  </button>
+</div>
+
+<h2 class="section-title">Lista de terapeutas</h2>
+
+<div class="cards-container">
+
+  @for (element of dataSource.connect() | async; track element.idUsuario) {
+    <mat-card class="user-card mat-elevation-z4">
+
+      <mat-card-header>
+        <mat-card-title>{{element.nameUsuario}} {{element.apellidoUsuario}}</mat-card-title>
+        <mat-card-subtitle>@{{element.username}}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="detail-row">
+          <mat-icon color="accent">badge</mat-icon>
+          <strong>No.:</strong> {{element.idUsuario}}
+        </div>
+        <div class="detail-row">
+          <mat-icon>calendar_today</mat-icon>
+          <strong>Fecha Nacimiento:</strong> {{element.fechaNacimiento|date:'dd/MM/yyyy'}}
+        </div>
+        <div class="detail-row">
+          <mat-icon>credit_card</mat-icon>
+          <strong>DNI:</strong> {{element.DNIUsuario}}
+        </div>
+        <div class="detail-row">
+          <mat-icon>local_library</mat-icon>
+          <strong>Especialidad:</strong> {{element.especialidadUsuario}}
+        </div>
+        <div class="detail-row">
+          <mat-icon>verified</mat-icon>
+          <strong>Número Colegiatura:</strong> {{element.numerocolegiatura}}
+        </div>
+        <div class="detail-row">
+          <mat-icon>shield</mat-icon>
+          <strong>Apoderado:</strong> {{element.apoderadoUsuario}}
+        </div>
+        <div class="detail-row">
+          <mat-icon color="primary">work</mat-icon>
+          <strong>Rol:</strong> {{element.roles.nameRole}}
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="card-actions">
+        <button mat-icon-button class="edit-btn" [routerLink]="['edits', element.idUsuario]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button class="delete-btn" (click)="eliminar(element.idUsuario)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
+<mat-paginator [length]="dataSource.data.length"
+               [pageSizeOptions]="[4, 8, 12]"
+               aria-label="Select page"
+               showFirstLastButtons>
+</mat-paginator>
