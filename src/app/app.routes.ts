@@ -27,6 +27,7 @@ import { Menu } from './components/menu/menu';
 import { guardGuard } from './guard/seguridad-guard';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { LandingPage } from './components/landing/landing';
+import { Reportecitasporusuario } from './components/reportecitasporusuario/reportecitasporusuario';
 export const routes: Routes = [
   { path: '', component: LandingPage },
 
@@ -112,6 +113,11 @@ export const routes: Routes = [
       { path: 'nuevo', component: Videoconferenciasinsert },
       { path: 'edits/:id', component: Videoconferenciasinsert }
     ]
+  },
+    {
+    path: 'por-usuario',
+    component: Reportecitasporusuario,
+    canActivate: [guardGuard],
   },
 
 

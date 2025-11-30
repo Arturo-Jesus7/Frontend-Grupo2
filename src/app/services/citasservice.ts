@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environments";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Citas } from "../models/Citas";
+import { CitaPorUsuarioDTO } from "../models/CitaPorUsuarioDTO";
 
 const base_url=environment.base
 @Injectable({
@@ -35,5 +36,8 @@ export class CitasService{
   }
     delete(id: number) {
     return this.http.delete(`${this.url}/${id}`, { responseType: 'text' });
+  }
+  getcitsdporusuario():Observable<CitaPorUsuarioDTO[]>{
+    return this.http.get<CitaPorUsuarioDTO[]>(`${this.url}/por-usuario`);
   }
 }
