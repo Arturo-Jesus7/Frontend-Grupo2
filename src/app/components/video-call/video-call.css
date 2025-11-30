@@ -1,0 +1,20 @@
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.room-box {
+  margin-bottom: 20px;
+}
+
+.videos {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+video {
+  width: 45%;
+  background: black;
+  border-radius: 10px;
+}
