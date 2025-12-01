@@ -1,0 +1,88 @@
+<div class="form-container">
+  <h2 class="form-title">
+    {{ edicion ? 'Edición de Alerta' : 'Registrar Alerta' }}
+  </h2>
+
+  <form [formGroup]="form" (submit)="aceptar()" class="user-form">
+
+    <!-- ID (solo en edición) -->
+    @if (edicion) {
+      <mat-form-field class="form-field">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly />
+        <mat-error>
+          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
+        </mat-error>
+      </mat-form-field>
+    }
+
+    <!-- Canal -->
+    <mat-form-field class="form-field">
+      <mat-label>Canal *</mat-label>
+      <input matInput formControlName="canalAlerta" />
+      <mat-error>
+        @if (form.get('canalAlerta')?.hasError('required')) {
+            El canal de alerta es obligatorio.
+        } @else if (form.get('canalAlerta')?.hasError('minlength')) {
+            Debe tener al menos 1 caracter.
+        } @else if (form.get('canalAlerta')?.hasError('maxlength')) {
+            Debe tener un máximo de 20 caracteres.
+        } @else if (form.get('canalAlerta')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Título -->
+    <mat-form-field class="form-field">
+      <mat-label>Título *</mat-label>
+      <input matInput formControlName="tituloAlerta" />
+      <mat-error>
+        @if (form.get('tituloAlerta')?.hasError('required')) {
+            El título de la alerta es obligatorio.
+        } @else if (form.get('tituloAlerta')?.hasError('minlength')) {
+            Debe tener al menos 1 caracter.
+        } @else if (form.get('tituloAlerta')?.hasError('maxlength')) {
+            Debe tener un máximo de 20 caracteres.
+        } @else if (form.get('tituloAlerta')?.hasError('pattern')) {
+            Solo se permiten letras, números y espacios.
+        }</mat-error>
+    </mat-form-field>
+
+    <!-- Mensaje -->
+    <mat-form-field class="form-field">
+      <mat-label>Mensaje *</mat-label>
+      <textarea matInput formControlName="mensajeAlerta" rows="3"></textarea>
+      <mat-error>
+        @if (form.get('mensajeAlerta')?.hasError('required')) {
+            El mensaje de la alerta es obligatorio.
+        } @else if (form.get('mensajeAlerta')?.hasError('minlength')) {
+            Debe tener al menos 1 caracter.
+        } @else if (form.get('mensajeAlerta')?.hasError('maxlength')) {
+            Debe tener un máximo de 150 caracteres.
+        } @else if (form.get('mensajeAlerta')?.hasError('pattern')) {
+            Solo se permiten letras, números, espacios y signos de puntuación comunes.
+        }</mat-error>
+    </mat-form-field>
+
+    <!-- Cita -->
+    <mat-form-field class="form-field">
+      <mat-label>Cita *</mat-label>
+      <mat-select formControlName="FK" required>
+        @for (cita of listaCita; track cita) {
+          <mat-option [value]="cita.idCita">Cita #{{ cita.idCita }} — {{ cita.estadoCita }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Botón -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? ' Guardar cambios' : ' Registrar alerta' }}
+      </button>
+    </div>
+<button mat-raised-button color="warn" type="button" (click)="cancelar()">
+    <mat-icon>cancel</mat-icon> Cancelar
+</button>
+  </form>
+</div>

@@ -1,0 +1,66 @@
+<div class="main-container">
+
+  <div class="header-section">
+    <div class="title-group">
+      <div class="blue-circle"></div>
+      <h1 class="page-title">Reporte: Cantidad de Citas por Mes</h1>
+    </div>
+  </div>
+
+  <!-- Se eliminó la sección de filtros porque el TS carga los datos automáticamente al iniciar -->
+
+  <div class="content-row" *ngIf="!noData; else noDataTemplate">
+    
+    <div class="chart-column">
+      <div class="card-box">
+        <h3 class="section-subtitle">Distribución Gráfica</h3>
+        <div class="canvas-container">
+          <canvas baseChart 
+            [data]="barChartData" 
+            [type]="barChartType"
+            [options]="barChartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-column">
+      <div class="card-box">
+        <h3 class="section-subtitle">Detalle Numérico</h3>
+        <table mat-table [dataSource]="listaCitas" class="mat-elevation-z0 custom-table">
+          
+          <!-- Columna Mes -->
+          <ng-container matColumnDef="mes">
+            <th mat-header-cell *matHeaderCellDef> Mes </th>
+            <td mat-cell *matCellDef="let element" class="fw-bold"> {{ element.mes }} </td>
+          </ng-container>
+
+          <!-- Columna Cantidad -->
+          <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef class="text-center"> Cantidad </th>
+            <td mat-cell *matCellDef="let element" class="text-center"> {{ element.total }} </td>
+          </ng-container>
+
+          <!-- Columna Porcentaje -->
+          <ng-container matColumnDef="porcentaje">
+            <th mat-header-cell *matHeaderCellDef class="text-center"> Porcentaje </th>
+            <td mat-cell *matCellDef="let element" class="text-center percent-text"> 
+              {{ porcentaje(element.total) }}% 
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <ng-template #noDataTemplate>
+    <div class="no-data-msg">
+      <p>No hay datos registrados para generar el reporte.</p>
+    </div>
+  </ng-template>
+
+</div>

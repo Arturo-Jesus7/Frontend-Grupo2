@@ -1,0 +1,119 @@
+<div class="form-container">
+  <h2 class="form-title">
+    <mat-icon>{{ edicion ? 'edit' : 'add_circle' }}</mat-icon>
+    {{ edicion ? ' Edición de Cita' : ' Registrar Cita' }}
+  </h2>
+
+  <form [formGroup]="form" (submit)="aceptar()" class="user-form">
+    <div class="form-grid">
+      @if (edicion) {
+      <mat-form-field class="form-field">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly />
+      </mat-form-field>
+      }
+
+      <mat-form-field class="form-field">
+        <mat-label>Estado *</mat-label>
+        <mat-select formControlName="estadoCita" required>
+          @for (t of tipos; track t) {
+          <mat-option [value]="t.value">{{ t.viewValue }}</mat-option>
+          }
+        </mat-select>
+        <mat-error
+          >@if (form.get('estadoCita')?.hasError('required')) {
+            El estado de la cita es obligatorio.
+        } @else if (form.get('estadoCita')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('estadoCita')?.hasError('maxlength')) {
+            Debe tener un máximo de 30 caracteres.
+        } @else if (form.get('estadoCita')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Fecha de Cita *</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha" />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>@if (form.get('fecha')?.hasError('required')) { Fecha obligatoria }</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Motivo *</mat-label>
+        <input matInput formControlName="motivoCita" />
+        <mat-error
+          >@if (form.get('motivoCita')?.hasError('required')) {
+            El motivo de la cita es obligatorio.
+        } @else if (form.get('motivoCita')?.hasError('minlength')) {
+            Debe tener un mínimo de 10 caracteres.
+        } @else if (form.get('motivoCita')?.hasError('maxlength')) {
+            Debe tener un máximo de 500 caracteres.
+        } @else if (form.get('motivoCita')?.hasError('pattern')) {
+            Solo se permiten letras, números, espacios y signos de puntuación comunes.
+        }</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Enlace de Video *</mat-label>
+        <input matInput formControlName="videoCita" type="url" placeholder="https://zoom.us/..." />
+        <mat-error>@if (form.get('videoCita')?.hasError('required')) {
+            El enlace o ID de la video cita es obligatorio.
+        } @else if (form.get('videoCita')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('videoCita')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        }</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Paciente *</mat-label>
+        <mat-select formControlName="FK1" required>
+          @for (u of listaUsuarios; track u) {
+          <mat-option [value]="u.idUsuario">{{ u.nameUsuario }} {{ u.apellidoUsuario }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>Seleccione paciente</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Terapeuta *</mat-label>
+        <mat-select formControlName="FK2" required>
+          @for (u of listaUsuarios; track u) {
+          <mat-option [value]="u.idUsuario">{{ u.nameUsuario }} {{ u.apellidoUsuario }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>Seleccione terapeuta</mat-error>
+      </mat-form-field>
+
+      <div class="radio-container custom-field-height">
+        <label class="radio-label">¿Marcar como Favorito?</label>
+        <mat-radio-group formControlName="favoritoCita" color="primary">
+          <mat-radio-button [value]="true">Sí</mat-radio-button>
+          <mat-radio-button [value]="false" class="ml-2">No</mat-radio-button>
+        </mat-radio-group>
+        <mat-error
+          *ngIf="
+            form.get('favoritoCita')?.hasError('required') && form.get('favoritoCita')?.touched
+          "
+        >
+          <small>Requerido</small>
+        </mat-error>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button mat-raised-button color="warn" type="button" routerLink="/citas">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        <mat-icon>save</mat-icon>
+        {{ edicion ? ' Guardar Cambios' : ' Registrar Cita' }}
+      </button>
+    </div>
+    <button mat-raised-button color="warn" type="button" (click)="cancelar()">
+    <mat-icon>cancel</mat-icon> Cancelar
+</button>
+  </form>
+</div>

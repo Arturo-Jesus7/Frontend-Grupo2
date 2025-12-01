@@ -1,0 +1,209 @@
+<div class="clinic-layout" role="application">
+
+  @if(verificar()) {
+  <!-- Cabecera superior -->
+  <header class="header" role="banner">
+    <div class="header-content">
+      <div class="logo-container">
+        <span class="logo-icon" aria-hidden="true">🏥</span>
+      </div>
+      <div class="header-text">
+        <h1>Clínica Digital</h1>
+        <p>Sistema de Gestión Médica Infantil</p>
+      </div>
+      <div>
+        <button mat-button [matMenuTriggerFor]="menuSalir" class="btn-rojo">
+          <mat-icon>person</mat-icon>Usuario
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <!-- Menú lateral -->
+    <aside class="sidebar" role="navigation" aria-label="Menú de navegación principal">
+      <nav>
+        <ul>
+
+          @if(isAdmin()) {
+          <li>
+            <a routerLink="/roles" routerLinkActive="active">
+              <mat-icon aria-hidden="true">assignment_ind</mat-icon>
+              <span>Roles</span>
+            </a>
+          </li>
+          }
+
+          @if(isAdmin()) {
+          <li>
+            <a routerLink="/usuarios" routerLinkActive="active">
+              <mat-icon aria-hidden="true">people</mat-icon>
+              <span>Usuarios</span>
+            </a>
+          </li>
+          }
+
+          @if(isAdmin()) {
+          <li>
+            <a routerLink="/terapeutas" routerLinkActive="active">
+              <mat-icon aria-hidden="true">people</mat-icon>
+              <span>Terapeutas</span>
+            </a>
+          </li>
+          }
+
+          @if(isAdmin()) {
+          <li>
+            <a routerLink="/alertas" routerLinkActive="active">
+              <mat-icon aria-hidden="true">notifications</mat-icon>
+              <span>Alertas</span>
+            </a>
+          </li>
+          }
+
+          @if(isPaciente() || isTerapeuta() || isAdmin()) {
+          <li>
+            <a routerLink="/citas" routerLinkActive="active">
+              <mat-icon aria-hidden="true">event</mat-icon>
+              <span>Citas</span>
+            </a>
+          </li>
+          }
+
+          @if(isTerapeuta() || isAdmin()) {
+          <li>
+            <a routerLink="/diagnosticos" routerLinkActive="active">
+              <mat-icon aria-hidden="true">medical_information</mat-icon>
+              <span>Diagnósticos</span>
+            </a>
+          </li>
+          }
+
+          @if(isTerapeuta() || isAdmin()) {
+          <li>
+            <a routerLink="/historial" routerLinkActive="active">
+              <mat-icon aria-hidden="true">history</mat-icon>
+              <span>Historial</span>
+            </a>
+          </li>
+          }
+
+          @if(isAdmin()) {
+          <li>
+            <a routerLink="/pagos" routerLinkActive="active">
+              <mat-icon aria-hidden="true">payments</mat-icon>
+              <span>Pagos</span>
+            </a>
+          </li>
+          }
+
+          @if(isPaciente() || isTerapeuta() || isAdmin()) {
+          <li>
+            <a routerLink="/sesiones" routerLinkActive="active">
+              <mat-icon aria-hidden="true">timer</mat-icon>
+              <span>Sesiones</span>
+            </a>
+          </li>
+          }
+
+          @if(isPaciente() || isTerapeuta() || isAdmin()) {
+          <li>
+            <a routerLink="/tecnicas" routerLinkActive="active">
+              <mat-icon aria-hidden="true">psychology</mat-icon>
+              <span>Técnicas</span>
+            </a>
+          </li>
+          }
+
+          @if(isPaciente() || isTerapeuta() || isAdmin()) {
+          <li>
+            <a routerLink="/tratamientos" routerLinkActive="active">
+              <mat-icon aria-hidden="true">healing</mat-icon>
+              <span>Tratamientos</span>
+            </a>
+          </li>
+          }
+
+          @if(isPaciente() || isTerapeuta() || isAdmin()) {
+          <li>
+            <a routerLink="/videoconferencias" routerLinkActive="active">
+              <mat-icon aria-hidden="true">videocam</mat-icon>
+              <span>Videoconferencias</span>
+            </a>
+          </li>
+          }
+
+          <!-- SECCIÓN REPORTES (MODIFICADA) -->
+          @if(isAdmin()) {
+          <li>
+            <!-- El 'a' ahora sirve como trigger del menú -->
+            <a [matMenuTriggerFor]="menuReportes"
+              style="cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center;">
+                <mat-icon aria-hidden="true">bar_chart</mat-icon>
+                <span>Reportes</span>
+              </div>
+              <mat-icon style="font-size: 20px; width: 20px; height: 20px;">arrow_drop_down</mat-icon>
+            </a>
+
+            <!-- Definición del menú desplegable -->
+            <mat-menu #menuReportes="matMenu" xPosition="after">
+
+              <a mat-menu-item routerLink="/por-usuario">
+                <mat-icon>person</mat-icon>
+                <span>Reporte por Usuario</span>
+              </a>
+
+              <a mat-menu-item routerLink="/por-mes">
+                <mat-icon>calendar_month</mat-icon> <span>Reporte por Mes</span>
+              </a>
+
+              <a mat-menu-item routerLink="/citas-por-pendiente">
+                <mat-icon>pending_actions</mat-icon> <span>Citas Pendientes</span>
+              </a>
+
+              <a mat-menu-item routerLink="/mas-citas-agendadas-por-usuario">
+                <mat-icon>leaderboard</mat-icon> <span>Más Citas Agendadas</span>
+              </a>
+
+              <a mat-menu-item routerLink="/progreso-del-usuario">
+                <mat-icon>trending_up</mat-icon> <span>Progreso del Usuario</span>
+              </a>
+
+              <a mat-menu-item routerLink="/alerta-por-cita">
+                <mat-icon>notifications_active</mat-icon> <span>Alertas de Cita</span>
+              </a>
+            </mat-menu>
+          </li>
+          }
+
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Contenido central -->
+    <main class="content" role="main">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="footer" role="contentinfo">
+    <p>© 2025 Clínica Digital - Sistema de Gestión Médica Infantil</p>
+  </footer>
+
+  <mat-menu #menuSalir="matMenu">
+    <button mat-menu-item routerLink="/login" (click)="cerrar()">
+      <mat-icon>logout</mat-icon>
+      <span>Cerrar sesión</span>
+    </button>
+    <button mat-menu-item>
+      Rol:
+      <span>{{ role }}</span>
+    </button>
+  </mat-menu>
+
+  }
+
+</div>

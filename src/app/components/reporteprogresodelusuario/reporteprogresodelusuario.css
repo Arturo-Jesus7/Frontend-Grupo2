@@ -1,0 +1,177 @@
+/* =========================================
+   CONTENEDOR PRINCIPAL
+   ========================================= */
+.main-container {
+  padding: 24px 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   ENCABEZADO DE LA PÁGINA
+   ========================================= */
+.header-section {
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.blue-circle {
+  width: 14px;
+  height: 14px;
+  background-color: #1976d2; /* Azul principal */
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.15);
+}
+
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #2c3e50;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* =========================================
+   LAYOUT
+   ========================================= */
+.content-row {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .content-row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .chart-column {
+    flex: 3; 
+  }
+  
+  .table-column {
+    flex: 2; 
+  }
+}
+
+/* =========================================
+   TARJETAS
+   ========================================= */
+.card-box {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 10px 15px rgba(0, 0, 0, 0.03); 
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  height: 100%;
+  box-sizing: border-box;
+  transition: transform 0.2s ease;
+}
+
+.card-box:hover {
+  box-shadow: 0 10px 25px rgba(25, 118, 210, 0.08);
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #546e7a;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f5f7fa;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* =========================================
+   GRÁFICO
+   ========================================= */
+.canvas-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
+
+/* =========================================
+   TABLA
+   ========================================= */
+.custom-table {
+  width: 100%;
+  background: transparent;
+}
+
+.custom-table th.mat-header-cell {
+  background-color: #f8f9fa;
+  color: #5f6368;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.custom-table td.mat-cell {
+  padding: 16px;
+  color: #37474f;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.custom-table tr.mat-row {
+  transition: background-color 0.2s ease;
+}
+
+.custom-table tr.mat-row:hover {
+  background-color: #f0f7ff;
+}
+
+.fw-bold {
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Estilo de Píldora para el Progreso */
+.percent-text {
+  font-weight: 700;
+  color: #1b5e20;
+  background-color: #e8f5e9;
+  padding: 4px 16px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  min-width: 50px;
+}
+
+/* =========================================
+   MENSAJE NO DATA
+   ========================================= */
+.no-data-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background: white;
+  border-radius: 12px;
+  border: 2px dashed #e0e0e0;
+  color: #9e9e9e;
+  font-size: 1.1rem;
+  margin-top: 20px;
+}

@@ -1,0 +1,60 @@
+<!-- Panel de acción -->
+<div class="action-panel">
+  <button class="btn-list" (click)="listar()"><mat-icon>list</mat-icon> Listar</button>
+  <button class="btn-register" (click)="registrar()"><mat-icon>add</mat-icon> Registrar</button>
+</div>
+
+<!-- Título -->
+<h2 class="section-title">Lista de Técnicas</h2>
+
+<!-- Tabla -->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Columnas -->
+  <ng-container matColumnDef="a">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let element">{{ element.idTecnica }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="b">
+    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+    <td mat-cell *matCellDef="let element">{{ element.nombreTecnica }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="c">
+    <th mat-header-cell *matHeaderCellDef>Descripción</th>
+    <td mat-cell *matCellDef="let element">{{ element.descripcionTecnica }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="FK">
+    <th mat-header-cell *matHeaderCellDef>Sesión ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.Sesiones?.idSesion || '—' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="l">
+    <th mat-header-cell *matHeaderCellDef>Actualizar</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button class="edit-btn" [routerLink]="['edits', element.idTecnica]">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="m">
+    <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button class="delete-btn" (click)="eliminar(element.idTecnica)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator
+  [pageSizeOptions]="[4, 8, 12]"
+  showFirstLastButtons
+  aria-label="Seleccione una página"
+>
+</mat-paginator>

@@ -1,0 +1,44 @@
+<div class="form-container">
+  <h2 class="form-title">
+    {{ edicion ? 'Edición de Rol' : 'Registrar Rol' }}
+  </h2>
+
+  <form [formGroup]="form" (submit)="aceptar()" class="user-form">
+    
+    <!-- ID (solo en edición) -->
+    @if (edicion) {
+      <mat-form-field class="form-field">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly />
+        <mat-error>
+          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
+        </mat-error>
+      </mat-form-field>
+    }
+
+    <!-- Nombre del rol -->
+    <mat-form-field class="form-field">
+      <mat-label>Nombre del Rol *</mat-label>
+      <input matInput formControlName="nombre" />
+      <mat-error> @if (form.get('nombre')?.hasError('required')) {
+            El nombre es obligatorio.
+        } @else if (form.get('nombre')?.hasError('minlength')) {
+            Debe tener un mínimo de 2 caracteres.
+        } @else if (form.get('nombre')?.hasError('maxlength')) {
+            Debe tener un máximo de 50 caracteres.
+        } @else if (form.get('nombre')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
+    </mat-form-field>
+
+    <!-- Botón -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? ' Guardar cambios' : 'Registrar rol' }}
+      </button>
+    </div>
+<button mat-raised-button color="warn" type="button" (click)="cancelar()">
+    <mat-icon>cancel</mat-icon> Cancelar
+</button>
+  </form>
+</div>

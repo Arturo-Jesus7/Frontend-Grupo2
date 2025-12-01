@@ -1,0 +1,78 @@
+<div class="landing-container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Kid Care</div>
+    <button class="btn-login" (click)="navigateToLogin()">Iniciar Sesión</button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Cuidamos la salud emocional de tu hijo</h1>
+      <p class="subtitle">
+        Psicólogos infantiles certificados, con enfoque lúdico y empático, para ayudar a tu niño a crecer con bienestar emocional.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn-primary" (click)="scheduleAppointment()">Agendar Cita</button>
+        <button class="btn-secondary" (click)="scrollToServices()">Conocer Más</button>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="assets/dibujado-mano-ilustracion-terapia-habla_23-2149205949.png" alt="Terapia infantil" />
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" #servicesSection>
+    <h2>Nuestros Servicios</h2>
+    <div class="service-cards">
+      <div class="card">
+        <div class="icon">🧠</div>
+        <h3>Terapia Individual</h3>
+        <p>Apoyo psicológico personalizado para ansiedad, TDAH, bajo rendimiento escolar y más.</p>
+      </div>
+      <div class="card">
+        <div class="icon">❤️</div>
+        <h3>Apoyo Familiar</h3>
+        <p>Guía para padres en la crianza emocional y manejo de conductas desafiantes.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🎨</div>
+        <h3>Talleres Infantiles</h3>
+        <p>Grupos terapéuticos para desarrollar habilidades sociales y emocionales.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="why-us">
+    <h2>¿Por qué elegir Kid Care?</h2>
+    <div class="features">
+      <div class="feature">
+        <span class="icon">🎓</span>
+        <h3>Profesionales certificados</h3>
+      </div>
+      <div class="feature">
+        <span class="icon">🤗</span>
+        <h3>Enfoque lúdico y amoroso</h3>
+      </div>
+      <div class="feature">
+        <span class="icon">🔒</span>
+        <h3>Confidencialidad total</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section class="cta-section">
+    <h2>¿Listo para dar el primer paso?</h2>
+    <p>Agenda hoy tu primera consulta gratuita.</p>
+    <button class="btn-primary" (click)="scheduleAppointment()">Reservar Cita</button>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Kid Care – Psicología Infantil. Todos los derechos reservados.</p>
+    <p>Lima, Perú | contacto@kidcare.pe</p>
+  </footer>
+</div>

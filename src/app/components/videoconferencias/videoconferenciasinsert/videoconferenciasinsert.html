@@ -1,0 +1,99 @@
+<div class="form-container">
+  <h2 class="form-title">
+    {{ edicion ? ' Edición de Videoconferencia' : ' Registrar Videoconferencia' }}
+  </h2>
+
+  <form [formGroup]="form" (submit)="aceptar()" class="user-form">
+
+    <!-- ID (solo en edición) -->
+    @if (edicion) {
+      <mat-form-field class="form-field">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="codigo" readonly />
+        <mat-error>
+          @if (form.get('id')?.hasError('required')) { Ingrese ID!! }
+        </mat-error>
+      </mat-form-field>
+    }
+
+    <!-- Proveedor -->
+    <mat-form-field class="form-field">
+      <mat-label>Proveedor *</mat-label>
+      <input matInput formControlName="proveedorVideoconferencia" placeholder="Zoom, Teams, Jitsi, etc." />
+      <mat-error>
+       @if (form.get('proveedorVideoconferencia')?.hasError('required')) {
+            El proveedor es obligatorio.
+        } @else if (form.get('proveedorVideoconferencia')?.hasError('minlength')) {
+            Debe tener un mínimo de 3 caracteres.
+        } @else if (form.get('proveedorVideoconferencia')?.hasError('maxlength')) {
+            Debe tener un máximo de 50 caracteres.
+        } @else if (form.get('proveedorVideoconferencia')?.hasError('pattern')) {
+            Solo se permiten letras y espacios.
+        }</mat-error>
+    </mat-form-field>
+
+    <!-- Enlace de Entrada (Join) -->
+    <mat-form-field class="form-field">
+      <mat-label>Enlace de Entrada (Join URL) *</mat-label>
+      <input matInput type="url" formControlName="joinUrlVideoconferencia" placeholder="https://zoom.us/j/123456789" />
+      <mat-error>
+        @if (form.get('joinUrlVideoconferencia')?.hasError('required')) {
+            La URL de unión es obligatoria.
+        } @else if (form.get('joinUrlVideoconferencia')?.hasError('maxlength')) {
+            Debe tener un máximo de 250 caracteres.
+        } @else if (form.get('joinUrlVideoconferencia')?.hasError('pattern')) {
+            Debe ser una URL válida (ej. https://ejemplo.com).
+        }</mat-error>
+    </mat-form-field>
+
+    <!-- Enlace de Inicio (Start) -->
+    <mat-form-field class="form-field">
+      <mat-label>Enlace de Inicio (Start URL) *</mat-label>
+      <input matInput type="url" formControlName="starUrlVideoconferencia" placeholder="https://zoom.us/s/123456789" />
+      <mat-error>
+       @if (form.get('starUrlVideoconferencia')?.hasError('required')) {
+            El nombre de inicio de URL es obligatorio.
+        } @else if (form.get('starUrlVideoconferencia')?.hasError('minlength')) {
+            Debe tener un mínimo de 5 caracteres.
+        } @else if (form.get('starUrlVideoconferencia')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        } @else if (form.get('starUrlVideoconferencia')?.hasError('pattern')) {
+            Solo se permiten caracteres alfanuméricos (letras y números).
+        }</mat-error>
+    </mat-form-field>
+
+    <!-- Clave API -->
+    <mat-form-field class="form-field">
+      <mat-label>Clave API *</mat-label>
+      <input matInput type="password" formControlName="passApiVideoconferencia" />
+      <mat-error>
+       @if (form.get('passApiVideoconferencia')?.hasError('required')) {
+            La clave API o contraseña es obligatoria.
+        } @else if (form.get('passApiVideoconferencia')?.hasError('minlength')) {
+            Debe tener un mínimo de 8 caracteres.
+        } @else if (form.get('passApiVideoconferencia')?.hasError('maxlength')) {
+            Debe tener un máximo de 100 caracteres.
+        }</mat-error>
+    </mat-form-field>
+
+    <!-- Cita -->
+    <mat-form-field class="form-field">
+      <mat-label>Cita *</mat-label>
+      <mat-select formControlName="FK" required>
+        @for (c of listaCitas; track c) {
+          <mat-option [value]="c.idCita">Cita #{{ c.idCita }} — {{ c.estadoCita }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Botón -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? ' Guardar cambios' : ' Registrar videoconferencia' }}
+      </button>
+    </div>
+<button mat-raised-button color="warn" type="button" (click)="cancelar()">
+    <mat-icon>cancel</mat-icon> Cancelar
+</button>
+  </form>
+</div>
