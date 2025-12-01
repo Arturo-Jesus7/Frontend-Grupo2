@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environments";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Tratamientos } from "../models/Tratamientos";
+import { TratamientosAsignadosDTO } from "../models/TratamientosAsignadosDTO";
 
 const base_url=environment.base
 @Injectable({
@@ -36,4 +37,8 @@ export class TratamientossService{
     delete(id: number) {
     return this.http.delete(`${this.url}/${id}`, { responseType: 'text' });
   }
+    
+    gettratamientoasignado():Observable<TratamientosAsignadosDTO[]>{
+      return this.http.get<TratamientosAsignadosDTO[]>(`${this.url}/tratamientos-terapeuta`);
+    }
 }

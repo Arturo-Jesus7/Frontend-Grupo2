@@ -1,21 +1,23 @@
 <div class="clinic-layout" role="application">
+
+  @if(verificar()) {
   <!-- Cabecera superior -->
   <header class="header" role="banner">
-  <div class="header-content">
-    <div class="logo-container">
-      <span class="logo-icon" aria-hidden="true">🏥</span>
+    <div class="header-content">
+      <div class="logo-container">
+        <span class="logo-icon" aria-hidden="true">🏥</span>
+      </div>
+      <div class="header-text">
+        <h1>Clínica Digital</h1>
+        <p>Sistema de Gestión Médica Infantil</p>
+      </div>
+      <div>
+        <button mat-button [matMenuTriggerFor]="menuSalir" class="btn-rojo">
+          <mat-icon>person</mat-icon>Usuario
+        </button>
+      </div>
     </div>
-    <div class="header-text">
-      <h1>Clínica Digital</h1>
-      <p>Sistema de Gestión Médica Infantil</p>
-    </div>
-    <div>
-      <button mat-button [matMenuTriggerFor]="menuSalir" class="btn-rojo">
-      <mat-icon>person</mat-icon>Usuario
-    </button>
-    </div>
-  </div>
-</header>
+  </header>
 
   <!-- Contenido principal -->
   <div class="main-content">
@@ -23,78 +25,122 @@
     <aside class="sidebar" role="navigation" aria-label="Menú de navegación principal">
       <nav>
         <ul>
+
+          @if(isAdmin()) {
           <li>
             <a routerLink="/roles" routerLinkActive="active">
               <mat-icon aria-hidden="true">assignment_ind</mat-icon>
               <span>Roles</span>
             </a>
           </li>
+          }
+
+          @if(isAdmin()) {
           <li>
             <a routerLink="/usuarios" routerLinkActive="active">
               <mat-icon aria-hidden="true">people</mat-icon>
               <span>Usuarios</span>
             </a>
           </li>
+          }
+
+          @if(isAdmin()) {
           <li>
             <a routerLink="/terapeutas" routerLinkActive="active">
               <mat-icon aria-hidden="true">people</mat-icon>
               <span>Terapeutas</span>
             </a>
           </li>
+          }
+
+          @if(isAdmin()) {
           <li>
             <a routerLink="/alertas" routerLinkActive="active">
               <mat-icon aria-hidden="true">notifications</mat-icon>
               <span>Alertas</span>
             </a>
           </li>
+          }
+
+          @if(isPaciente() || isTerapeuta() || isAdmin()) {
           <li>
             <a routerLink="/citas" routerLinkActive="active">
               <mat-icon aria-hidden="true">event</mat-icon>
               <span>Citas</span>
             </a>
           </li>
+          }
+
+          @if(isTerapeuta() || isAdmin()) {
           <li>
             <a routerLink="/diagnosticos" routerLinkActive="active">
               <mat-icon aria-hidden="true">medical_information</mat-icon>
               <span>Diagnósticos</span>
             </a>
           </li>
+          }
+
+          @if(isTerapeuta() || isAdmin()) {
           <li>
             <a routerLink="/historial" routerLinkActive="active">
               <mat-icon aria-hidden="true">history</mat-icon>
               <span>Historial</span>
             </a>
           </li>
+          }
+
+          @if(isAdmin()) {
           <li>
             <a routerLink="/pagos" routerLinkActive="active">
               <mat-icon aria-hidden="true">payments</mat-icon>
               <span>Pagos</span>
             </a>
           </li>
+          }
+
+          @if(isPaciente() || isTerapeuta() || isAdmin()) {
           <li>
             <a routerLink="/sesiones" routerLinkActive="active">
               <mat-icon aria-hidden="true">timer</mat-icon>
               <span>Sesiones</span>
             </a>
           </li>
+          }
+
+          @if(isPaciente() || isTerapeuta() || isAdmin()) {
           <li>
             <a routerLink="/tecnicas" routerLinkActive="active">
               <mat-icon aria-hidden="true">psychology</mat-icon>
               <span>Técnicas</span>
             </a>
           </li>
+          }
+
+          @if(isPaciente() || isTerapeuta() || isAdmin()) {
           <li>
             <a routerLink="/tratamientos" routerLinkActive="active">
               <mat-icon aria-hidden="true">healing</mat-icon>
               <span>Tratamientos</span>
             </a>
           </li>
+          }
+
+          @if(isPaciente() || isTerapeuta() || isAdmin()) {
           <li>
             <a routerLink="/videoconferencias" routerLinkActive="active">
               <mat-icon aria-hidden="true">videocam</mat-icon>
               <span>Videoconferencias</span>
             </a>
           </li>
+          }
+          @if(isAdmin()) {
+          <li>
+            <a routerLink="/por-usuario" routerLinkActive="active">
+              <mat-icon aria-hidden="true">videocam</mat-icon>
+              <span>reportes</span>
+            </a>
+          </li>
+          }
         </ul>
       </nav>
     </aside>
@@ -120,4 +166,7 @@
       <span>{{ role }}</span>
     </button>
   </mat-menu>
+
+  }
+
 </div>

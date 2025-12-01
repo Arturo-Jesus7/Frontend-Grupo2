@@ -4,6 +4,8 @@ import { Observable, Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Citas } from "../models/Citas";
 import { CitaPorUsuarioDTO } from "../models/CitaPorUsuarioDTO";
+import { CitasPorMesDTO } from "../models/CitasPorMesDTO";
+import { CitaPendienteDTO } from "../models/CitaPendienteDTO";
 
 const base_url=environment.base
 @Injectable({
@@ -39,5 +41,11 @@ export class CitasService{
   }
   getcitsdporusuario():Observable<CitaPorUsuarioDTO[]>{
     return this.http.get<CitaPorUsuarioDTO[]>(`${this.url}/por-usuario`);
+  }
+    getcitaspormes():Observable<CitasPorMesDTO[]>{
+    return this.http.get<CitasPorMesDTO[]>(`${this.url}/por-mes`);
+  }
+      getcitasporpendiente():Observable<CitaPendienteDTO[]>{
+    return this.http.get<CitaPendienteDTO[]>(`${this.url}/pendientes`);
   }
 }

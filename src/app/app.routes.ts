@@ -29,6 +29,9 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { LandingPage } from './components/landing/landing';
 import { Terapeutas } from './components/terapeutas/terapeutas';
 import { Terapeutasinsert } from './components/terapeutas/terapeutasinsert/terapeutasinsert';
+import { Reportecitasporusuario } from './components/reportecitasporusuario/reportecitasporusuario';
+import { Reportecitaspormes } from './components/reportecitaspormes/reportecitaspormes';
+import { Reportecitaspendientes } from './components/reportecitaspendientes/reportecitaspendientes';
 export const routes: Routes = [
   { path: '', component: LandingPage },
 
@@ -125,8 +128,16 @@ export const routes: Routes = [
     {
     path: 'por-usuario',
     component: Reportecitasporusuario,
-    canActivate: [guardGuard],
+    canActivate: [seguridadGuard],
   },
-
-
+{
+    path: 'por-mes',
+    component: Reportecitaspormes,
+    canActivate: [seguridadGuard],
+  },
+{
+    path: 'pendientes',
+    component: Reportecitaspendientes,
+    canActivate: [seguridadGuard],
+  },
 ];
