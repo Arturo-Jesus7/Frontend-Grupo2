@@ -1,94 +1,103 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Signaling } from '../../services/signaling';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Webrtcservice } from '../../services/webrtcservice';
+import { Signalingservice } from '../../services/signalingservice';
+import { Roomservice } from '../../services/roomservice';
 
 @Component({
   selector: 'app-video-call',
-  imports:[FormsModule,CommonModule],
+  imports:[FormsModule],
   templateUrl: './video-call.html',
   styleUrl: './video-call.css',
 })
 export class VideoCall {
 
-  @ViewChild('localVideo', { static: true }) localVideo!: ElementRef;
-  @ViewChild('remoteVideo', { static: true }) remoteVideo!: ElementRef;
+  @ViewChild('localVideo') localVideo!: ElementRef<HTMLVideoElement>;
+  @ViewChild('remoteVideo') remoteVideo!: ElementRef<HTMLVideoElement>;
 
-  roomCode: string = "";
-  inCall = false;
+  roomId: string = '';
+  joined = false;
+  isCaller = false;
+  offerReceived = false;
 
-  peer!: RTCPeerConnection;
-  localStream!: MediaStream;
+  audioEnabled = true;
+  videoEnabled = true;
 
-  constructor(private signaling: Signaling) {}
+  constructor(
+    private webrtc: Webrtcservice,
+    private signaling: Signalingservice,
+    private roomService: Roomservice
+  ) {}
 
   ngOnInit() {
-    this.signaling.onMessage(async message => {
-
-      if (message.type === 'offer') {
-        await this.peer.setRemoteDescription(new RTCSessionDescription(message));
-        const answer = await this.peer.createAnswer();
-        await this.peer.setLocalDescription(answer);
-        this.signaling.send(answer);
-      }
-
-      if (message.type === 'answer') {
-        await this.peer.setRemoteDescription(new RTCSessionDescription(message));
-      }
-
-      if (message.type === 'candidate') {
-        await this.peer.addIceCandidate(message.candidate);
-      }
-    });
+    this.signaling.messages$.subscribe((msg) => this.handleSignal(msg));
   }
 
-  async enterRoom() {
-    if (!this.roomCode.trim()) return;
-
-    await this.initializeWebRTC();
-
-    this.signaling.send({
-      type: "join",
-      room: this.roomCode
-    });
-
-    this.inCall = true;
+  createRoom() {
+    this.roomId = this.roomService.generateRoomId();
+    alert("Comparte este Room ID: " + this.roomId);
   }
 
-  async initializeWebRTC() {
-    this.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    this.localVideo.nativeElement.srcObject = this.localStream;
+  async joinRoom() {
+    this.joined = true;
 
-    this.peer = new RTCPeerConnection({
-      iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+    await this.webrtc.initPeer();
+
+    const local = await this.webrtc.getLocalStream();
+    this.localVideo.nativeElement.srcObject = local;
+    this.webrtc.addLocalTracks();
+
+    this.webrtc.onTrack((remote) => {
+      this.remoteVideo.nativeElement.srcObject = remote;
     });
 
-    this.localStream.getTracks().forEach(track => {
-      this.peer.addTrack(track, this.localStream);
-    });
+    setTimeout(async () => {
+      if (!this.offerReceived) {
+        this.isCaller = true;
 
-    this.peer.onicecandidate = (event) => {
-      if (event.candidate) {
-        this.signaling.send({
-          type: 'candidate',
-          candidate: event.candidate,
-          room: this.roomCode
+        const offer = await this.webrtc.createOffer();
+        this.signaling.sendMessage({
+          type: 'offer',
+          roomId: this.roomId,
+          offer
         });
       }
-    };
-
-    this.peer.ontrack = (event) => {
-      this.remoteVideo.nativeElement.srcObject = event.streams[0];
-    };
+    }, 500);
   }
 
-  async startCall() {
-    const offer = await this.peer.createOffer();
-    await this.peer.setLocalDescription(offer);
+  async handleSignal(msg: any) {
+    if (msg.roomId !== this.roomId) return;
 
-    this.signaling.send({
-      ...offer,
-      room: this.roomCode
+    switch (msg.type) {
+      case 'offer':
+        await this.handleOffer(msg.offer);
+        break;
+      case 'answer':
+        await this.webrtc.setRemoteDescription(msg.answer);
+        break;
+      case 'ice':
+        await this.webrtc.addIceCandidate(msg.candidate);
+        break;
+    }
+  }
+
+  async handleOffer(offer: RTCSessionDescriptionInit) {
+    this.offerReceived = true;
+
+    await this.webrtc.setRemoteDescription(offer);
+
+    const answer = await this.webrtc.createAnswer();
+    this.signaling.sendMessage({
+      type: 'answer',
+      roomId: this.roomId,
+      answer
     });
+  }
+  toggleAudio() {
+    this.audioEnabled = this.webrtc.toggleAudio()!;
+  }
+
+  toggleVideo() {
+    this.videoEnabled = this.webrtc.toggleVideo()!;
   }
 }

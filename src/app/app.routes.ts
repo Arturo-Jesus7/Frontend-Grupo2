@@ -32,6 +32,7 @@ import { Reportecitasporpendiente } from './components/reportecitasporpendiente/
 import { Reportemascitasagendadas } from './components/reportemascitasagendadas/reportemascitasagendadas';
 import { Reporteprogresodelusuario } from './components/reporteprogresodelusuario/reporteprogresodelusuario';
 import { Reportealertasporcita } from './components/reportealertasporcita/reportealertasporcita';
+import { VideoCall } from './components/video-call/video-call';
 export const routes: Routes = [
   { path: '', component: LandingPage },
 
@@ -180,5 +181,8 @@ export const routes: Routes = [
     path: 'alerta-por-cita',
     component: Reportealertasporcita,
     canActivate: [seguridadGuard],
+  },
+  {
+    path:'videocall',component:VideoCall
   },
 ];
